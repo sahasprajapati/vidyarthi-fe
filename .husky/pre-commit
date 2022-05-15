@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Check tsconfig standards
+
+yarn check:types || (
+    echo "Failed Type Check.";
+    false;
+)
+
+# Check Prettier Standards
+
+yarn format:check || (
+    echo "Prettier Check Failed. Run yarn format, add changes and try commit again.";
+    false;
+)
+
+# Check Eslint Standards
+
+yarn lint || (
+    echo "Eslint Check Failed. Make the required changes listed above, add changes and commit";
+    false;
+)
+
+# If every thing passes
+
+echo " Code looks good. Please try to push now."
+
+git add
