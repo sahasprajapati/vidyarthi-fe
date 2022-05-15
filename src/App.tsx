@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { AdminLayout } from 'containers';
+
 // ehehe
 
 /**
@@ -10,7 +12,7 @@ import React from 'react';
 function App() {
   return (
     <div className="App">
-      <div className="">Vidhyarthi</div>
+      <AdminLayout />
     </div>
   );
 }
