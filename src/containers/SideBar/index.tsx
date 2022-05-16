@@ -1,8 +1,8 @@
 import React from 'react';
-import { MdSpaceDashboard } from 'react-icons/md';
-import { BsBookFill } from 'react-icons/bs';
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from 'react-icons/ai';
 import { SideBarRow } from 'components';
+import Icon from 'assets/svg/Icon';
+import { VidyarthiLogo } from 'assets/images';
 
 interface Props {
   responsive: boolean;
@@ -18,7 +18,7 @@ const SideBar: React.FC<Props> = ({ responsive, setResponsive }) => {
         }`}
       >
         <div className="sidebar__top flex-between mx-3 my-3">
-          {!responsive && <h3>logi</h3>}
+          {!responsive && <img src={VidyarthiLogo} alt="logo" />}
           {!responsive ? (
             <AiOutlineMenuUnfold
               size={35}
@@ -35,38 +35,26 @@ const SideBar: React.FC<Props> = ({ responsive, setResponsive }) => {
         </div>
         <SideBarRow
           title="Dashboard"
-          Icon={MdSpaceDashboard}
+          Icon={<Icon name="dashboard" />}
           path="/"
           responsive={responsive}
         />
         <SideBarRow
           title="Course"
-          Icon={BsBookFill}
-          path="/aa"
+          Icon={<Icon name="course" />}
+          path="/course"
           responsive={responsive}
         />
         <SideBarRow
-          title="Dashboard"
-          Icon={MdSpaceDashboard}
-          path="/dd"
+          title="Transaction"
+          Icon={<Icon name="transaction" />}
+          path="/transaction"
           responsive={responsive}
         />
         <SideBarRow
-          title="Dashboard"
-          Icon={MdSpaceDashboard}
-          path="/gg"
-          responsive={responsive}
-        />
-        <SideBarRow
-          title="Dashboard"
-          Icon={MdSpaceDashboard}
-          path="/ee"
-          responsive={responsive}
-        />
-        <SideBarRow
-          title="Dashboard"
-          Icon={MdSpaceDashboard}
-          path="/rr"
+          title="Settings"
+          Icon={<Icon name="setting" />}
+          path="/setting"
           responsive={responsive}
         />
       </div>

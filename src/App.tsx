@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { AdminLayout } from 'containers';
+import { AdminDashboard } from 'pages/Admin';
 
 // ehehe
 
@@ -12,7 +11,7 @@ import { AdminLayout } from 'containers';
 function App() {
   return (
     <div className="App">
-      <AdminLayout />
+      <AdminDashboard />
     </div>
   );
 }
