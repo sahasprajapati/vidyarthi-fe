@@ -1,5 +1,6 @@
 import React from 'react';
-import { AdminDashboard } from 'pages/Admin';
+import { AdminCourse, AdminDashboard } from 'pages/Admin';
+import { Route, Routes } from 'react-router-dom';
 
 // ehehe
 
@@ -11,7 +12,10 @@ import { AdminDashboard } from 'pages/Admin';
 function App() {
   return (
     <div className="App">
-      <AdminDashboard />
+      <Routes>
+        <Route element={<AdminDashboard />} path="/" />
+        <Route element={<AdminCourse />} path="/admin-course" />
+      </Routes>
     </div>
   );
 }

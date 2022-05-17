@@ -42,19 +42,19 @@ const SideBar: React.FC<Props> = ({ responsive, setResponsive }) => {
         <SideBarRow
           title="Course"
           Icon={<Icon name="course" />}
-          path="/course"
+          path="/admin-course"
           responsive={responsive}
         />
         <SideBarRow
           title="Transaction"
           Icon={<Icon name="transaction" />}
-          path="/transaction"
+          path="/admin-transaction"
           responsive={responsive}
         />
         <SideBarRow
           title="Settings"
           Icon={<Icon name="setting" />}
-          path="/setting"
+          path="/admin-setting"
           responsive={responsive}
         />
       </div>

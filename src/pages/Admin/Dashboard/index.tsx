@@ -1,15 +1,16 @@
+/* eslint-disable no-unused-vars */
 import { OvalFour, OvalOne, OvalThree, OvalTwo } from 'assets/images';
 import Icon from 'assets/svg/Icon';
-import { CustomTable } from 'components';
-import BarChartComponent from 'components/BarChart';
+import { Chart, CustomTable } from 'components';
 import Card from 'components/Card';
 import Heading from 'components/Heading';
 import MainHeading from 'components/MainHeading';
 import { AdminLayout } from 'containers';
 import React from 'react';
 import { TableColumn } from 'react-data-table-component';
+import { Link } from 'react-router-dom';
 import formatMoney from 'utils/formatMoney';
-import { stackGraph } from './__chartdata__/chartData';
+import { doughnutData, stackGraph } from './__chartdata__/chartData';
 
 interface DataRow {
   title: string;
@@ -20,6 +21,33 @@ interface DataRow {
 }
 
 const AdminDashboard: React.FC = () => {
+  const graphData = {
+    type: 'bar',
+    labels: stackGraph.map((e) => e?.month),
+    datasets: [
+      {
+        label: 'dataset1',
+        data: stackGraph.map((e) => e?.courseVisit),
+        backgroundColor: '#6B8E4E',
+        order: 1,
+      },
+      {
+        label: 'dataset2',
+        data: stackGraph.map((e) => e?.courseSale),
+        backgroundColor: '#92C9FB',
+        order: 2,
+      },
+      {
+        label: 'Line Dataset',
+        data: stackGraph.map((e) => e?.courseVisit),
+        type: 'line' as any,
+        borderColor: '#3F3F44',
+        fill: true,
+        order: 3,
+      },
+    ],
+  };
+
   const columns: TableColumn<DataRow>[] = React.useMemo(
     () => [
       {
@@ -97,13 +125,68 @@ const AdminDashboard: React.FC = () => {
 
   const options = {
     responsive: true,
+    type: 'bar',
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        grid: {
+          display: false,
+        },
+      },
+    },
     plugins: {
       legend: {
-        position: 'top' as const,
+        labels: {
+          usePointStyle: true,
+          boxWidth: 10,
+          boxHeight: 9.93,
+          title: {
+            color: 'red',
+          },
+          font: {
+            size: 14,
+          },
+        },
+        // title: {
+        //   color: '#',
+        //   font: 14,
+        //   text: 'hello',
+        // },
       },
       title: {
         display: true,
         text: 'Chart.js Bar Chart',
+      },
+      tooltip: {
+        backgroundColor: '#FFFFFF',
+        titleColor: '#3F3F44',
+        titleFont: '12px',
+        padding: 20,
+        intersect: true,
+        titleSpacing: 4,
+        titleMarginBottom: 10,
+      },
+    },
+  };
+  const doughnutConfig = {
+    responsive: true,
+    cutout: '75%',
+    plugins: {
+      legend: {
+        position: 'right',
+        labels: {
+          usePointStyle: true,
+          color: '#333333',
+          padding: 30,
+          font: {
+            size: 12,
+            weight: 500,
+          },
+        },
       },
     },
   };
@@ -211,6 +294,18 @@ const AdminDashboard: React.FC = () => {
     },
   ];
 
+  // Doughnut Data
+
+  const doughnut = {
+    labels: doughnutData.map((e) => e?.label),
+    datasets: [
+      {
+        data: doughnutData.map((e) => e?.data),
+        backgroundColor: doughnutData.map((e) => e?.color),
+      },
+    ],
+  };
+
   return (
     <AdminLayout>
       <div className="container-fluid">
@@ -251,10 +346,10 @@ const AdminDashboard: React.FC = () => {
         <div className="row my-5">
           <div className="col-lg-7 col-md-12">
             <Card>
-              <BarChartComponent options={options} data={stackGraph} />
+              <Chart data={graphData} options={options} type="bar" />
             </Card>
           </div>
-          <div className="col-lg-5 col-md-12 mt-4">
+          <div className="col-lg-5 col-md-12">
             <Card>
               <MainHeading title="Best Instructor" />
               <div className="instructor__container">
@@ -290,7 +385,43 @@ const AdminDashboard: React.FC = () => {
         <div className="row">
           <div className="col-lg-5 col-md-12">
             <Card>
-              <h6>Hello</h6>
+              <div className="flex-between">
+                <Heading title="top sales" />
+                <Link to="/">View all</Link>
+              </div>
+              <div className="flex-between mt-3">
+                <div className="dashboard__topsales">
+                  <h6 className="dashboard__topsales__title">
+                    {formatMoney('2000')}{' '}
+                  </h6>
+                  <h6 className="dashboard__topsales__subtitle">
+                    weekly report
+                  </h6>
+                </div>
+                <div className="dashboard__topsales">
+                  <h6 className="dashboard__topsales__title">
+                    {formatMoney('2000')}{' '}
+                  </h6>
+                  <h6 className="dashboard__topsales__subtitle">
+                    weekly report
+                  </h6>
+                </div>
+                <div className="dashboard__topsales">
+                  <h6 className="dashboard__topsales__title">
+                    {formatMoney('2000')}{' '}
+                  </h6>
+                  <h6 className="dashboard__topsales__subtitle">
+                    weekly report
+                  </h6>
+                </div>
+              </div>
+              <Chart
+                data={doughnut}
+                type="doughnut"
+                options={doughnutConfig}
+                width={158}
+                height={158}
+              />
             </Card>
           </div>
           <div className="col-lg-7 col-md-12">
@@ -300,6 +431,13 @@ const AdminDashboard: React.FC = () => {
                 title="Latest Withdraw"
                 data={data}
               />
+            </Card>
+          </div>
+        </div>
+        <div className="row my-5">
+          <div className="col-12 mb-4">
+            <Card>
+              <CustomTable columns={columns} title="Feedback" data={data} />
             </Card>
           </div>
         </div>
