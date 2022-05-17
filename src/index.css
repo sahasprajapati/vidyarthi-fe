@@ -215,7 +215,7 @@ h6 {
 /* dashbaord */
 
 .dashboard__card {
-  padding: 1.188rem 0.3125rem;
+  padding: 0.9rem 0.3125rem;
 }
 
 .dashboard__card__title {
@@ -227,4 +227,34 @@ h6 {
 
 .dashboard__card__image {
   border-radius: 13px;
+}
+/* Instructor */
+
+.instructor__container {
+  overflow-y: auto;
+  max-height: 432px;
+}
+.dashboard__instructor__image {
+  border-radius: 30px;
+  object-fit: cover;
+  height: 2.75rem;
+  width: 2.75rem;
+  margin-right: 0.8rem;
+}
+
+.dashboard__instructor__title {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--color-primary);
+}
+.dashboard__instructor__sub__title {
+  font-weight: 400;
+  font-size: 0.875rem;
+  color: rgba(18, 13, 38, 0.5);
+}
+
+.dashboard__instructor__teacher {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #120d26;
 }

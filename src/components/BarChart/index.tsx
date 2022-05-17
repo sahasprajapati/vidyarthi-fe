@@ -1,9 +1,8 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 // eslint-disable-next-line no-unused-vars
-import { Chart as ChartJS } from 'chart.js/auto';
 import {
-  Chart as ChartJS1,
+  Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
@@ -11,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-ChartJS1.register(
+ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
@@ -28,7 +27,7 @@ interface Props {
 const BarChartComponent: React.FC<Props> = ({ data, options }) => {
   // eslint-disable-next-line no-unused-vars
   const [graphData, setGraphData] = React.useState({
-    label: data.map((data: { month: string }) => data.month),
+    label: data.map((e: { courseVisit: string }) => e?.courseVisit),
     datasets: [
       {
         label: 'Course Visit',
@@ -40,6 +39,7 @@ const BarChartComponent: React.FC<Props> = ({ data, options }) => {
       },
     ],
   });
+
   return (
     <div>
       <Bar data={graphData} options={options} />
