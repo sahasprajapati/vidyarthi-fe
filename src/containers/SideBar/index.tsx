@@ -1,5 +1,4 @@
 import React from 'react';
-import { AiOutlineMenuFold, AiOutlineMenuUnfold } from 'react-icons/ai';
 import { SideBarRow } from 'components';
 import Icon from 'assets/svg/Icon';
 import { VidyarthiLogo } from 'assets/images';
@@ -10,6 +9,9 @@ interface Props {
 }
 
 const SideBar: React.FC<Props> = ({ responsive, setResponsive }) => {
+  const token: any = window.localStorage.getItem('accessToken');
+  const checkRole = JSON.parse(token);
+  console.log('this is check role', checkRole.roles);
   return (
     <div className="flex-col">
       <div
@@ -19,32 +21,25 @@ const SideBar: React.FC<Props> = ({ responsive, setResponsive }) => {
       >
         <div className="sidebar__top flex-between mx-3 my-3">
           {!responsive && <img src={VidyarthiLogo} alt="logo" />}
-          {!responsive ? (
-            <AiOutlineMenuUnfold
-              size={35}
-              className="pointer"
-              onClick={() => setResponsive(!responsive)}
-            />
-          ) : (
-            <AiOutlineMenuFold
-              size={35}
-              className="pointer"
-              onClick={() => setResponsive(!responsive)}
-            />
-          )}
+          <div className="pointer" onClick={() => setResponsive(!responsive)}>
+            <Icon name="menu" />
+          </div>
         </div>
+
         <SideBarRow
           title="Dashboard"
           Icon={<Icon name="dashboard" />}
           path="/"
           responsive={responsive}
         />
+
         <SideBarRow
           title="Course"
           Icon={<Icon name="course" />}
           path="/admin-course"
           responsive={responsive}
         />
+
         <SideBarRow
           title="Transaction"
           Icon={<Icon name="transaction" />}

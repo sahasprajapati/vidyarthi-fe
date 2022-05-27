@@ -1,12 +1,25 @@
 /* eslint-disable new-cap */
 import React from 'react';
+import BasicSvg from './Basic';
+import MenuSvg from './Menu';
 import BellSvg from './Bell';
 import CourseSvg from './Course';
+import CrossSvg from './Cross';
 import DashboardSvg from './Dashboard';
 import DownArrowSvg from './DownArrow';
+import FileTextSvg from './FileText';
+import FrameSvg from './Frame';
 import SearchSvg from './Search';
 import SettingSvg from './Setting';
 import TransactionSvg from './Transaction';
+import UploadSvg from './Upload';
+import VideoSvg from './Video';
+import PlusSvg from './Plus';
+import StartSvg from './Star';
+import DotsHorizontalSvg from './Dots';
+import UserSvg from './User';
+import EyeSvg from './Eye';
+import WishListSvg from './WishList';
 export interface Props {
   name: string;
   height?: number | string;
@@ -22,6 +35,19 @@ const IconsList: any = {
   search: (props: Props) => <SearchSvg {...props} />,
   bell: (props: Props) => <BellSvg {...props} />,
   'down-arrow': (props: Props) => <DownArrowSvg {...props} />,
+  video: (props: Props) => <VideoSvg {...props} />,
+  curriculum: (props: Props) => <FrameSvg {...props} />,
+  'file-text': (props: Props) => <FileTextSvg {...props} />,
+  basic: (props: Props) => <BasicSvg {...props} />,
+  upload: (props: Props) => <UploadSvg {...props} />,
+  dots: (props: Props) => <DotsHorizontalSvg {...props} />,
+  cross: (props: Props) => <CrossSvg {...props} />,
+  menu: (props: Props) => <MenuSvg {...props} />,
+  plus: (props: Props) => <PlusSvg {...props} />,
+  star: (props: Props) => <StartSvg {...props} />,
+  user: (props: Props) => <UserSvg {...props} />,
+  eye: (props: Props) => <EyeSvg {...props} />,
+  'wish-list': (props: Props) => <WishListSvg {...props} />,
 };
 
 const Icon: React.FC<Props> = ({ name, ...props }) => {

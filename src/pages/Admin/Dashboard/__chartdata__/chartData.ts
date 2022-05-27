@@ -2,7 +2,7 @@ export const stackGraph = [
   {
     id: 0,
     month: 'Jan',
-    courseVisit: 100,
+    courseVisit: 10,
     courseSale: 40,
   },
   {

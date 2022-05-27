@@ -325,12 +325,7 @@ const AdminDashboard: React.FC = () => {
                     </div>
                     <div className="">
                       <div className="position-absolute top-0 end-0">
-                        <img
-                          src={e?.image}
-                          alt="logo"
-                          height={80}
-                          className="dashboard__card__image"
-                        />
+                        <div className="square">hello</div>
                       </div>
                       <div className="">
                         <Icon name="dashboard" />
@@ -389,7 +384,7 @@ const AdminDashboard: React.FC = () => {
                 <Heading title="top sales" />
                 <Link to="/">View all</Link>
               </div>
-              <div className="flex-between mt-3">
+              <div className="flex mt-3">
                 <div className="dashboard__topsales">
                   <h6 className="dashboard__topsales__title">
                     {formatMoney('2000')}{' '}

@@ -1,13 +1,26 @@
-import Icon from 'assets/svg/Icon';
 import MainHeading from 'components/MainHeading';
 import { AdminLayout } from 'containers';
 import React from 'react';
+import Button from 'components/Button';
+import Icon from 'assets/svg/Icon';
 import formatMoney from 'utils/formatMoney';
+import { useNavigate } from 'react-router-dom';
 
 const AdminCourse: React.FC = () => {
+  const navigate = useNavigate();
+  const [courseOption, setCourseOption] = React.useState<any>(null);
   return (
     <AdminLayout>
-      <MainHeading title="All Courses" />
+      <div className="flex-between">
+        <MainHeading title="All Courses" />
+        <Button
+          variant="primary"
+          onClick={() => navigate('/admin-course-add')}
+          type="button"
+        >
+          add course
+        </Button>
+      </div>
       <div className="row">
         <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-2">
           <label htmlFor="" className="label__heading mb-1">
@@ -45,7 +58,7 @@ const AdminCourse: React.FC = () => {
               </div>
             </div>
           ))}
-        {/* course listing */}
+
         {Array(15)
           .fill('')
           .map((e, i) => (
@@ -66,23 +79,48 @@ const AdminCourse: React.FC = () => {
                   </h6>
                   <div className="course__card__info__container flex-between my-3">
                     <div className="flex">
-                      <Icon name="down-arrow" />
+                      <Icon name="star" />
                       <h6 className="course__card__info__title ms-2 mt-2">
                         4.5
                       </h6>
                     </div>
                     <div className="flex">
-                      <Icon name="dashboard" />
-                      <h6 className="course__card__info__count">
+                      <Icon name="user" />
+                      <h6 className="course__card__info__count mt-2 mx-2">
                         121 students
                       </h6>
                     </div>
                   </div>
                   <div className="flex-between course__card__bottom__container pb-3 pt-2">
                     <h6 className="course__card__info__price">
-                      {formatMoney('3000')}{' '}
+                      {formatMoney('3000')}
                     </h6>
-                    <div className="course__card__info__options">..</div>
+
+                    <div
+                      className="course__card__info__options pointer position-relative px-1"
+                      onClick={() => {
+                        courseOption === i
+                          ? setCourseOption(null)
+                          : setCourseOption(i);
+                      }}
+                    >
+                      <Icon name="dots" />
+                      {courseOption === i && (
+                        <div className="course__options__dropdown">
+                          <div className="ms-3">
+                            <h6 className="course__options__dropdown__list">
+                              View Course
+                            </h6>
+                            <h6 className="course__options__dropdown__list">
+                              Edit Course
+                            </h6>
+                            <h6 className="course__options__dropdown__list">
+                              Delete Course
+                            </h6>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

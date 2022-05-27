@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import DataTable from 'react-data-table-component';
 
 interface Props {
-  title: string;
+  title?: string;
   loading?: boolean;
   data: any[];
   columns: any[];
@@ -15,6 +15,8 @@ interface Props {
   handleRowSelected?: () => void;
   pagination?: boolean;
   paginationServer?: boolean;
+  highlightOnHover?: boolean;
+  pointerOnHover?: boolean;
 }
 
 const CustomTable: React.FC<Props> = ({
@@ -31,6 +33,8 @@ const CustomTable: React.FC<Props> = ({
   selectableRows,
   paginationServer,
   pagination,
+  highlightOnHover,
+  pointerOnHover,
 }) => {
   return (
     <DataTable
@@ -47,6 +51,8 @@ const CustomTable: React.FC<Props> = ({
       contextActions={contextActions}
       onSelectedRowsChange={handleRowSelected}
       clearSelectedRows={toggleCleared}
+      highlightOnHover={highlightOnHover}
+      pointerOnHover={pointerOnHover}
     />
   );
 };
