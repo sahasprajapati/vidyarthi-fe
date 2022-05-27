@@ -21,7 +21,7 @@ import { Route, Routes } from 'react-router-dom';
 
 function App() {
   const localData = {
-    roles: ['user'],
+    roles: ['admin'],
     accessToken: 'token is valid',
   };
 
@@ -33,7 +33,7 @@ function App() {
         <Route element={<Login />} path="/login" />
         <Route element={<Register />} path="/register" />
         <Route element={<Home />} path="/home" />
-        <Route element={<PrivateRoute allowedRoutes={['user']} />}>
+        <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
           <Route element={<AdminDashboard />} path="/" />
         </Route>
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
@@ -42,7 +42,7 @@ function App() {
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
           <Route element={<AdminTransaction />} path="/admin-transaction" />
         </Route>
-        <Route element={<PrivateRoute allowedRoutes={['user']} />}>
+        <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
           <Route element={<AdminTransaction />} path="/admin-transaction" />
         </Route>
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
