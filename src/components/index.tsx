@@ -8,3 +8,4 @@ export { default as Editor } from './CkEditor';
 export { default as BorderBottom } from './BorderBottom';
 export { default as SocialMediaLoginOptions } from './SocialMediaLoginOptions';
 export { default as NavBar } from './NavBar';
+export { default as CourseCard } from './CourseCard';

@@ -20,6 +20,9 @@ import DotsHorizontalSvg from './Dots';
 import UserSvg from './User';
 import EyeSvg from './Eye';
 import WishListSvg from './WishList';
+import ArrowRightSvg from './ArrowRight';
+import ArrowLeftSvg from './ArrowLeft';
+import CartSvg from './Cart';
 export interface Props {
   name: string;
   height?: number | string;
@@ -48,6 +51,9 @@ const IconsList: any = {
   user: (props: Props) => <UserSvg {...props} />,
   eye: (props: Props) => <EyeSvg {...props} />,
   'wish-list': (props: Props) => <WishListSvg {...props} />,
+  'arrow-right': (props: Props) => <ArrowRightSvg {...props} />,
+  'arrow-left': (props: Props) => <ArrowLeftSvg {...props} />,
+  cart: (props: Props) => <CartSvg {...props} />,
 };
 
 const Icon: React.FC<Props> = ({ name, ...props }) => {

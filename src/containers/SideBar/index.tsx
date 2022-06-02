@@ -9,9 +9,8 @@ interface Props {
 }
 
 const SideBar: React.FC<Props> = ({ responsive, setResponsive }) => {
-  const token: any = window.localStorage.getItem('accessToken');
-  const checkRole = JSON.parse(token);
-  console.log('this is check role', checkRole.roles);
+  //   const token: any = window.localStorage.getItem('accessToken');
+  //   const checkRole = JSON.parse(token);
   return (
     <div className="flex-col">
       <div

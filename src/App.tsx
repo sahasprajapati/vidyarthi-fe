@@ -3,6 +3,7 @@ import {
   AdminCourse,
   AdminDashboard,
   AdminTransaction,
+  CourseSearch,
   Home,
   Login,
   Register,
@@ -33,6 +34,7 @@ function App() {
         <Route element={<Login />} path="/login" />
         <Route element={<Register />} path="/register" />
         <Route element={<Home />} path="/home" />
+        <Route element={<CourseSearch />} path="/course-search" />
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
           <Route element={<AdminDashboard />} path="/" />
         </Route>

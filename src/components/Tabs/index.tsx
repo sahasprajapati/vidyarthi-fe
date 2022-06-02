@@ -26,7 +26,6 @@ const tabData = [
 
 const Tab: React.FC = () => {
   const [toggle, setToggle] = React.useState<string>('tab1');
-  console.log('This is togle', toggle);
   return (
     <div className="tab__container">
       <div className="flex flex-wrap">

@@ -29,8 +29,7 @@ const AddCourse: React.FC = () => {
   const [previewImageUrl, setPreviewImageUrl] = React.useState<any>('');
   const [descriptionsText, setDescriptionsText] = React.useState<string>('');
   const [previewImage, setPreviewImage] = React.useState<any>(null);
-  console.log('descriptions text', descriptionsText);
-  console.log('image url', previewImageUrl);
+
   //   const initValues = {
   //     title: '',
   //     subTitle: '',
@@ -69,10 +68,7 @@ const AddCourse: React.FC = () => {
   return (
     <AdminLayout>
       <MainHeading title="Create a new Course" />
-      <Formik
-        initialValues={initValues}
-        onSubmit={(val) => console.log('this is value', val)}
-      >
+      <Formik initialValues={initValues} onSubmit={(val) => {}}>
         {({ values }) => (
           <Form>
             <Card>
@@ -188,7 +184,7 @@ const AddCourse: React.FC = () => {
                     <Editor
                       onChange={(_event: any, editor: any) => {
                         const data = editor.getData();
-                        console.log('this is data', data);
+
                         setDescriptionsText(data);
                       }}
                     />

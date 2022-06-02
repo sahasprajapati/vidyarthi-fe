@@ -17,14 +17,18 @@ const LoginNavBar: React.FC<Props> = ({ imageUrl }) => {
         <Icon name="menu" />
       </div>
       <ul className="flex navbar__list">
-        <li className="mx-3 nav__link">About Us</li>
-        <li className="mx-3 nav__link">Course</li>
-        <li className="mx-3 nav__link">Contact us</li>
-        <div className="" data-badge="20">
+        <li className="mx-4 nav__link pointer">About Us</li>
+        <li className="mx-4 nav__link pointer">Course</li>
+        <li className="mx-4 nav__link pointer">Contact us</li>
+        <div className="position-relative ms-5">
           <Icon name="wish-list" fill="#120D26" />
+          <div className="wishlist__badge">3</div>
+        </div>
+        <div className="position-relative mx-5">
+          <Icon name="cart" fill="#120D26" />
+          <div className="wishlist__badge">23</div>
         </div>
 
-        <div className="wishlist__badge">3</div>
         <img
           src={imageUrl}
           alt="profile-logo"

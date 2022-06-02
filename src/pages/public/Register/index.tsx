@@ -48,7 +48,7 @@ const Register: React.FC = () => {
         </div>
         <div className="d-flex align-items-center">
           <Formik
-            onSubmit={(val: any) => console.log('This is the values', val)}
+            onSubmit={(val: any) => {}}
             initialValues={{
               email: '',
               password: '',
