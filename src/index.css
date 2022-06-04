@@ -1,7 +1,63 @@
 @font-face {
-  font-family: 'Poppins', sans-serif;
-  src: local('Poppins') url('./assets/fonts/Poppins-Regular.ttf') format('woff');
+  font-family: 'Poppins';
+  src: url(./assets/fonts/Poppins-Thin.ttf);
+  font-style: normal;
+  font-weight: 100;
 }
+@font-face {
+  font-family: 'Poppins';
+  src: url(./assets/fonts/Poppins-ExtraLight.ttf);
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url(./assets/fonts/Poppins-ExtraLight.ttf);
+  font-style: normal;
+  font-weight: 200;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url(./assets/fonts/Poppins-Light.ttf);
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url(./assets/fonts/Poppins-Regular.ttf);
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url(./assets/fonts/Poppins-Medium.ttf);
+  font-style: normal;
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url(./assets/fonts/Poppins-SemiBold.ttf);
+  font-style: normal;
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url(./assets/fonts/Poppins-Bold.ttf);
+  font-style: normal;
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url(./assets/fonts/Poppins-ExtraBold.ttf);
+  font-style: normal;
+  font-weight: 800;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url(./assets/fonts/Poppins-ExtraBold.ttf);
+  font-style: normal;
+  font-weight: 900;
+}
+
 :root {
   --color-primary: #6b8e4e;
   --color-white: #ffffffff;
@@ -89,6 +145,7 @@ li {
 .ck-editor__editable_inline {
   min-height: 342px;
 }
+/* overwrite */
 
 /* modal */
 
@@ -185,6 +242,11 @@ li {
   font-size: 16px;
   color: #120d26;
   opacity: 0.7;
+}
+f-16 {
+  font-weight: 400;
+  font-size: 1rem;
+  color: #120d26;
 }
 
 .bg-dark-white {
@@ -464,10 +526,6 @@ li {
   background-color: #ffffff;
   padding: 2px 4px;
   border-radius: 4px;
-}
-.course__card__container {
-  border-radius: 8px;
-  background-color: var(--color-white);
 }
 
 .course__upload__adv__info__title {
@@ -784,7 +842,10 @@ li {
   filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.05));
   /* padding: 1rem; */
   /* padding: 0 0.6rem; */
-  margin: 0 0.4rem;
+  border-radius: 8px;
+  background-color: var(--color-white);
+
+  max-height: 580px;
 }
 .home__page__course__card__image {
   /* width: 23.25rem; */
@@ -925,4 +986,30 @@ li {
   background: #ffffff;
   border-radius: 10px;
   padding: 1rem;
+}
+
+.course__category__count__container {
+  background: #f4f5f9;
+  border-radius: 5px;
+  width: 24px;
+  height: 24px;
+}
+
+.course__category__count {
+  font-family: 'Poppins';
+  font-weight: 500;
+  font-size: 10px;
+  color: #120d26;
+}
+
+#checkedCategory {
+  accent-color: #3dd598;
+  width: 21.39px;
+  height: 21.39px;
+  border-radius: 10px;
+  outline: 1px solid var(--color-primary) !important;
+  border: none;
+}
+input[type='checkbox']:checked {
+  background-color: var(--color-white);
 }

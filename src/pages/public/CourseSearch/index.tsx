@@ -1,10 +1,69 @@
 import Icon from 'assets/svg/Icon';
-import { CourseCard, NavBar } from 'components';
+import { Accordin, CourseCard, NavBar } from 'components';
 import Heading from 'components/Heading';
 import { Footer } from 'containers';
 import React from 'react';
 
 const CourseSearch: React.FC = () => {
+  const categoryData = [
+    {
+      id: 0,
+      title: 'programming',
+      count: 10,
+    },
+    {
+      id: 1,
+      title: 'Marketing',
+      count: 15,
+    },
+    {
+      id: 2,
+      title: 'Web Developemt',
+      count: 46,
+    },
+    {
+      id: 3,
+      title: 'UI & UX Design',
+      count: 26,
+    },
+    {
+      id: 4,
+      title: 'Bussiness',
+      count: 50,
+    },
+  ];
+
+  // const [values, setValues] = React.useState({});
+  // const newObject = {};
+  // const data = categoryData.map((e) => console.log(e.title));
+
+  // console.log('this is object', newObject);
+  // console.log('this is data', data);
+
+  // for (let index = 0; index < array.length; index++) {
+  //   const element = array[index];
+
+  // }
+
+  // const newArray = [];
+
+  for (let i = 0; i < categoryData.length; i++) {
+    // console.log('this is index', categoryData[i].title.split(' ').join(''));
+    // const data = categoryData[i].title.split(' ').join('');
+    // const newString = data.split(data.charAt(data.length - 1)).join(': ""');
+    // console.log('-----<<', newString);
+    // newArray.push(data);
+  }
+  // console.log('new aerat', newArray);
+  // const handleInputChange = (e: HTMLInputElement) => {
+  //
+  //
+  // };n
+
+  const newString = 'prashant khanal';
+
+  console.log('-----', newString.charAt(0).split(' ').join('').toUpperCase());
+
   return (
     <div className="bg-home">
       <div className="container">
@@ -111,23 +170,48 @@ const CourseSearch: React.FC = () => {
           {/* category and bottom section */}
           <div className="col-md-3">
             <div className="category__container my-3">
-              {/*  */}
-              {/*  */}
-              <div className="accordion__container">
-                <div className="flex-between">
-                  <Heading title="Category" />
-                  <Icon name="down-arrow" />
-                </div>
-                <div className="flex-between">
-                  <div className="flex">
-                    <input type="checkbox" name="" id="" />
-                    <p className="">Programming</p>
+              <Accordin title="Category">
+                {categoryData.map((e) => (
+                  <div className="flex-between" key={e?.id}>
+                    <div className="flex">
+                      <input
+                        type="checkbox"
+                        name={e?.title}
+                        value={e?.title}
+                        // onChange={handleInputChange}
+                        id="checkedCategory"
+                      />
+                      <p className="f-16 mt-3 ps-3"> {e?.title} </p>
+                    </div>
+                    <div className="course__category__count__container">
+                      <p className="text-center mt-1 course__category__count">
+                        {e?.count}
+                      </p>
+                    </div>
                   </div>
-                  <p>32</p>
-                </div>
-                {/*  0*/}
-                {/*  */}
-              </div>
+                ))}
+              </Accordin>
+              <Accordin title="Category">
+                {categoryData.map((e) => (
+                  <div className="flex-between" key={e?.id}>
+                    <div className="flex">
+                      <input
+                        type="checkbox"
+                        name={e?.title}
+                        value={e?.title}
+                        // onChange={handleInputChange}
+                        id="checkedCategory"
+                      />
+                      <p className="f-16 mt-3 ps-3"> {e?.title} </p>
+                    </div>
+                    <div className="course__category__count__container">
+                      <p className="text-center mt-1 course__category__count">
+                        {e?.count}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </Accordin>
             </div>
           </div>
           <div className="col-md-9">
@@ -137,8 +221,8 @@ const CourseSearch: React.FC = () => {
               <div className="row">
                 {Array(9)
                   .fill('')
-                  .map((e) => (
-                    <div className="col-md-4" key={e}>
+                  .map((e, i) => (
+                    <div className="col-md-4" key={i}>
                       <CourseCard />
                     </div>
                   ))}

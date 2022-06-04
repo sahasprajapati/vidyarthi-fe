@@ -23,6 +23,7 @@ import WishListSvg from './WishList';
 import ArrowRightSvg from './ArrowRight';
 import ArrowLeftSvg from './ArrowLeft';
 import CartSvg from './Cart';
+import UpArrowSvg from './UpArrow';
 export interface Props {
   name: string;
   height?: number | string;
@@ -38,6 +39,7 @@ const IconsList: any = {
   search: (props: Props) => <SearchSvg {...props} />,
   bell: (props: Props) => <BellSvg {...props} />,
   'down-arrow': (props: Props) => <DownArrowSvg {...props} />,
+  'up-arrow': (props: Props) => <UpArrowSvg {...props} />,
   video: (props: Props) => <VideoSvg {...props} />,
   curriculum: (props: Props) => <FrameSvg {...props} />,
   'file-text': (props: Props) => <FileTextSvg {...props} />,
