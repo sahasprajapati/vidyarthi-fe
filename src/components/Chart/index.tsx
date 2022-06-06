@@ -30,21 +30,27 @@ ChartJS.register(
 interface Props {
   data: any;
   options?: any;
-  type: string;
+  type: 'bar' | 'doughnut';
   width?: number;
   height?: number;
 }
 
 const Chart: React.FC<Props> = ({ data, options, type, width, height }) => {
-  return (
-    <div>
-      {type === 'bar' ? (
-        <Bar data={data} options={options} width={width} height={height} />
-      ) : type === 'doughnut' ? (
+  const renderGraph = React.useMemo(() => {
+    if (type === 'doughnut') {
+      return (
         <Doughnut data={data} options={options} width={width} height={height} />
-      ) : null}
-    </div>
-  );
+      );
+    } else if (type === 'bar') {
+      return (
+        <Bar data={data} options={options} width={width} height={height} />
+      );
+    } else {
+      return null;
+    }
+  }, [type]);
+
+  return <React.Fragment>{renderGraph}</React.Fragment>;
 };
 
 export default React.memo(Chart);

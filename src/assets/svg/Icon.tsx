@@ -24,6 +24,8 @@ import ArrowRightSvg from './ArrowRight';
 import ArrowLeftSvg from './ArrowLeft';
 import CartSvg from './Cart';
 import UpArrowSvg from './UpArrow';
+import ShareSvg from './Share';
+import TickSvg from './Tick';
 export interface Props {
   name: string;
   height?: number | string;
@@ -56,6 +58,8 @@ const IconsList: any = {
   'arrow-right': (props: Props) => <ArrowRightSvg {...props} />,
   'arrow-left': (props: Props) => <ArrowLeftSvg {...props} />,
   cart: (props: Props) => <CartSvg {...props} />,
+  share: (props: Props) => <ShareSvg {...props} />,
+  tick: (props: Props) => <TickSvg {...props} />,
 };
 
 const Icon: React.FC<Props> = ({ name, ...props }) => {

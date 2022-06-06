@@ -5,9 +5,10 @@ import Heading from 'components/Heading';
 interface Props {
   children: React.ReactNode;
   title: string;
+  variant?: 'small' | 'big';
 }
 
-const Accordin: React.FC<Props> = ({ children, title }) => {
+const Accordin: React.FC<Props> = ({ children, title, variant }) => {
   const [showAccordin, setShowAccordin] = React.useState<boolean>(false);
   return (
     <div className="category__container my-3">
@@ -15,14 +16,28 @@ const Accordin: React.FC<Props> = ({ children, title }) => {
         className="flex-between pointer"
         onClick={() => setShowAccordin(!showAccordin)}
       >
-        <Heading title={title} />
+        {variant === 'small' ? (
+          <h6 className="f-16">{title} </h6>
+        ) : (
+          <Heading title={title} />
+        )}
+
         {!showAccordin ? (
           <Icon name="down-arrow" width={10} height={6} fill={'#120D26'} />
         ) : (
           <Icon name="up-arrow" />
         )}
       </div>
-      {!showAccordin && <>{children}</>}
+      {!showAccordin && (
+        <>
+          {variant === 'small' ? (
+            <div className="accordin__bottom__border" />
+          ) : (
+            ''
+          )}
+          {children}
+        </>
+      )}
     </div>
   );
 };

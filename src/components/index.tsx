@@ -10,3 +10,5 @@ export { default as SocialMediaLoginOptions } from './SocialMediaLoginOptions';
 export { default as NavBar } from './NavBar';
 export { default as CourseCard } from './CourseCard';
 export { default as Accordin } from './Accordin';
+export { default as VideoPlayer } from './VideoPlayer';
+export { default as DashboardCard } from './DashboardCard';

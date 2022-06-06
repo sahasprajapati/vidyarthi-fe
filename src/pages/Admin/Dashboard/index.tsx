@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { OvalFour, OvalOne, OvalThree, OvalTwo } from 'assets/images';
 import Icon from 'assets/svg/Icon';
-import { Chart, CustomTable } from 'components';
+import { Chart, CustomTable, DashboardCard } from 'components';
 import Card from 'components/Card';
 import Heading from 'components/Heading';
 import MainHeading from 'components/MainHeading';
@@ -109,22 +109,40 @@ const AdminDashboard: React.FC = () => {
   ];
 
   const overviewData = [
-    { id: 0, total: '2000', title: 'total students', image: OvalOne },
+    {
+      id: 0,
+      total: '2000',
+      title: 'total students',
+      iconName: 'menu',
+      bgColor: 'red',
+    },
 
     {
       id: 1,
       total: '49832',
       title: 'total instructor',
-      image: OvalTwo,
+      iconName: 'menu',
+      bgColor: 'red',
     },
-    { id: 2, total: '2000', title: 'revenue', image: OvalThree },
-    { id: 3, total: '2000', title: 'total enrolled courses', image: OvalFour },
+    {
+      id: 2,
+      total: '2000',
+      title: 'revenue',
+      iconName: 'menu',
+      bgColor: 'red',
+    },
+    {
+      id: 3,
+      total: '2000',
+      title: 'total enrolled courses',
+      iconName: 'menu',
+      bgColor: 'red',
+    },
   ];
 
   //   stacked chart options
 
   const options = {
-    responsive: true,
     type: 'bar',
     scales: {
       x: {
@@ -173,7 +191,6 @@ const AdminDashboard: React.FC = () => {
     },
   };
   const doughnutConfig = {
-    responsive: true,
     cutout: '75%',
     plugins: {
       legend: {
@@ -316,24 +333,12 @@ const AdminDashboard: React.FC = () => {
               className="col-xl-3 col-lg-6 col-md-6  col-sm-6 col-xs-12 mt-4"
               key={e?.id}
             >
-              <Card>
-                <div className="dashboard__card">
-                  <div className="flex-between ">
-                    <div className="flex-col">
-                      <Heading title={formatMoney(e?.total)} />
-                      <span className="dashboard__card__title">{e?.title}</span>
-                    </div>
-                    <div className="">
-                      <div className="position-absolute top-0 end-0">
-                        <div className="square">hello</div>
-                      </div>
-                      <div className="">
-                        <Icon name="dashboard" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Card>
+              <DashboardCard
+                title={e?.title}
+                bgColor={e?.bgColor}
+                iconName={e?.iconName}
+                money={e?.total}
+              />
             </div>
           ))}
         </div>
@@ -341,7 +346,12 @@ const AdminDashboard: React.FC = () => {
         <div className="row my-5">
           <div className="col-lg-7 col-md-12">
             <Card>
-              <Chart data={graphData} options={options} type="bar" />
+              <Chart
+                data={graphData}
+                options={options}
+                type="bar"
+                height={200}
+              />
             </Card>
           </div>
           <div className="col-lg-5 col-md-12">
@@ -410,13 +420,7 @@ const AdminDashboard: React.FC = () => {
                   </h6>
                 </div>
               </div>
-              <Chart
-                data={doughnut}
-                type="doughnut"
-                options={doughnutConfig}
-                width={158}
-                height={158}
-              />
+              <Chart data={doughnut} type="doughnut" options={doughnutConfig} />
             </Card>
           </div>
           <div className="col-lg-7 col-md-12">

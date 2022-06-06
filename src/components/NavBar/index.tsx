@@ -1,12 +1,24 @@
-import { Profile } from 'assets/images';
 import React from 'react';
+import { Profile } from 'assets/images';
 import LoginNavBar from './LoginNavBar';
 import NotLoginNavBar from './NotLoginNavBar';
 
-const NavBar: React.FC = () => {
+interface Props {
+  variant?: 'white' | 'black';
+}
+
+const NavBar: React.FC<Props> = ({ variant }) => {
   const login = true;
 
-  return <>{login ? <LoginNavBar imageUrl={Profile} /> : <NotLoginNavBar />}</>;
+  return (
+    <header>
+      {login ? (
+        <LoginNavBar imageUrl={Profile} variant={variant} />
+      ) : (
+        <NotLoginNavBar variant={variant} />
+      )}
+    </header>
+  );
 };
 
 export default React.memo(NavBar);

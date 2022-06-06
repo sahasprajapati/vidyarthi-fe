@@ -7,21 +7,24 @@ interface Props {
 }
 
 const StartSvg: React.FC<Props> = ({
-  fill = '#FFC833',
-  width = 15,
-  height = 14,
+  fill = '#FAA307',
+  width = 24,
+  height = 24,
   ...props
 }) => {
   return (
     <svg
-      width="15"
-      height="14"
-      viewBox="0 0 15 14"
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
-        d="M7.5 0L9.995 4.06593L14.6329 5.18237L11.537 8.8117L11.9084 13.5676L7.5 11.7447L3.09161 13.5676L3.46301 8.8117L0.367076 5.18237L5.005 4.06593L7.5 0Z"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 19.2884L19.416 24L17.448 15.12L24 9.14526L15.372 8.37474L12 0L8.628 8.37474L0 9.14526L6.552 15.12L4.584 24L12 19.2884Z"
         fill={fill}
       />
     </svg>

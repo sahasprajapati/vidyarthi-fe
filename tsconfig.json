@@ -3,10 +3,12 @@
     "allowJs": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
+    "isolatedModules": false,
+
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "isolatedModules": true,
+
     "baseUrl": "src",
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],

@@ -22,14 +22,14 @@ const ArrowLeftSvg: React.FC<Props> = ({
     >
       <path
         d="M23.75 15H6.25"
-        stroke={fill}
+        stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M15 23.75L6.25 15L15 6.25"
-        stroke={fill}
+        stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

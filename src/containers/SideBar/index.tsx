@@ -12,7 +12,7 @@ const SideBar: React.FC<Props> = ({ responsive, setResponsive }) => {
   //   const token: any = window.localStorage.getItem('accessToken');
   //   const checkRole = JSON.parse(token);
   return (
-    <div className="flex-col">
+    <aside className="flex-col">
       <div
         className={`${
           responsive ? 'sidebar__container__responsive' : 'sidebar__container'
@@ -28,7 +28,7 @@ const SideBar: React.FC<Props> = ({ responsive, setResponsive }) => {
         <SideBarRow
           title="Dashboard"
           Icon={<Icon name="dashboard" />}
-          path="/"
+          path="/dashboard"
           responsive={responsive}
         />
 
@@ -52,7 +52,7 @@ const SideBar: React.FC<Props> = ({ responsive, setResponsive }) => {
           responsive={responsive}
         />
       </div>
-    </div>
+    </aside>
   );
 };
 

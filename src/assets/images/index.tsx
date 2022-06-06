@@ -19,3 +19,4 @@ export { default as Avatar } from './avatar.png';
 export { default as Crown } from './crown.png';
 export { default as JoinUS } from './joinus.png';
 export { default as VidyarthiWhiteLogo } from './VidyarthifooterLogo.png';
+export { default as BgCourse } from './bg-course.png';

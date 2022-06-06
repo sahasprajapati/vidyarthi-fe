@@ -23,14 +23,14 @@ const PlusSvg: React.FC<Props> = ({
     >
       <path
         d="M12 5V19"
-        stroke="#6B8E4E"
+        stroke={fill}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M5 12H19"
-        stroke="#6B8E4E"
+        stroke={fill}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

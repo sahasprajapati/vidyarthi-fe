@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <div className="bg-primary-color">
+    <footer className="bg-primary-color">
       <div className="container">
         <div className="row py-5">
           <div className="col-lg-6 col-md-6 col-sm-6">
@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
           <span className="footer__copyright__text">. All right reserved</span>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

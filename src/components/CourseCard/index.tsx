@@ -2,9 +2,19 @@ import React from 'react';
 import Icon from 'assets/svg/Icon';
 import Heading from 'components/Heading';
 
-const CourseCard = () => {
+interface Props {
+  types?: 'cursoul' | 'normal';
+}
+
+const CourseCard: React.FC<Props> = ({ types }) => {
   return (
-    <div className="course__card__container p-2 my-3">
+    <div
+      className={
+        types === 'cursoul'
+          ? 'course__card__container__cursol p-2 my-3'
+          : 'course__card__container p-2 my-3'
+      }
+    >
       <img
         src="https://images.unsplash.com/photo-1557804483-ef3ae78eca57?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1044&q=80"
         alt="course_image"
@@ -33,4 +43,4 @@ const CourseCard = () => {
   );
 };
 
-export default CourseCard;
+export default React.memo(CourseCard);

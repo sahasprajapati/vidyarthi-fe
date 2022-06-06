@@ -3,10 +3,12 @@ import {
   AdminCourse,
   AdminDashboard,
   AdminTransaction,
+  CourseDetail,
   CourseSearch,
   Home,
   Login,
   Register,
+  StudentDashBoard,
 } from 'pages';
 import PrivateRoute from 'PrivateRoute';
 import React from 'react';
@@ -35,8 +37,12 @@ function App() {
         <Route element={<Register />} path="/register" />
         <Route element={<Home />} path="/home" />
         <Route element={<CourseSearch />} path="/course-search" />
+        <Route element={<CourseDetail />} path="/course-detail" />
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
           <Route element={<AdminDashboard />} path="/" />
+        </Route>
+        <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
+          <Route element={<StudentDashBoard />} path="/dashboard" />
         </Route>
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
           <Route element={<AdminAddCourse />} path="/admin-course-add" />
