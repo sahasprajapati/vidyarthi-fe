@@ -242,6 +242,10 @@ progress[value]::-webkit-progress-value {
 }
 
 /* utility class */
+.b10 {
+  border-radius: 10px;
+  background-color: var(--color-white);
+}
 .flex-between {
   display: flex;
   align-items: center;
@@ -299,7 +303,6 @@ progress[value]::-webkit-progress-value {
   font-size: 1.125rem;
   color: var(--color-black);
 }
-
 .bg-dark-white {
   background-color: var(--color-white);
 }
@@ -364,7 +367,6 @@ progress[value]::-webkit-progress-value {
   background: #ffffff;
   box-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.04);
   border-radius: 0.875rem;
-  max-height: 25rem;
 }
 
 /* main heading */
@@ -495,9 +497,10 @@ progress[value]::-webkit-progress-value {
 
 .dashboard__card__title {
   font-weight: 400;
-  font-size: 0.625rem;
+  font-size: 1rem;
   color: var(--color-black);
   text-transform: capitalize;
+  opacity: 0.5;
 }
 
 .dashboard__card__image {
@@ -572,6 +575,11 @@ progress[value]::-webkit-progress-value {
 }
 
 /* course */
+@media screen and (max-width: 996px) {
+  .course__search__filter__container {
+    display: none;
+  }
+}
 .course__search__container {
   background-color: #ffffff;
   padding: 2px 2rem 2px 1.5rem;
@@ -1203,4 +1211,24 @@ input[type='checkbox']:checked {
   height: 100%;
   border-radius: 8px;
   object-fit: cover;
+}
+/* student dashboard */
+.student__completed__course__image {
+  height: 6.25rem;
+  width: 6.25rem;
+  border-radius: 4px;
+  object-fit: contain;
+}
+.student__completed__course__subtitle {
+  font-size: 0.75rem;
+  font-weight: 400;
+  opacity: 0.7;
+  color: var(--color-black);
+  text-transform: capitalize;
+}
+.student__completed__course__time {
+  font-size: 0.75rem;
+  font-weight: 400;
+  opacity: 0.7;
+  color: var(--color-black);
 }

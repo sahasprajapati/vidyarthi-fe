@@ -1,7 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { OvalFour, OvalOne, OvalThree, OvalTwo } from 'assets/images';
 import Icon from 'assets/svg/Icon';
-import { Chart, CustomTable, DashboardCard } from 'components';
+import {
+  Chart,
+  CustomTable,
+  DashboardCard,
+  DashBoardScrollContent,
+} from 'components';
 import Card from 'components/Card';
 import Heading from 'components/Heading';
 import MainHeading from 'components/MainHeading';
@@ -356,10 +361,9 @@ const AdminDashboard: React.FC = () => {
           </div>
           <div className="col-lg-5 col-md-12">
             <Card>
-              <MainHeading title="Best Instructor" />
-              <div className="instructor__container">
+              <DashBoardScrollContent title="Best Instructor">
                 {bestInstructor.map((e, i) => (
-                  <div className="flex-between py-3  " key={i}>
+                  <div className="flex-between py-3" key={i}>
                     <div className="flex">
                       <img
                         src={e?.image}
@@ -382,7 +386,7 @@ const AdminDashboard: React.FC = () => {
                     </div>
                   </div>
                 ))}
-              </div>
+              </DashBoardScrollContent>
             </Card>
           </div>
         </div>

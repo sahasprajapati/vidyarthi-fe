@@ -92,66 +92,6 @@ const CourseSearch: React.FC = () => {
           col-lg-2 col-md-4  my-4"
           >
             <label htmlFor="" className="label__course__search mb-1">
-              Sort By:
-            </label>
-            <div className="flex-between course__filter__container">
-              <select
-                name=""
-                id=""
-                className="form-control shadow-none bg-transparent outline-none border-none"
-              >
-                <option value="hhd">djf</option>
-                <option value="dfd">djkjf</option>
-                <option value="dfjfkj">fdfdkj</option>
-              </select>
-              <Icon name="down-arrow" />
-            </div>
-          </div>
-          <div
-            className="
-          col-lg-2 col-md-4  my-4"
-          >
-            <label htmlFor="" className="label__course__search mb-1">
-              Instructor:
-            </label>
-            <div className="flex-between course__filter__container">
-              <select
-                name=""
-                id=""
-                className="form-control shadow-none bg-transparent outline-none border-none"
-              >
-                <option value="hhd">djf</option>
-                <option value="dfd">djkjf</option>
-                <option value="dfjfkj">fdfdkj</option>
-              </select>
-              <Icon name="down-arrow" />
-            </div>
-          </div>
-          <div
-            className="
-          col-lg-2 col-md-4 my-4"
-          >
-            <label htmlFor="" className="label__course__search mb-1">
-              Category:
-            </label>
-            <div className="flex-between course__filter__container">
-              <select
-                name=""
-                id=""
-                className="form-control shadow-none bg-transparent outline-none border-none"
-              >
-                <option value="hhd">djf</option>
-                <option value="dfd">djkjf</option>
-                <option value="dfjfkj">fdfdkj</option>
-              </select>
-              <Icon name="down-arrow" />
-            </div>
-          </div>
-          <div
-            className="
-          col-lg-2 col-md-4  my-4"
-          >
-            <label htmlFor="" className="label__course__search mb-1">
               Rating:
             </label>
             <div className="flex-between course__filter__container">

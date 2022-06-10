@@ -61,7 +61,7 @@ const Home: React.FC = () => {
     <React.Fragment>
       <div className="home__container">
         <div className="container px-4 ">
-          <NavBar />
+          <NavBar variant="black" />
           <div className="row">
             <div className="col-lg-6">
               <div className="homepage__leftside__container">
