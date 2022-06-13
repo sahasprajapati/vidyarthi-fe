@@ -20,3 +20,4 @@ export { default as Crown } from './crown.png';
 export { default as JoinUS } from './joinus.png';
 export { default as VidyarthiWhiteLogo } from './VidyarthifooterLogo.png';
 export { default as BgCourse } from './bg-course.png';
+export { default as NotFoundImage } from './404.png';

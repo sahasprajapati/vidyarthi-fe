@@ -7,6 +7,7 @@ import {
   CourseSearch,
   Home,
   Login,
+  NotFound,
   Register,
   StudentDashBoard,
 } from 'pages';
@@ -36,6 +37,7 @@ function App() {
         <Route element={<Login />} path="/login" />
         <Route element={<Register />} path="/register" />
         <Route element={<Home />} path="/home" />
+        <Route element={<NotFound />} path="/*" />
         <Route element={<CourseSearch />} path="/course-search" />
         <Route element={<CourseDetail />} path="/course-detail" />
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>

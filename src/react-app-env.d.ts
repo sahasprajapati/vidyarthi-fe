@@ -11,6 +11,7 @@ declare module '@ckeditor/ckeditor5-build-classic' {
   export = ClassicEditor;
 }
 declare module 'react-slick';
+declare module 'react-calendar';
 declare module 'video.js';
 declare module '*.mp4';
 declare module '*.jpg';

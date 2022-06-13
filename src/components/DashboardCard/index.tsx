@@ -1,6 +1,5 @@
 import React from 'react';
 import Icon from 'assets/svg/Icon';
-import Card from 'components/Card';
 import Heading from 'components/Heading';
 import formatMoney from 'utils/formatMoney';
 
@@ -18,27 +17,20 @@ const DashBoardCard: React.FC<Props> = ({
   bgColor,
 }) => {
   return (
-    <Card>
+    <div className="card__container position-relative px-2">
       <div className="dashboard__card">
-        <div className="flex-between ">
+        <div className="flex-between">
           <div className="flex-col">
             <Heading title={formatMoney(money.toString())} />
             <span className="dashboard__card__title">{title}</span>
           </div>
-          <div className="">
-            <div className="position-absolute top-0 end-0">
-              <div
-                className="square"
-                style={{ backgroundColor: bgColor }}
-              ></div>
-            </div>
-            <div className="">
-              <Icon name={iconName} />
-            </div>
+          <div className="position-absolute top-0 end-0">
+            <div className="square" style={{ backgroundColor: bgColor }} />
           </div>
+          <Icon name={iconName} width={10} height={10} />
         </div>
       </div>
-    </Card>
+    </div>
   );
 };
 

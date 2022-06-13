@@ -8,5 +8,6 @@ export { default as Register } from './Public/Register';
 export { default as Home } from './Public/Home';
 export { default as CourseSearch } from './Public/CourseSearch';
 export { default as CourseDetail } from './Public/CourseDetail';
+export { default as NotFound } from './Public/404';
 // Student Dashboard
 export { default as StudentDashBoard } from './Student/DashBoard';

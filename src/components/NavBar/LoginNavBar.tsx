@@ -30,7 +30,7 @@ const LoginNavBar: React.FC<Props> = ({ imageUrl, variant }) => {
           About Us
         </NavLink>
         <NavLink
-          to="/"
+          to="/course-search"
           className={`pointer mx-4 ${
             variant === 'white' ? 'nav__link__white' : 'nav__link'
           }`}

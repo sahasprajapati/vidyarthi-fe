@@ -137,6 +137,41 @@ li {
   min-height: 342px;
 }
 /* overwrite */
+.react-calendar__month-view__weekdays {
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  color: rgba(0, 0, 0, 0.6) !important;
+  text-decoration: none !important;
+}
+.react-calendar {
+  background: var(--color-white) !important;
+  border: none !important;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.04) !important;
+  border-radius: 14px !important;
+}
+.react-calendar__tile--now,
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active,
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus,
+.react-calendar__tile--active:enabled:focus {
+  background: var(--color-primary) !important;
+  border-radius: 14px !important;
+  color: var(--color-white) !important;
+}
+.react-calendar__tile {
+  padding: 13px 15.6667px !important;
+}
+.abbr[data-bs-original-title],
+abbr[title] {
+  text-decoration: none !important;
+  padding: 10px 0 !important;
+  /* cursor: help; */
+  /* text-decoration-skip-ink: none; */
+}
+.react-calendar__month-view__days {
+  padding: 1rem !important;
+}
 .rdt_TableRow:hover {
   background-color: var(--color-white) !important ;
 }
@@ -240,7 +275,29 @@ progress[value]::-webkit-progress-value {
   display: inline-block;
   margin-bottom: 0 !important;
 }
-
+/* not found  */
+.not__found__right__text {
+  font-weight: 800;
+  font-size: 150px;
+  letter-spacing: 5px;
+  color: var(--color-primary);
+}
+.not__fount__left__heading {
+  font-weight: 700;
+  font-size: 64px;
+  letter-spacing: 3px;
+  color: rgba(18, 13, 38, 0.5);
+}
+.not__fount__left__subheading {
+  font-weight: 400;
+  font-size: 50px;
+  color: #000000;
+}
+.not__fount__left__subtitle {
+  font-weight: 400;
+  font-size: 1rem;
+  color: rgba(18, 13, 38, 0.5);
+}
 /* utility class */
 .b10 {
   border-radius: 10px;
@@ -433,6 +490,7 @@ progress[value]::-webkit-progress-value {
 .responsive__header__container {
   margin-left: 0;
   background: var(--color-white);
+  padding: 1.2rem;
 }
 
 .dashboard__content {
