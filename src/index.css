@@ -137,6 +137,10 @@ li {
   min-height: 342px;
 }
 /* overwrite */
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+  background-image: none !important;
+}
 .react-calendar__month-view__weekdays {
   font-weight: 400 !important;
   font-size: 14px !important;
@@ -148,6 +152,8 @@ li {
   border: none !important;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.04) !important;
   border-radius: 14px !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 .react-calendar__tile--now,
 .react-calendar__tile--active:enabled:hover,
@@ -201,14 +207,14 @@ progress[value]::-webkit-progress-value {
 /* modal */
 
 .modal__container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 5%;
+  width: auto;
+  height: auto;
   background-color: var(--color-white);
   border-radius: 6px;
   z-index: 1000;
-  padding: 50px;
+  padding: 1.4rem;
 }
 .overlay__modal {
   position: fixed;
@@ -303,6 +309,9 @@ progress[value]::-webkit-progress-value {
   border-radius: 10px;
   background-color: var(--color-white);
 }
+.b16 {
+  border-radius: 1rem;
+}
 .flex-between {
   display: flex;
   align-items: center;
@@ -324,6 +333,15 @@ progress[value]::-webkit-progress-value {
   color: var(--color-black);
   opacity: 0.7;
 }
+.fw-600 {
+  font-weight: 600;
+}
+.fw-500 {
+  font-weight: 600;
+}
+.fs-18 {
+  font-size: 18px;
+}
 .f-16 {
   font-weight: 400;
   font-size: 1rem;
@@ -344,6 +362,14 @@ progress[value]::-webkit-progress-value {
   font-size: 1.125rem;
   color: var(--color-black);
 }
+.course__options__dropdown__list:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+.color-primary {
+  color: var(--color-primary);
+}
+
 .pipe {
   opacity: 0.5;
   /* border: 0.625rem solid red; */
@@ -354,7 +380,30 @@ progress[value]::-webkit-progress-value {
 .opacity-half {
   opacity: 0.5;
 }
+.width-32 {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 8px;
+}
 
+.opacity-1 {
+  opacity: 0.1;
+}
+.border-10 {
+  border-radius: 10px;
+}
+.border-8 {
+  border-radius: 8px;
+}
+.fw-700 {
+  font-weight: 700;
+}
+.fs-14 {
+  font-size: 14px;
+}
+.fs-10 {
+  font-size: 10px;
+}
 .f-24 {
   font-weight: 500;
   font-size: 1.125rem;
@@ -366,7 +415,15 @@ progress[value]::-webkit-progress-value {
 .color-white {
   color: var(--color-white);
 }
-
+.color-gray {
+  color: #a098ae;
+}
+.color-light-purple {
+  color: #4cbc9a;
+}
+.color-secondary {
+  color: var(--color-black);
+}
 .bg-home {
   background-color: #f4f5f9;
 }
@@ -667,7 +724,7 @@ progress[value]::-webkit-progress-value {
   color: #ffffff;
   background: #92c9fb;
   display: inline-block;
-  padding: 0.625rem 0.938rem;
+  padding: 0.4rem 0.938rem;
   border-radius: 5px;
   margin: 1rem 0;
 }
@@ -719,13 +776,6 @@ progress[value]::-webkit-progress-value {
   /* top: -1.25rem; */
   bottom: 0;
 }
-.course__options__dropdown__list {
-  font-weight: 400;
-  font-size: 0.875rem;
-  letter-spacing: 0.2px;
-
-  color: var(--color-black);
-}
 
 .course__options__dropdown__list {
   font-weight: 400;
@@ -733,6 +783,7 @@ progress[value]::-webkit-progress-value {
   letter-spacing: 0.2px;
   color: var(--color-black);
   margin: 0.8rem 0;
+  padding: 0.5rem;
 }
 
 /* btn */
@@ -1289,4 +1340,11 @@ input[type='checkbox']:checked {
   font-weight: 400;
   opacity: 0.7;
   color: var(--color-black);
+}
+/* instructor */
+.instructor__graph__card {
+  min-height: 13.125rem;
+}
+.instructor__bottom__graph__card {
+  min-height: 30rem;
 }

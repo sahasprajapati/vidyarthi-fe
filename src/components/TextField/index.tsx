@@ -6,6 +6,8 @@ interface IProps {
   type?: string;
   defaultValue?: string | number;
   readOnly?: boolean;
+  hidden?: boolean;
+  ref?: any;
 }
 const TextField = ({
   label,
@@ -13,12 +15,14 @@ const TextField = ({
   type,
   readOnly,
   defaultValue,
-
+  hidden,
+  ref,
   ...otherProps
 }: IProps & FieldHookConfig<string>) => {
   const [field, meta] = useField(otherProps);
+  console.log('this is ref', ref);
   return (
-    <div className="mb-3">
+    <div className="mb-1">
       <label
         className={`input__label ${
           meta.error && meta.touched
@@ -39,6 +43,8 @@ const TextField = ({
         defaultValue={defaultValue}
         autoComplete="off"
         readOnly={readOnly}
+        hidden={hidden}
+        ref={ref}
       />
       {meta.touched && meta.error ? (
         <div className="input__error__icon"></div>

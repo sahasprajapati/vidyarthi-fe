@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-import { OvalFour, OvalOne, OvalThree, OvalTwo } from 'assets/images';
-import Icon from 'assets/svg/Icon';
 import {
   Chart,
   CustomTable,
@@ -28,23 +25,23 @@ interface DataRow {
 const AdminDashboard: React.FC = () => {
   const graphData = {
     type: 'bar',
-    labels: stackGraph.map((e) => e?.month),
+    labels: stackGraph?.map((e) => e?.month),
     datasets: [
       {
         label: 'dataset1',
-        data: stackGraph.map((e) => e?.courseVisit),
+        data: stackGraph?.map((e) => e?.courseVisit),
         backgroundColor: '#6B8E4E',
         order: 1,
       },
       {
         label: 'dataset2',
-        data: stackGraph.map((e) => e?.courseSale),
+        data: stackGraph?.map((e) => e?.courseSale),
         backgroundColor: '#92C9FB',
         order: 2,
       },
       {
         label: 'Line Dataset',
-        data: stackGraph.map((e) => e?.courseVisit),
+        data: stackGraph?.map((e) => e?.courseVisit),
         type: 'line' as any,
         borderColor: '#3F3F44',
         fill: true,

@@ -108,19 +108,25 @@ const Home: React.FC = () => {
               </div>
             </div>
           </div>
-
           <div className="my-5">
             <Slider ref={controlRef} {...settings}>
-              <CourseCard types="cursoul" />
-              <CourseCard types="cursoul" />
-              <CourseCard types="cursoul" />
-              <CourseCard types="cursoul" />
-              <CourseCard types="cursoul" />
-              <CourseCard types="cursoul" />
-              <CourseCard types="cursoul" />
-              <CourseCard types="cursoul" />
-              <CourseCard types="cursoul" />
-              <CourseCard types="cursoul" />
+              {Array(20)
+                .fill('')
+                .map((_, i) => (
+                  <CourseCard
+                    key={i}
+                    types="cursoul"
+                    isCourseDisplay="yes"
+                    title="How to become a good designer"
+                    descriptions="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid harum sequi vero obcaecati, reiciendis dignissimos culpa quisquam non odio veritatis."
+                    courseTag="Design Course"
+                    isPrice="yes"
+                    price="$22"
+                    isIcon="yes"
+                    imageUrl="https://images.unsplash.com/photo-1557804483-ef3ae78eca57?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1044&q=80"
+                    icon={<Icon name="arrow-right" />}
+                  />
+                ))}
             </Slider>
           </div>
         </div>

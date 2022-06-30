@@ -10,7 +10,10 @@ import MainHeading from 'components/MainHeading';
 const FORM_VALIDATION = Yup.object().shape({
   email: Yup.string().email('Please enter a valid mail').required('Required'),
   password: Yup.string()
-    .min(6, `At least 6 character long required`)
+    .matches(
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/,
+      'Password must be at least one alpha numeric character, 8 character long, at least one numeric and up to.'
+    )
     .required('Required'),
 });
 

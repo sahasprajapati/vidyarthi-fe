@@ -1,27 +1,28 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import Icon from 'assets/svg/Icon';
+import MainHeading from 'components/MainHeading';
 
 interface Props {
-  open: boolean;
   onClick: () => void;
-  children: ReactNode;
+  children: React.ReactNode;
   title: string;
+  modalClose: () => void;
 }
 
-const Modal: React.FC<Props> = ({ title, onClick, children }) => {
+const Modal: React.FC<Props> = ({ title, children, modalClose, onClick }) => {
   return ReactDOM.createPortal(
     <React.Fragment>
-      <div className="overlay__modal" />
-      <div className="modal__container">
+      <div className="overlay__modal" onClick={modalClose} />
+      <div className="modal__container mx-3">
         <div className="flex-between">
-          <h6>{title}</h6>
-          <div className="" onClick={onClick}>
+          <MainHeading title={title} />
+          <div className="pointer" onClick={onClick}>
             <Icon name="cross" />
           </div>
         </div>
+        <div className="my-3">{children}</div>
       </div>
-      {children}
       <div className="border-bottom" />
     </React.Fragment>,
     document.getElementById('portal') as HTMLElement

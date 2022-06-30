@@ -115,3 +115,20 @@ export const doughnutData = [
     color: '#E48890',
   },
 ];
+export const doughnutDataInstructor = [
+  {
+    label: 'Designing Course',
+    data: 22,
+    color: '#5372E7',
+  },
+  {
+    label: 'Web Design',
+    data: 50,
+    color: '#EB91E8',
+  },
+  {
+    label: 'Web Design',
+    data: 50,
+    color: '#EB91E8',
+  },
+];

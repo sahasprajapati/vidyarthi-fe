@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordin, CourseCard, NavBar } from 'components';
+import { Accordion, CourseCard, NavBar } from 'components';
 import { Footer } from 'containers';
 import Icon from 'assets/svg/Icon';
 import Button from 'components/Button';
@@ -137,14 +137,14 @@ const CourseDetail: React.FC = () => {
               <div className="course__detail__card">
                 {courseCurriculum.map((e, i) => (
                   <div className="course__curriculum__container" key={i}>
-                    <Accordin title={e?.title} variant="small">
+                    <Accordion title={e?.title} variant="small">
                       {e?.content.map((el, i) => (
                         <div className="flex-between mt-4 mx-1 " key={i}>
                           <p className="f-16">{el.title}</p>
                           <p className="course__detail__length">{el?.length}</p>
                         </div>
                       ))}
-                    </Accordin>
+                    </Accordion>
                   </div>
                 ))}
               </div>
@@ -250,7 +250,15 @@ const CourseDetail: React.FC = () => {
               .fill('')
               .map((_, i) => (
                 <div className="col-lg-3" key={i}>
-                  <CourseCard />
+                  <CourseCard
+                    isCourseDisplay="yes"
+                    title="How to become a good designer"
+                    descriptions="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid harum sequi vero obcaecati, reiciendis dignissimos culpa quisquam non odio veritatis."
+                    courseTag="Design Course"
+                    price="$22"
+                    imageUrl="https://images.unsplash.com/photo-1557804483-ef3ae78eca57?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1044&q=80"
+                    icon={<Icon name="arrow-right" />}
+                  />
                 </div>
               ))}
           </div>

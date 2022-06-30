@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AdminCourse: React.FC = () => {
   const navigate = useNavigate();
+  const closeRef = React.useRef<any>(null);
   const [courseOption, setCourseOption] = React.useState<any>(null);
   return (
     <AdminLayout>
@@ -97,6 +98,7 @@ const AdminCourse: React.FC = () => {
                     </h6>
 
                     <div
+                      ref={closeRef}
                       className="course__card__info__options pointer position-relative px-1"
                       onClick={() => {
                         courseOption === i

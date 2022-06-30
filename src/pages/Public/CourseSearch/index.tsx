@@ -1,5 +1,5 @@
 import Icon from 'assets/svg/Icon';
-import { Accordin, CourseCard, NavBar } from 'components';
+import { Accordion, CourseCard, NavBar } from 'components';
 import Heading from 'components/Heading';
 import { Footer } from 'containers';
 import React from 'react';
@@ -92,7 +92,67 @@ const CourseSearch: React.FC = () => {
           col-lg-2 col-md-4  my-4"
           >
             <label htmlFor="" className="label__course__search mb-1">
-              Rating:
+              Sort By:
+            </label>
+            <div className="flex-between course__filter__container">
+              <select
+                name=""
+                id=""
+                className="form-control shadow-none bg-transparent outline-none border-none"
+              >
+                <option value="hhd">djf</option>
+                <option value="dfd">djkjf</option>
+                <option value="dfjfkj">fdfdkj</option>
+              </select>
+              <Icon name="down-arrow" />
+            </div>
+          </div>
+          <div
+            className="
+          col-lg-2 col-md-4  my-4"
+          >
+            <label htmlFor="" className="label__course__search mb-1">
+              Instructor:
+            </label>
+            <div className="flex-between course__filter__container">
+              <select
+                name=""
+                id=""
+                className="form-control shadow-none bg-transparent outline-none border-none"
+              >
+                <option value="hhd">djf</option>
+                <option value="dfd">djkjf</option>
+                <option value="dfjfkj">fdfdkj</option>
+              </select>
+              <Icon name="down-arrow" />
+            </div>
+          </div>
+          <div
+            className="
+          col-lg-2 col-md-4 my-4"
+          >
+            <label htmlFor="" className="label__course__search mb-1">
+              Category:
+            </label>
+            <div className="flex-between course__filter__container">
+              <select
+                name=""
+                id=""
+                className="form-control shadow-none bg-transparent outline-none border-none"
+              >
+                <option value="hhd">djf</option>
+                <option value="dfd">djkjf</option>
+                <option value="dfjfkj">fdfdkj</option>
+              </select>
+              <Icon name="down-arrow" />
+            </div>
+          </div>
+          <div
+            className="
+          col-lg-2 col-md-4  my-4"
+          >
+            <label htmlFor="" className="label__course__search mb-1">
+              Sort by:
             </label>
             <div className="flex-between course__filter__container">
               <select
@@ -110,7 +170,7 @@ const CourseSearch: React.FC = () => {
           {/* category and bottom section */}
           <div className="col-md-3">
             <div className="category__container my-3">
-              <Accordin title="Category">
+              <Accordion title="Category">
                 {categoryData.map((e) => (
                   <div className="flex-between" key={e?.id}>
                     <div className="flex">
@@ -130,8 +190,8 @@ const CourseSearch: React.FC = () => {
                     </div>
                   </div>
                 ))}
-              </Accordin>
-              <Accordin title="Category">
+              </Accordion>
+              <Accordion title="Category">
                 {categoryData.map((e) => (
                   <div className="flex-between" key={e?.id}>
                     <div className="flex">
@@ -151,7 +211,7 @@ const CourseSearch: React.FC = () => {
                     </div>
                   </div>
                 ))}
-              </Accordin>
+              </Accordion>
             </div>
           </div>
           <div className="col-md-9">
@@ -163,7 +223,15 @@ const CourseSearch: React.FC = () => {
                   .fill('')
                   .map((e, i) => (
                     <div className="col-md-4" key={i}>
-                      <CourseCard />
+                      <CourseCard
+                        isCourseDisplay="yes"
+                        title="How to become a good designer"
+                        descriptions="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid harum sequi vero obcaecati, reiciendis dignissimos culpa quisquam non odio veritatis."
+                        courseTag="Design Course"
+                        price="$22"
+                        imageUrl="https://images.unsplash.com/photo-1557804483-ef3ae78eca57?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1044&q=80"
+                        icon={<Icon name="arrow-right" />}
+                      />
                     </div>
                   ))}
               </div>

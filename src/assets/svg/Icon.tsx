@@ -26,6 +26,10 @@ import CartSvg from './Cart';
 import UpArrowSvg from './UpArrow';
 import ShareSvg from './Share';
 import TickSvg from './Tick';
+import LikeSvg from './Like';
+import BookSvg from './Book';
+import CreditSvg from './CreditCard';
+import RectangleSvg from './Rectangle';
 export interface Props {
   name: string;
   height?: number | string;
@@ -60,6 +64,10 @@ const IconsList: any = {
   cart: (props: Props) => <CartSvg {...props} />,
   share: (props: Props) => <ShareSvg {...props} />,
   tick: (props: Props) => <TickSvg {...props} />,
+  like: (props: Props) => <LikeSvg {...props} />,
+  book: (props: Props) => <BookSvg {...props} />,
+  'credit-card': (props: Props) => <CreditSvg {...props} />,
+  rectangle: (props: Props) => <RectangleSvg {...props} />,
 };
 
 const Icon: React.FC<Props> = ({ name, ...props }) => {
@@ -71,4 +79,4 @@ const Icon: React.FC<Props> = ({ name, ...props }) => {
   }
 };
 
-export default Icon;
+export default React.memo(Icon);

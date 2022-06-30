@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bar, Doughnut } from 'react-chartjs-2';
+import { Bar, Doughnut, Line } from 'react-chartjs-2';
 // eslint-disable-next-line no-unused-vars
 import {
   Chart as ChartJS,
@@ -30,7 +30,7 @@ ChartJS.register(
 interface Props {
   data: any;
   options?: any;
-  type: 'bar' | 'doughnut';
+  type: 'bar' | 'doughnut' | 'line';
   width?: number;
   height?: number;
 }
@@ -44,6 +44,10 @@ const Chart: React.FC<Props> = ({ data, options, type, width, height }) => {
     } else if (type === 'bar') {
       return (
         <Bar data={data} options={options} width={width} height={height} />
+      );
+    } else if (type === 'line') {
+      return (
+        <Line data={data} options={options} width={width} height={height} />
       );
     } else {
       return null;

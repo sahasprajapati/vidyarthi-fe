@@ -8,7 +8,7 @@ interface Props {
   variant?: 'small' | 'big';
 }
 
-const Accordin: React.FC<Props> = ({ children, title, variant }) => {
+const Accordion: React.FC<Props> = ({ children, title, variant }) => {
   const [showAccordin, setShowAccordin] = React.useState<boolean>(false);
   return (
     <div className="category__container my-3">
@@ -42,4 +42,4 @@ const Accordin: React.FC<Props> = ({ children, title, variant }) => {
   );
 };
 
-export default React.memo(Accordin);
+export default React.memo(Accordion);

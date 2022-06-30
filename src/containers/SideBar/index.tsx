@@ -48,7 +48,7 @@ const SideBar: React.FC<Props> = ({ responsive, setResponsive }) => {
         <SideBarRow
           title="Settings"
           Icon={<Icon name="setting" />}
-          path="/admin-setting"
+          path="/setting"
           responsive={responsive}
         />
       </div>

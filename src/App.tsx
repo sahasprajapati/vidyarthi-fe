@@ -9,7 +9,11 @@ import {
   Login,
   NotFound,
   Register,
+  Setting,
+  StudentAchievements,
+  StudentCourse,
   StudentDashBoard,
+  TeacherDashboard,
 } from 'pages';
 import PrivateRoute from 'PrivateRoute';
 import React from 'react';
@@ -39,6 +43,7 @@ function App() {
         <Route element={<Home />} path="/home" />
         <Route element={<NotFound />} path="/*" />
         <Route element={<CourseSearch />} path="/course-search" />
+        <Route element={<Setting />} path="/setting" />
         <Route element={<CourseDetail />} path="/course-detail" />
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
           <Route element={<AdminDashboard />} path="/" />
@@ -57,6 +62,18 @@ function App() {
         </Route>
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
           <Route element={<AdminCourse />} path="/admin-course" />
+        </Route>
+        <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
+          <Route element={<StudentCourse />} path="/student-course" />
+        </Route>
+        <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
+          <Route element={<StudentAchievements />} path="/achievements" />
+        </Route>
+        <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
+          <Route element={<StudentCourse />} path="/student-course" />
+        </Route>
+        <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
+          <Route element={<TeacherDashboard />} path="/teacher" />
         </Route>
       </Routes>
     </div>
