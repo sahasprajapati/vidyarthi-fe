@@ -10,10 +10,13 @@ import {
 import Card from 'components/Card';
 import Heading from 'components/Heading';
 import formatMoney from 'utils/formatMoney';
+import Feedback from './Feedback';
 
 interface IProps {}
 
 const TeacherDashboard: React.FC<IProps> = ({}) => {
+  const [showModal, setShowModal] = React.useState(false);
+  const handleModal = () => setShowModal(!showModal);
   const graphData = {
     type: 'bar',
     labels: stackGraph?.map((e) => e?.month),
@@ -58,9 +61,9 @@ const TeacherDashboard: React.FC<IProps> = ({}) => {
         backgroundColor: '#111',
         order: 1,
         borderWidth: 5,
-        // tension: 0.4,
+        tension: 0.4,
         pointRadius: 0,
-        // pointHoverRadius: 0,
+        pointHoverRadius: 5,
       },
     ],
   };
@@ -231,7 +234,7 @@ const TeacherDashboard: React.FC<IProps> = ({}) => {
           padding: 30,
           textAlign: 'left',
           font: {
-            // size: 16,
+            size: 16,
             weight: 500,
           },
         },
@@ -274,7 +277,7 @@ const TeacherDashboard: React.FC<IProps> = ({}) => {
                     </span>
                     <span className="fs-10 color-gray ms-1">
                       than last year
-                    </span>{' '}
+                    </span>
                   </div>
                 </div>
               </Card>
@@ -361,12 +364,10 @@ const TeacherDashboard: React.FC<IProps> = ({}) => {
                 type="bar"
                 data={graphData}
                 options={options}
-                height={300}
+                height={250}
               />
             </div>
           </Card>
-          {/*  */}
-          {/*  */}
         </div>
         <div className="col-md-4 my-5">
           {/* course sales */}
@@ -403,13 +404,18 @@ const TeacherDashboard: React.FC<IProps> = ({}) => {
             <Heading title="Feedback Form" />
             <p className="my-4">
               Any Issues regarding the course or give some feedback.
-              <span className="text-decoration-underline primary-color ms-2 pointer">
+              <span
+                className="text-decoration-underline primary-color ms-2 pointer"
+                onClick={handleModal}
+              >
                 Click here
               </span>
             </p>
           </Card>
         </div>
       </div>
+      {/* feedbaack form */}
+      {showModal && <Feedback handleModal={handleModal} />}
     </AdminLayout>
   );
 };

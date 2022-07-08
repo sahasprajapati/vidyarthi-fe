@@ -72,6 +72,43 @@ export const stackGraph = [
     courseSale: 35,
   },
 ];
+export const instructorTransactionLineGraph = [
+  {
+    id: 0,
+    day: 'Sunday',
+    courseVisit: 10,
+  },
+  {
+    id: 1,
+    day: 'Monday',
+    courseVisit: 10,
+  },
+  {
+    id: 2,
+    day: 'Tuesday',
+    courseVisit: 30,
+  },
+  {
+    id: 2,
+    day: 'Wednesday',
+    courseVisit: 60,
+  },
+  {
+    id: 3,
+    day: 'Thursday',
+    courseVisit: 66,
+  },
+  {
+    id: 4,
+    day: 'Friday',
+    courseVisit: 45,
+  },
+  {
+    id: 5,
+    day: 'Saturday',
+    courseVisit: 80,
+  },
+];
 
 export const doughnutData = [
   {

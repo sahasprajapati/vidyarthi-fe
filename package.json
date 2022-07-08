@@ -4,10 +4,10 @@
   "description": "Learning app",
   "private": true,
   "resolutions": {
-    "autoprefixer": "10.4.7"
+    "autoprefixer": "10.4.6"
   },
   "overrides": {
-    "autoprefixer": "10.4.7"
+    "autoprefixer": "10.4.6"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "19.0.0",

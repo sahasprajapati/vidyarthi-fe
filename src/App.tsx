@@ -14,6 +14,7 @@ import {
   StudentCourse,
   StudentDashBoard,
   TeacherDashboard,
+  TeacherTransaction,
 } from 'pages';
 import PrivateRoute from 'PrivateRoute';
 import React from 'react';
@@ -74,6 +75,9 @@ function App() {
         </Route>
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
           <Route element={<TeacherDashboard />} path="/teacher" />
+        </Route>
+        <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
+          <Route element={<TeacherTransaction />} path="/teacher-transaction" />
         </Route>
       </Routes>
     </div>

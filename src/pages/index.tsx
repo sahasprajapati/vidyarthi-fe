@@ -18,3 +18,4 @@ export { default as StudentCourse } from './Student/Course';
 
 // Teacher Dashboard
 export { default as TeacherDashboard } from './Teacher/Dashboard';
+export { default as TeacherTransaction } from './Teacher/Transaction';

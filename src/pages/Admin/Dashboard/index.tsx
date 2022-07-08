@@ -398,7 +398,7 @@ const AdminDashboard: React.FC = () => {
               <div className="flex mt-3">
                 <div className="dashboard__topsales">
                   <h6 className="dashboard__topsales__title">
-                    {formatMoney('2000')}{' '}
+                    {formatMoney('2000')}
                   </h6>
                   <h6 className="dashboard__topsales__subtitle">
                     weekly report
@@ -406,7 +406,7 @@ const AdminDashboard: React.FC = () => {
                 </div>
                 <div className="dashboard__topsales">
                   <h6 className="dashboard__topsales__title">
-                    {formatMoney('2000')}{' '}
+                    {formatMoney('2000')}
                   </h6>
                   <h6 className="dashboard__topsales__subtitle">
                     weekly report
@@ -414,7 +414,7 @@ const AdminDashboard: React.FC = () => {
                 </div>
                 <div className="dashboard__topsales">
                   <h6 className="dashboard__topsales__title">
-                    {formatMoney('2000')}{' '}
+                    {formatMoney('2000')}
                   </h6>
                   <h6 className="dashboard__topsales__subtitle">
                     weekly report

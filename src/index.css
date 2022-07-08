@@ -208,13 +208,14 @@ progress[value]::-webkit-progress-value {
 
 .modal__container {
   position: absolute;
-  top: 5%;
-  width: auto;
+  top: 10%;
+  width: 50%;
   height: auto;
   background-color: var(--color-white);
   border-radius: 6px;
   z-index: 1000;
   padding: 1.4rem;
+  margin: 0 auto;
 }
 .overlay__modal {
   position: fixed;
@@ -1346,5 +1347,5 @@ input[type='checkbox']:checked {
   min-height: 13.125rem;
 }
 .instructor__bottom__graph__card {
-  min-height: 30rem;
+  min-height: 20rem;
 }

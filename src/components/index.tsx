@@ -16,3 +16,5 @@ export { default as DashBoardScrollContent } from './DashBoardScrollContent';
 export { default as CartCard } from './CartCard';
 export { default as PaymentMethod } from './PaymentMethod';
 export { default as InstructorCard } from './InstructorCard';
+export { default as CheckBox } from './CheckBox';
+export { default as TextArea } from './TextArea';
