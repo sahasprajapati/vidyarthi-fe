@@ -1,9 +1,9 @@
-import { Chart, CustomTable, InstructorCard } from 'components';
+import React from 'react';
+import { Chart, CustomTable, InstructorCard, Tabs } from 'components';
 import Card from 'components/Card';
 import Heading from 'components/Heading';
 import { AdminLayout } from 'containers';
 import { instructorTransactionLineGraph } from 'pages/Admin/Dashboard/__chartdata__/chartData';
-import React from 'react';
 import { TableColumn } from 'react-data-table-component';
 import formatMoney from 'utils/formatMoney';
 
@@ -48,6 +48,8 @@ const instructorTransactionData = [
 ];
 
 const Transaction: React.FC = ({}) => {
+  const [activeIndex, setActiveIndex] = React.useState(0);
+
   const graphData = {
     type: 'line',
     labels: instructorTransactionLineGraph?.map((e) => e?.day),
@@ -159,6 +161,24 @@ const Transaction: React.FC = ({}) => {
     },
   ];
 
+  const tabData = [
+    {
+      id: 0,
+
+      label: 'prahsat',
+    },
+    {
+      id: 1,
+
+      label: 'Khanal',
+    },
+    {
+      id: 2,
+
+      label: 'biratnagar',
+    },
+  ];
+
   return (
     <AdminLayout>
       <div className="row">
@@ -213,6 +233,32 @@ const Transaction: React.FC = ({}) => {
             <CustomTable columns={columns} title="" data={data} />
           </Card>
         </div>
+        {/* tabs */}
+        <Tabs
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+          tabData={tabData}
+        />
+
+        {activeIndex === 0 && (
+          <div className="tab-content">
+            <div className="tab-pane fade show active">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Laudantium suscipit aliquam, iusto eos distinctio quo illum
+              impedit amet reprehenderit illo.
+            </div>
+          </div>
+        )}
+        {activeIndex === 1 && (
+          <div className="tab-content">
+            <div className="tab-pane fade show active">my name is prashant</div>
+          </div>
+        )}
+        {activeIndex === 2 && (
+          <div className="tab-content">
+            <div className="tab-pane fade show active">my name is khanal</div>
+          </div>
+        )}
       </div>
     </AdminLayout>
   );

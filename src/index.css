@@ -63,6 +63,7 @@
   margin: 0;
   font-family: 'Sofia Pro', sans-serif;
 }
+
 li {
   list-style: none;
   padding: 0;
@@ -1348,4 +1349,20 @@ input[type='checkbox']:checked {
 }
 .instructor__bottom__graph__card {
   min-height: 20rem;
+}
+
+/* tabs */
+.tab {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-weight: 500;
+  font-size: 18px;
+  color: rgba(18, 13, 38, 0.5);
+}
+.tab__wrapper {
+  border-bottom: 2px solid #dbdbdb;
+}
+.tab.active {
+  color: var(--color-primary);
 }

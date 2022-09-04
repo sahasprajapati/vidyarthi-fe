@@ -41,13 +41,13 @@ function App() {
       <Routes>
         <Route element={<Login />} path="/login" />
         <Route element={<Register />} path="/register" />
-        <Route element={<Home />} path="/home" />
+        <Route element={<Home />} path="/" />
         <Route element={<NotFound />} path="/*" />
         <Route element={<CourseSearch />} path="/course-search" />
         <Route element={<Setting />} path="/setting" />
         <Route element={<CourseDetail />} path="/course-detail" />
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
-          <Route element={<AdminDashboard />} path="/" />
+          <Route element={<AdminDashboard />} path="/admin" />
         </Route>
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
           <Route element={<StudentDashBoard />} path="/dashboard" />
@@ -69,9 +69,6 @@ function App() {
         </Route>
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
           <Route element={<StudentAchievements />} path="/achievements" />
-        </Route>
-        <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
-          <Route element={<StudentCourse />} path="/student-course" />
         </Route>
         <Route element={<PrivateRoute allowedRoutes={['admin']} />}>
           <Route element={<TeacherDashboard />} path="/teacher" />
