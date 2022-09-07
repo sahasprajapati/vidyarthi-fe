@@ -18,3 +18,4 @@ export { default as PaymentMethod } from './PaymentMethod';
 export { default as InstructorCard } from './InstructorCard';
 export { default as CheckBox } from './CheckBox';
 export { default as TextArea } from './TextArea';
+export { default as Table } from './Table';

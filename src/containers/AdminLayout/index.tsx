@@ -5,9 +5,10 @@ import SideBar from '../SideBar';
 
 interface Props {
   children: ReactNode;
+  variant?: 'not-spacing';
 }
 
-const AdminLayout: React.FC<Props> = ({ children }) => {
+const AdminLayout: React.FC<Props> = ({ children, variant }) => {
   const [responsive, setResponsive] = React.useState<boolean>(false);
   //   const currentYear = new Date().getFullYear();
 
@@ -20,7 +21,13 @@ const AdminLayout: React.FC<Props> = ({ children }) => {
           responsive ? 'responsive__dashboard__content' : 'dashboard__content'
         }`}
       >
-        <div className="mx-4 pt-3">{children}</div>
+        <div
+          className={`${
+            variant !== 'not-spacing' ? 'mx-4 pt-3' : 'overflow-hidden'
+          }`}
+        >
+          {children}
+        </div>
       </div>
       {/* <div className="footer__container">
         <div>

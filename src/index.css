@@ -53,6 +53,7 @@
   --color-white: #ffffffff;
   --color-black: #120d26;
   --color-light-black: #120d2680;
+  --color-text: rgba(18, 13, 38, 0.5);
 }
 *,
 *::before,
@@ -294,7 +295,7 @@ progress[value]::-webkit-progress-value {
   font-weight: 700;
   font-size: 64px;
   letter-spacing: 3px;
-  color: rgba(18, 13, 38, 0.5);
+  color: var(--color-text);
 }
 .not__fount__left__subheading {
   font-weight: 400;
@@ -304,7 +305,7 @@ progress[value]::-webkit-progress-value {
 .not__fount__left__subtitle {
   font-weight: 400;
   font-size: 1rem;
-  color: rgba(18, 13, 38, 0.5);
+  color: var(--color-text);
 }
 /* utility class */
 .b10 {
@@ -371,13 +372,16 @@ progress[value]::-webkit-progress-value {
 .color-primary {
   color: var(--color-primary);
 }
+.color-light-black {
+  color: var(--color-text);
+}
 
 .pipe {
   opacity: 0.5;
   /* border: 0.625rem solid red; */
   height: 22px;
   width: 2px;
-  background-color: rgba(18, 13, 38, 0.5);
+  background-color: var(--color-text);
 }
 .opacity-half {
   opacity: 0.5;
@@ -504,7 +508,7 @@ progress[value]::-webkit-progress-value {
 
 .sidebar__icon {
   font-size: 2rem;
-  color: rgba(18, 13, 38, 0.5);
+  color: var(--color-text);
 }
 
 .sidebar__list__title {
@@ -594,7 +598,7 @@ progress[value]::-webkit-progress-value {
 }
 
 .footer__title {
-  color: rgba(18, 13, 38, 0.5);
+  color: var(--color-text);
   font-weight: 400;
   font-size: 1.5rem;
 }
@@ -662,7 +666,7 @@ progress[value]::-webkit-progress-value {
 .dashboard__instructor__sub__title {
   font-weight: 400;
   font-size: 0.875rem;
-  color: rgba(18, 13, 38, 0.5);
+  color: var(--color-text);
 }
 
 .dashboard__instructor__teacher {
@@ -716,7 +720,7 @@ progress[value]::-webkit-progress-value {
 .course__thumbnail__text {
   font-weight: 300;
   font-size: 0.75rem;
-  color: rgba(18, 13, 38, 0.5);
+  color: var(--color-text);
   max-width: 298px;
 }
 
@@ -875,7 +879,7 @@ progress[value]::-webkit-progress-value {
 .login__qn {
   font-weight: 500;
   font-size: 1rem;
-  color: rgba(18, 13, 38, 0.5);
+  color: var(--color-text);
   margin: 0.5rem 1.3rem;
 }
 
@@ -1295,7 +1299,7 @@ input[type='checkbox']:checked {
 .course__dec__text {
   font-weight: 400;
   font-size: 1rem;
-  color: rgba(18, 13, 38, 0.5);
+  color: var(--color-text);
 }
 .course__detail__card {
   background: #ffffff;
@@ -1306,7 +1310,7 @@ input[type='checkbox']:checked {
   font-weight: 400;
   font-size: 1rem;
 
-  color: rgba(18, 13, 38, 0.5);
+  color: var(--color-text);
 }
 
 .accordin__bottom__border {
@@ -1358,11 +1362,29 @@ input[type='checkbox']:checked {
   background-color: transparent;
   font-weight: 500;
   font-size: 18px;
-  color: rgba(18, 13, 38, 0.5);
+  color: var(--color-text);
 }
 .tab__wrapper {
   border-bottom: 2px solid #dbdbdb;
 }
 .tab.active {
   color: var(--color-primary);
+}
+.student__video__player {
+  position: relative;
+  padding-top: 56.25%;
+}
+.player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.border-left {
+  border-left: 1px solid #120d261a;
+}
+
+.color-black {
+  color: #120d26;
 }
