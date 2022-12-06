@@ -1,12 +1,13 @@
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { FacebookLogo, GoogleLogo, VidyarthiLogo } from 'assets/images';
 import { SocialMediaLoginOptions, TextField } from 'components';
 import Button from 'components/Button';
 import MainHeading from 'components/MainHeading';
 import Icon from 'assets/svg/Icon';
+import axiosInstance from 'config/network';
 
 const FORM_VALIDATION = Yup.object().shape({
   email: Yup.string().email('Please enter a valid mail').required('Required'),
@@ -16,11 +17,9 @@ const FORM_VALIDATION = Yup.object().shape({
       'Password must be at least one alpha numeric character, 8 character long, at least one numeric and up to.'
     )
     .required('Required'),
-
   cpassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords must match')
     .required('Required'),
-
   firstName: Yup.string()
     .min(3, 'First Name must be at least 3 character long')
     .required('Required'),
@@ -30,6 +29,31 @@ const FORM_VALIDATION = Yup.object().shape({
 });
 
 const Register: React.FC = () => {
+  const [errorText, setErrorText] = React.useState('');
+  const naviagte = useNavigate();
+  const handleRegister = async (val: {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+  }) => {
+    try {
+      const payload = {
+        email: val?.email,
+        password: val?.password,
+        firstName: val?.firstName,
+        lastName: val?.lastName,
+      };
+      const response = await axiosInstance.post('/register', payload);
+      if (response?.data?.status === 'success') {
+        naviagte('/login');
+      }
+      console.log('this is respinse', response);
+    } catch (err: any) {
+      console.log('error', err);
+      setErrorText(err?.response?.data?.message);
+    }
+  };
   return (
     <div className="row me-2">
       <div className="col-lg-6 register__image__banner">
@@ -48,23 +72,23 @@ const Register: React.FC = () => {
         </div>
         <div className="d-flex align-items-center">
           <Formik
-            onSubmit={(val: any) => {}}
+            onSubmit={handleRegister}
             initialValues={{
               email: '',
               password: '',
               cpassword: '',
-              checked: [],
               firstName: '',
               lastName: '',
             }}
             validationSchema={FORM_VALIDATION}
             validateOnMount
           >
-            {({ values }) => (
+            {({ values, isSubmitting }) => (
               <Form className="row position-relative">
                 <div className="my-5">
                   <MainHeading title="Create your Account" />
                 </div>
+                <p className="text-center text-danger"> {errorText} </p>
                 <div className="col-md-6">
                   <TextField
                     name="firstName"
@@ -104,7 +128,7 @@ const Register: React.FC = () => {
                     placeholder="Confirm Password"
                   />
                 </div>
-                <label className="mb-2">
+                {/* <label className="mb-2">
                   <div className="flex">
                     <Field
                       type="checkbox"
@@ -117,9 +141,13 @@ const Register: React.FC = () => {
                       Terms & conditions.
                     </Link>
                   </div>
-                </label>
+                </label> */}
                 <div className="mt-2 col-6">
-                  <Button variant="primary" type="submit">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    isSubmitting={isSubmitting}
+                  >
                     <span className="p-5">Register</span>
                   </Button>
                 </div>

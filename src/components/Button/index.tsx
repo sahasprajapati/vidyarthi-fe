@@ -5,6 +5,7 @@ interface Props {
   onClick?: () => void;
   children: ReactNode;
   type: 'button' | 'submit' | 'reset' | undefined;
+  isSubmitting?: boolean;
 }
 
 const Button: React.FC<Props> = ({
@@ -12,6 +13,7 @@ const Button: React.FC<Props> = ({
   onClick,
   variant,
   type = 'button',
+  isSubmitting,
 }) => {
   return (
     <div className="">
@@ -28,7 +30,18 @@ const Button: React.FC<Props> = ({
         }`}
         type={type}
       >
-        {children}
+        {isSubmitting ? (
+          <div className="">
+            Loading
+            <span
+              className="spinner-border spinner-border-sm mx-2"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          </div>
+        ) : (
+          children
+        )}
       </button>
     </div>
   );

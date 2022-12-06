@@ -1,8 +1,10 @@
+import Icon from 'assets/svg/Icon';
 import {
   Chart,
   CustomTable,
   DashboardCard,
   DashBoardScrollContent,
+  Table,
 } from 'components';
 import Card from 'components/Card';
 import Heading from 'components/Heading';
@@ -13,14 +15,6 @@ import { TableColumn } from 'react-data-table-component';
 import { Link } from 'react-router-dom';
 import formatMoney from 'utils/formatMoney';
 import { doughnutData, stackGraph } from './__chartdata__/chartData';
-
-interface DataRow {
-  title: string;
-  director: string;
-  year: string;
-  payementMethod: string;
-  amount: string | number;
-}
 
 const AdminDashboard: React.FC = () => {
   const graphData = {
@@ -50,63 +44,252 @@ const AdminDashboard: React.FC = () => {
     ],
   };
 
-  const columns: TableColumn<DataRow>[] = React.useMemo(
-    () => [
-      {
-        name: 'Instructor Name',
-        selector: ({ title }) => title,
+  const columns = [
+    {
+      Header: 'Instructor Name',
+      accessor: 'instructorName',
+      Cell: (row: any) => (
+        <div className="d-flex">
+          <img
+            src={row?.cell?.value?.imageUrl}
+            alt="instructor-image"
+            width={30}
+            height={30}
+            className="rounded-circle"
+          />
+          <p className="text-capitalize mt-.5 ms-2">{row?.cell?.value?.name}</p>
+        </div>
+      ),
+    },
+    {
+      Header: 'Date',
+      accessor: 'year',
+    },
+    {
+      Header: 'Payment Method',
+      accessor: 'payementMethod',
+    },
+    {
+      Header: 'Amount',
+      accessor: 'amount',
+      Cell: (row: any) => (
+        <p className="color-primary f-16 fw-500"> $ {row?.cell?.value}</p>
+      ),
+    },
+    {
+      Header: 'Action',
+      Cell: ({ row, flatRows }: any) => (
+        <div className="">
+          <div className="position-relative">
+            <Icon name="dots" height={15} width={15} />
+            <select name="" id="" className="table-select">
+              <option value="" className="course__options__dropdown__list">
+                View course
+              </option>
+              <option value="" className="course__options__dropdown__list">
+                View course
+              </option>
+              <option value="" className="course__options__dropdown__list">
+                View course
+              </option>
+            </select>
+          </div>
+        </div>
+      ),
+    },
+  ];
+  // feedback column
+  const feedBackColumns = [
+    {
+      Header: 'S.N',
+
+      Cell: ({ row, flatRows }: any) => <p>0{flatRows?.indexOf(row) + 1} </p>,
+    },
+    {
+      Header: 'Name',
+      accessor: 'name',
+      Cell: (row: any) => (
+        <div className="d-flex">
+          <img
+            src={row?.cell?.value?.imageUrl}
+            alt="instructor-image"
+            width={30}
+            height={30}
+            className="rounded-circle"
+          />
+          <p className="text-capitalize mt-.5 ms-2">{row?.cell?.value?.name}</p>
+        </div>
+      ),
+    },
+    {
+      Header: 'Email Address',
+      accessor: 'email',
+      Cell: (row: any) => <p className="f-16">{row?.cell?.value}</p>,
+    },
+    {
+      Header: 'Date',
+      accessor: 'date',
+      Cell: (row: any) => (
+        <p className="f-16 color-light-black">{row?.cell?.value}</p>
+      ),
+    },
+    {
+      Header: 'title',
+      accessor: 'title',
+      Cell: (row: any) => (
+        <p className="f-16 fw-500">{row?.cell?.value?.slice(0, 19)}...</p>
+      ),
+    },
+    {
+      Header: 'Rating',
+      accessor: 'rating',
+      Cell: (row: any) => {
+        return (
+          <div className="flex ">
+            {Array(Math.round(4.5))
+              .fill('')
+              .map((_, idx) => (
+                <Icon name="star" width={10} height={10} key={idx} />
+              ))}
+          </div>
+        );
       },
-      {
-        name: 'Date',
-        selector: ({ year }) => year,
-      },
-      {
-        name: 'Payment Method',
-        selector: ({ payementMethod }) => payementMethod,
-      },
-      {
-        name: 'Amount',
-        selector: ({ amount }) => formatMoney(amount),
-      },
-    ],
-    []
-  );
+    },
+    {
+      Header: 'Action',
+      Cell: ({ row, flatRows }: any) => (
+        <div className="">
+          <div className="position-relative">
+            <Icon name="dots" height={15} width={15} />
+            <select name="" id="" className="table-select">
+              <option value="" className="course__options__dropdown__list">
+                View course
+              </option>
+              <option value="" className="course__options__dropdown__list">
+                View course
+              </option>
+              <option value="" className="course__options__dropdown__list">
+                View course
+              </option>
+            </select>
+          </div>
+        </div>
+      ),
+    },
+  ];
 
   const data = [
     {
-      title: 'Ricardo Michael',
+      instructorName: {
+        name: 'prashant khanal',
+        imageUrl:
+          'https://cdn.pixabay.com/photo/2022/02/12/21/37/woman-7009979_960_720.jpg',
+      },
       director: 'prashant',
       payementMethod: 'Mastercards',
-      amount: '$2000',
+      amount: '2000',
       year: '20/05/2018',
     },
     {
-      title: 'Ricardo Michael',
+      instructorName: {
+        name: 'prashant khanal',
+        imageUrl:
+          'https://cdn.pixabay.com/photo/2022/02/12/21/37/woman-7009979_960_720.jpg',
+      },
       director: 'prashant',
       payementMethod: 'Mastercards',
-      amount: '$2000',
+      amount: '2000',
       year: '20/05/2018',
     },
     {
-      title: 'Ricardo Michael',
+      instructorName: {
+        name: 'prashant khanal',
+        imageUrl:
+          'https://cdn.pixabay.com/photo/2022/02/12/21/37/woman-7009979_960_720.jpg',
+      },
       director: 'prashant',
       payementMethod: 'Mastercards',
-      amount: '$2000',
+      amount: '2000',
       year: '20/05/2018',
     },
     {
-      title: 'Ricardo Michael',
+      instructorName: {
+        name: 'prashant khanal',
+        imageUrl:
+          'https://cdn.pixabay.com/photo/2022/02/12/21/37/woman-7009979_960_720.jpg',
+      },
       director: 'prashant',
       payementMethod: 'Mastercards',
-      amount: '$2000',
+      amount: '2000',
       year: '20/05/2018',
     },
     {
-      title: 'Ricardo Michael',
+      instructorName: {
+        name: 'prashant khanal',
+        imageUrl:
+          'https://cdn.pixabay.com/photo/2022/02/12/21/37/woman-7009979_960_720.jpg',
+      },
       director: 'prashant',
       payementMethod: 'Mastercards',
-      amount: '$2000',
+      amount: '2000',
       year: '20/05/2018',
+    },
+  ];
+  const feedBackData = [
+    {
+      name: {
+        name: 'prashant khanal',
+        imageUrl:
+          'https://cdn.pixabay.com/photo/2022/02/12/21/37/woman-7009979_960_720.jpg',
+      },
+      email: 'prashantkhanal32@gmail.com',
+      title: 'how do i know what should i choose',
+      rating: 4.5,
+      date: '20/05/2018',
+    },
+    {
+      instructorName: {
+        name: 'prashant khanal',
+        imageUrl:
+          'https://cdn.pixabay.com/photo/2022/02/12/21/37/woman-7009979_960_720.jpg',
+      },
+      email: 'prashantkhanal32@gmail.com',
+      title: 'how do i know what should i choose',
+      rating: 4.5,
+      date: '20/05/2018',
+    },
+    {
+      instructorName: {
+        name: 'prashant khanal',
+        imageUrl:
+          'https://cdn.pixabay.com/photo/2022/02/12/21/37/woman-7009979_960_720.jpg',
+      },
+      email: 'prashantkhanal32@gmail.com',
+      title: 'how do i know what should i choose',
+      rating: 4.5,
+      date: '20/05/2018',
+    },
+    {
+      instructorName: {
+        name: 'prashant khanal',
+        imageUrl:
+          'https://cdn.pixabay.com/photo/2022/02/12/21/37/woman-7009979_960_720.jpg',
+      },
+      email: 'prashantkhanal32@gmail.com',
+      title: 'how do i know what should i choose',
+      rating: 4.5,
+      date: '20/05/2018',
+    },
+    {
+      instructorName: {
+        name: 'prashant khanal',
+        imageUrl:
+          'https://cdn.pixabay.com/photo/2022/02/12/21/37/woman-7009979_960_720.jpg',
+      },
+      email: 'prashantkhanal32@gmail.com',
+      title: 'how do i know what should i choose',
+      rating: 4.5,
+      date: '20/05/2018',
     },
   ];
 
@@ -329,6 +512,7 @@ const AdminDashboard: React.FC = () => {
     <AdminLayout>
       <div className="container-fluid">
         <MainHeading title="overview" />
+        <div className="flex "></div>
         <div className="row">
           {overviewData.map((e) => (
             <div
@@ -426,10 +610,15 @@ const AdminDashboard: React.FC = () => {
           </div>
           <div className="col-lg-7 col-md-12">
             <Card>
-              <CustomTable
-                columns={columns}
-                title="Latest Withdraw"
-                data={data}
+              <div className="flex-between mb-4 mt-2">
+                <Heading title="latest withdraw" />
+                <Link to="/">View all</Link>
+              </div>
+              <Table
+                tableColumn={columns}
+                tableData={data}
+                noPagination
+                notPadding
               />
             </Card>
           </div>
@@ -437,7 +626,13 @@ const AdminDashboard: React.FC = () => {
         <div className="row my-5">
           <div className="col-12 mb-4">
             <Card>
-              <CustomTable columns={columns} title="Feedback" data={data} />
+              <Heading title="Feedback" />
+              <Table
+                tableColumn={feedBackColumns}
+                tableData={feedBackData}
+                noPagination
+                notPadding
+              />
             </Card>
           </div>
         </div>

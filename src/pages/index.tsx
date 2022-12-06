@@ -15,6 +15,7 @@ export { default as NotFound } from './Public/404';
 export { default as StudentDashBoard } from './Student/DashBoard';
 export { default as StudentAchievements } from './Student/Achievements';
 export { default as StudentCourse } from './Student/Course';
+export { default as StudentCart } from './Student/Cart';
 
 // Teacher Dashboard
 export { default as TeacherDashboard } from './Teacher/Dashboard';

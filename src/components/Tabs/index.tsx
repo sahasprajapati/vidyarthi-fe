@@ -14,7 +14,10 @@ const Tab: React.FC<IProps> = ({ setActiveIndex, activeIndex, tabData }) => {
     <div className="flex flex-wrap tab__wrapper">
       {tabData.map((item) => (
         <button
-          className={`tab ${checkActive(item?.id, 'active')} mx-3`}
+          className={`tab ${checkActive(
+            item?.id,
+            'active'
+          )} mx-3 text-capitalize`}
           onClick={() => handleClick(item?.id)}
           key={item?.id}
         >

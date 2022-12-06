@@ -1,23 +1,30 @@
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { FacebookLogo, GoogleLogo, VidyarthiLogo } from 'assets/images';
 import { SocialMediaLoginOptions, TextField } from 'components';
 import Button from 'components/Button';
 import MainHeading from 'components/MainHeading';
+import { useDispatch, useSelector } from 'react-redux';
+import { authAction } from 'redux/actions/auth.action';
 
 const FORM_VALIDATION = Yup.object().shape({
   email: Yup.string().email('Please enter a valid mail').required('Required'),
-  password: Yup.string()
-    .matches(
-      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,20}$/,
-      'Password must be at least one alpha numeric character, 8 character long, at least one numeric and up to.'
-    )
-    .required('Required'),
+  password: Yup.string().required('Required'),
 });
 
 const Login: React.FC = () => {
+  const dispatch: any = useDispatch();
+  const userData: any = useSelector((state: any) => state.auth);
+  const authError: any = useSelector((state: any) => state.auth.error);
+  const navigate = useNavigate();
+
+  if (userData?.authenticate) {
+    if (userData?.userData?.role === 'user') {
+      navigate('/student-dashboard');
+    }
+  }
   return (
     <div className="row me-2">
       <div className="col-lg-6 login__image__banner">
@@ -37,20 +44,25 @@ const Login: React.FC = () => {
         <div className="d-flex align-items-center">
           <Formik
             onSubmit={(val) => {
-              alert(JSON.stringify(val, null, 2));
               if (val.checked.find((yes) => val.checked.includes(yes))) {
                 return localStorage.setItem('Email', JSON.stringify(val));
               }
+              const payload: any = {
+                email: val?.email,
+                password: val?.password,
+              };
+              dispatch(authAction(payload));
             }}
             initialValues={{ email: '', password: '', checked: [] }}
             validationSchema={FORM_VALIDATION}
             validateOnMount
           >
-            {({ values }) => (
+            {({ values, isSubmitting }) => (
               <Form className="row">
                 <div className="my-5">
                   <MainHeading title="Login to your Account" />
                 </div>
+                <p className="text-center text-danger"> {authError} </p>
                 <div className="col-12">
                   <TextField
                     name="email"
@@ -79,7 +91,11 @@ const Login: React.FC = () => {
                   </div>
                 </label>
                 <div className="mt-2 col-6">
-                  <Button variant="primary" type="submit">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    isSubmitting={isSubmitting}
+                  >
                     <span className="p-5">Login</span>
                   </Button>
                 </div>

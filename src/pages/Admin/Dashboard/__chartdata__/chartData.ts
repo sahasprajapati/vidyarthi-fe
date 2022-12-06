@@ -141,16 +141,6 @@ export const doughnutData = [
     data: 10,
     color: '#BABBFD',
   },
-  {
-    label: 'Education',
-    data: 42,
-    color: '#FF6967',
-  },
-  {
-    label: 'Marketing',
-    data: 62,
-    color: '#E48890',
-  },
 ];
 export const doughnutDataInstructor = [
   {

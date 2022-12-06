@@ -1,12 +1,21 @@
 import { VidyarthiLogo } from 'assets/images';
 import Icon from 'assets/svg/Icon';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { logoutAction } from 'redux/actions/auth.action';
 
 interface Props {
   responsive: boolean;
 }
 
 const Header: React.FC<Props> = ({ responsive }) => {
+  const dispatch: any = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logoutAction());
+    navigate('/');
+  };
   return (
     <div
       className={`${
@@ -39,6 +48,7 @@ const Header: React.FC<Props> = ({ responsive }) => {
               alt="logo"
             />
           </div>
+          <p onClick={handleLogout}>Logout</p>
         </div>
       </div>
     </div>
