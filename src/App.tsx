@@ -6,6 +6,7 @@ import {
   AdminTransaction,
   CourseDetail,
   CourseSearch,
+  FAQ,
   Home,
   Login,
   NotFound,
@@ -17,6 +18,10 @@ import {
   StudentDashBoard,
   TeacherDashboard,
   TeacherTransaction,
+  AboutUs,
+  PrivacyPolicy,
+  TermsAndConditions,
+  ContactUs,
 } from 'pages';
 import PrivateRoute from 'PrivateRoute';
 
@@ -47,21 +52,20 @@ function App() {
         <Route element={<Login />} path="/login" />
         <Route element={<Register />} path="/register" />
         <Route element={<Home />} path="/" />
+        <Route element={<AboutUs />} path="/about-us" />
+        <Route element={<PrivacyPolicy />} path="/privacy-policy" />
+        <Route element={<TermsAndConditions />} path="/terms-conditions" />
+        <Route element={<FAQ />} path="/faq" />
+        <Route element={<ContactUs />} path="/contact-us" />
         <Route element={<NotFound />} path="/*" />
         <Route element={<CourseSearch />} path="/course-search" />
         <Route element={<Setting />} path="/setting" />
         <Route element={<CourseDetail />} path="/course-detail" />
-
         <Route element={<AdminDashboard />} path="/admin" />
-
         <Route element={<StudentDashBoard />} path="/dashboard" />
-
         <Route element={<AdminAddCourse />} path="/admin-course-add" />
-
         <Route element={<AdminTransaction />} path="/admin-transaction" />
-
         <Route element={<AdminTransaction />} path="/admin-transaction" />
-
         <Route element={<AdminCourse />} path="/admin-course" />
 
         <Route element={<StudentCourse />} path="/student-course" />

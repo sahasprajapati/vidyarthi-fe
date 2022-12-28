@@ -11,6 +11,7 @@ import {
   Certificate,
   Crown,
   Fire,
+  HomePageCourse,
   JoinUS,
   Phone,
   Tick,
@@ -84,7 +85,27 @@ const Home: React.FC = () => {
                 <Heading title="from the most trusted names." />
               </div>
             </div>
-            <div className="col-lg-6">hello</div>
+            <div className="col-lg-6 overflow-hidden">
+              <div className="flex h-100">
+                <img
+                  src={HomePageCourse}
+                  alt="home-page-course"
+                  className="home__page__first__image__course me-2"
+                />
+                <img
+                  src={HomePageCourse}
+                  className="home__page__second__image__course me-2"
+                />
+                <img
+                  src={HomePageCourse}
+                  className="home__page__third__image__course me-2"
+                />
+                <img
+                  src={HomePageCourse}
+                  className="home__page__fourth__image__course me-2"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

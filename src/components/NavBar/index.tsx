@@ -13,7 +13,7 @@ const NavBar: React.FC<Props> = ({ variant }) => {
   const login = userData?.authenticate ? true : false;
 
   return (
-    <header>
+    <header className="">
       {login ? (
         <LoginNavBar imageUrl={Profile} variant={variant} />
       ) : (

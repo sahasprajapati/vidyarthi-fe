@@ -978,6 +978,7 @@ progress[value]::-webkit-progress-value {
     display: block;
   }
 }
+s
 
 /* home pages */
 
@@ -1512,4 +1513,29 @@ button[disabled] {
   padding: 0px 0px;
   opacity: 0;
   cursor: pointer;
+}
+
+.home__page__first__image__course {
+  width: 180px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.home__page__second__image__course {
+  width: 130px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.home__page__third__image__course {
+  width: 90px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.home__page__fourth__image__course {
+  width: 90px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }

@@ -11,6 +11,11 @@ export { default as Home } from './Public/Home';
 export { default as CourseSearch } from './Public/CourseSearch';
 export { default as CourseDetail } from './Public/CourseDetail';
 export { default as NotFound } from './Public/404';
+export { default as AboutUs } from './Public/about-us';
+export { default as ContactUs } from './Public/contact-us';
+export { default as FAQ } from './Public/faq';
+export { default as TermsAndConditions } from './Public/terms-and-conditions';
+export { default as PrivacyPolicy } from './Public/privacy-policy';
 // Student Dashboard
 export { default as StudentDashBoard } from './Student/DashBoard';
 export { default as StudentAchievements } from './Student/Achievements';

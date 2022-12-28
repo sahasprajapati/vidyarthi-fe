@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { VidyarthiLogo, VidyarthiWhiteLogo } from 'assets/images';
 import Button from 'components/Button';
+import Icon from 'assets/svg/Icon';
 
 interface Props {
   variant?: 'white' | 'black';
@@ -16,8 +17,11 @@ const NotLoginNavBar: React.FC<Props> = ({ variant }) => {
           alt="main-logo"
         />
       </Link>
+      <div className="navlist__mobile__menu">
+        <Icon name="menu" />
+      </div>
 
-      <ul className="flex">
+      <ul className="flex navbar__list">
         <li
           className={`pointer mx-4 ${
             variant === 'white' ? 'nav__link__white' : 'nav__link'
