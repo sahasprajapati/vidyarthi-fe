@@ -19,3 +19,4 @@ export { default as InstructorCard } from './InstructorCard';
 export { default as CheckBox } from './CheckBox';
 export { default as TextArea } from './TextArea';
 export { default as Table } from './Table';
+export { default as ScrollToTop } from './scroll-top';

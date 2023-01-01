@@ -28,6 +28,7 @@ import PrivateRoute from 'PrivateRoute';
 import { Route, Routes } from 'react-router-dom';
 import { isUserLoggedIn } from 'redux/actions/auth.action';
 import { useDispatch, useSelector } from 'react-redux';
+import { ScrollToTop } from 'components';
 
 // ehehe
 
@@ -45,9 +46,13 @@ function App() {
       dispatch(isUserLoggedIn());
     }
   }, [auth.authenticate]);
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="App">
+      <ScrollToTop />
       <Routes>
         <Route element={<Login />} path="/login" />
         <Route element={<Register />} path="/register" />
@@ -58,7 +63,7 @@ function App() {
         <Route element={<FAQ />} path="/faq" />
         <Route element={<ContactUs />} path="/contact-us" />
         <Route element={<NotFound />} path="/*" />
-        <Route element={<CourseSearch />} path="/course-search" />
+        <Route element={<CourseSearch />} path="/course" />
         <Route element={<Setting />} path="/setting" />
         <Route element={<CourseDetail />} path="/course-detail" />
         <Route element={<AdminDashboard />} path="/admin" />

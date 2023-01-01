@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { VidyarthiLogo, VidyarthiWhiteLogo } from 'assets/images';
 import Button from 'components/Button';
 import Icon from 'assets/svg/Icon';
@@ -11,7 +11,7 @@ interface Props {
 const NotLoginNavBar: React.FC<Props> = ({ variant }) => {
   return (
     <nav className="flex-between py-5">
-      <Link to="/home">
+      <Link to="/">
         <img
           src={variant === 'white' ? VidyarthiWhiteLogo : VidyarthiLogo}
           alt="main-logo"
@@ -22,27 +22,30 @@ const NotLoginNavBar: React.FC<Props> = ({ variant }) => {
       </div>
 
       <ul className="flex navbar__list">
-        <li
+        <NavLink
+          to="/about-us"
           className={`pointer mx-4 ${
             variant === 'white' ? 'nav__link__white' : 'nav__link'
           }`}
         >
           About Us
-        </li>
-        <li
+        </NavLink>
+        <NavLink
+          to="/course"
           className={`pointer mx-4 ${
             variant === 'white' ? 'nav__link__white' : 'nav__link'
           }`}
         >
           Course
-        </li>
-        <li
+        </NavLink>
+        <NavLink
+          to="/contact-us"
           className={`pointer mx-4 ${
             variant === 'white' ? 'nav__link__white' : 'nav__link'
           }`}
         >
           Contact Us
-        </li>
+        </NavLink>
 
         <Link to="/login" className="mx-3">
           <Button type="button" variant="outline">

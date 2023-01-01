@@ -8,17 +8,19 @@ const Footer: React.FC = () => {
   const footerData = [
     {
       id: 0,
-      title: 'about',
-      subtitle1: 'about us',
-      subtitle2: 'courses',
-      subtitle3: 'contact us',
+      subtitle1: 'about',
+      subtitle2: 'privacy policy',
+      subtitle3: 'FAQ',
+      subtitle4: 'terms & conditions',
+      subtitle5: 'contact us',
     },
+  ];
+  const footerData1 = [
     {
-      id: 1,
-      title: 'courses',
-      subtitle1: 'programming courses',
-      subtitle2: 'art',
-      subtitle3: 'marketing',
+      id: 0,
+      subtitle1: 'Programming',
+      subtitle2: 'Art',
+      subtitle3: 'Designing',
     },
   ];
 
@@ -36,37 +38,36 @@ const Footer: React.FC = () => {
           </div>
           {footerData.map((e) => (
             <div className="col-lg-2 col-md-3 col-sm-3" key={e?.id}>
-              <h6 className="footer__title mb-4">{e?.title}</h6>
-              <Link to="/">
+              <Link to="/about-us">
                 <p className="footer__subtile"> {e?.subtitle1} </p>
               </Link>
-              <Link to="/">
+              <Link to="/privacy-policy">
                 <p className="footer__subtile"> {e?.subtitle2} </p>
               </Link>
-              <Link to="/">
+              <Link to="/faq">
+                <p className="footer__subtile"> {e?.subtitle3} </p>
+              </Link>
+              <Link to="/terms-conditions">
+                <p className="footer__subtile"> {e?.subtitle4} </p>
+              </Link>
+              <Link to="/contact-us">
+                <p className="footer__subtile"> {e?.subtitle5} </p>
+              </Link>
+            </div>
+          ))}
+          {footerData1.map((e) => (
+            <div className="col-lg-2 col-md-3 col-sm-3" key={e?.id}>
+              <Link to="/course">
+                <p className="footer__subtile"> {e?.subtitle1} </p>
+              </Link>
+              <Link to="/privacy-policy">
                 <p className="footer__subtile"> {e?.subtitle2} </p>
               </Link>
-              <Link to="/">
+              <Link to="/faq">
                 <p className="footer__subtile"> {e?.subtitle3} </p>
               </Link>
             </div>
           ))}
-
-          <div className="col-lg-2 col-md-12">
-            <h6 className="footer__title mb-4">company</h6>
-            <Link to="/">
-              <p className="footer__subtile">FAQs</p>
-            </Link>
-            <Link to="/">
-              <p className="footer__subtile">privacy & policy</p>
-            </Link>
-            <Link to="/">
-              <p className="footer__subtile">terms of service</p>
-            </Link>
-            <Link to="/">
-              <p className="footer__subtile">help & support</p>
-            </Link>
-          </div>
         </div>
         <div className="pb-4">
           <span className="footer__copyright__text">&copy; - {todayYear}</span>

@@ -11,7 +11,7 @@ interface Props {
 const LoginNavBar: React.FC<Props> = ({ imageUrl, variant }) => {
   return (
     <nav className="flex-between py-5">
-      <Link to="/home">
+      <Link to="/">
         <img
           src={variant === 'white' ? VidyarthiWhiteLogo : VidyarthiLogo}
           alt="main-logo"
@@ -22,7 +22,7 @@ const LoginNavBar: React.FC<Props> = ({ imageUrl, variant }) => {
       </div>
       <ul className="flex navbar__list">
         <NavLink
-          to="/"
+          to="/about-us"
           className={`pointer mx-4 ${
             variant === 'white' ? 'nav__link__white' : 'nav__link'
           }`}
@@ -30,7 +30,7 @@ const LoginNavBar: React.FC<Props> = ({ imageUrl, variant }) => {
           About Us
         </NavLink>
         <NavLink
-          to="/course-search"
+          to="/course"
           className={`pointer mx-4 ${
             variant === 'white' ? 'nav__link__white' : 'nav__link'
           }`}
@@ -38,7 +38,7 @@ const LoginNavBar: React.FC<Props> = ({ imageUrl, variant }) => {
           Course
         </NavLink>
         <NavLink
-          to="/"
+          to="/contact-us"
           className={`pointer mx-4 ${
             variant === 'white' ? 'nav__link__white' : 'nav__link'
           }`}
