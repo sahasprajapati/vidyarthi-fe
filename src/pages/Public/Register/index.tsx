@@ -8,6 +8,8 @@ import Button from 'components/Button';
 import MainHeading from 'components/MainHeading';
 import Icon from 'assets/svg/Icon';
 import axiosInstance from 'config/network';
+import { authRegisterAction, fetchProfile } from 'redux/actions/auth.action';
+import { useDispatch, useSelector } from 'react-redux';
 
 const FORM_VALIDATION = Yup.object().shape({
   email: Yup.string().email('Please enter a valid mail').required('Required'),
@@ -29,26 +31,38 @@ const FORM_VALIDATION = Yup.object().shape({
 });
 
 const Register: React.FC = () => {
+  const dispatch: any = useDispatch();
   const [errorText, setErrorText] = React.useState('');
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
+  const userData: any = useSelector((state: any) => state.auth);
+
   const handleRegister = async (val: {
     email: string;
     password: string;
     firstName: string;
     lastName: string;
+    cpassword: string;
   }) => {
+    if (userData?.authenticate) {
+      if (userData?.role === 'student') {
+        navigate('/student-dashboard');
+      }
+      if (userData?.role === 'super') {
+        navigate('/admin');
+      }
+      if (userData?.role === 'instructor') {
+        navigate('/teacher');
+      }
+    }
     try {
       const payload = {
         email: val?.email,
         password: val?.password,
         firstName: val?.firstName,
         lastName: val?.lastName,
+        confirmPassword: val?.cpassword,
       };
-      const response = await axiosInstance.post('/register', payload);
-      if (response?.data?.status === 'success') {
-        naviagte('/login');
-      }
-      console.log('this is respinse', response);
+      dispatch(authRegisterAction(payload));
     } catch (err: any) {
       console.log('error', err);
       setErrorText(err?.response?.data?.message);

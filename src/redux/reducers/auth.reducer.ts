@@ -7,6 +7,7 @@ const initState = {
   error: '',
   userData: null,
   userProfile: false,
+  role: '',
 };
 
 export const authReducer = (state = initState, { type, payload }: any) => {
@@ -14,7 +15,8 @@ export const authReducer = (state = initState, { type, payload }: any) => {
     case authConstant.LOGIN_SUCCESS:
       state = {
         ...state,
-        token: payload?.data?.token,
+        token: payload?.data?.accessToken,
+        role: payload?.data?.role,
         authenticate: true,
         userData: payload?.data?.user,
       };

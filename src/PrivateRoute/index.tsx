@@ -7,12 +7,10 @@ interface Props {
 
 const PrivateRoute: React.FC<Props> = ({ allowedRoutes }) => {
   const token: any = window.localStorage.getItem('accessToken');
-  const checkRole = JSON.parse(token);
+  const role = JSON.parse(window.localStorage.getItem('role') ?? '');
   const location = useLocation();
-  return checkRole.roles.find((role: never) => allowedRoutes.includes(role)) ? (
+  return allowedRoutes.includes(role) ? (
     <Outlet />
-  ) : checkRole.accessToken ? (
-    <Navigate to={'/login'} state={{ from: location }} replace />
   ) : (
     <Navigate to={'/login'} state={{ from: location }} replace />
   );

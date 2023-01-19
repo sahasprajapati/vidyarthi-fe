@@ -1,13 +1,13 @@
 import { Field, Form, Formik } from 'formik';
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import { FacebookLogo, GoogleLogo, VidyarthiLogo } from 'assets/images';
 import { SocialMediaLoginOptions, TextField } from 'components';
 import Button from 'components/Button';
 import MainHeading from 'components/MainHeading';
 import { useDispatch, useSelector } from 'react-redux';
-import { authAction } from 'redux/actions/auth.action';
+import { authAction, socialLoginAction } from 'redux/actions/auth.action';
 
 const FORM_VALIDATION = Yup.object().shape({
   email: Yup.string().email('Please enter a valid mail').required('Required'),
@@ -19,13 +19,35 @@ const Login: React.FC = () => {
   const userData: any = useSelector((state: any) => state.auth);
   const authError: any = useSelector((state: any) => state.auth.error);
   const navigate = useNavigate();
+  const [search, setSearch] = useSearchParams();
 
-  if (userData?.authenticate) {
-    if (userData?.userData?.role === 'user') {
+  useEffect(() => {
+    if (
+      search.get('role') &&
+      search.get('accessToken') &&
+      search.get('refreshToken')
+    ) {
+      dispatch(
+        socialLoginAction({
+          role: search.get('role') ?? '',
+          accessToken: search.get('accessToken') ?? '',
+          refreshToken: search.get('refreshToken') ?? '',
+        })
+      );
+    }
+  }, []);
+
+  if (userData?.authenticate && userData?.userData && userData?.role) {
+    if (userData?.role === 'student') {
       navigate('/student-dashboard');
     }
+    if (userData?.role === 'super') {
+      navigate('/admin');
+    }
+    if (userData?.role === 'instructor') {
+      navigate('/teacher');
+    }
   }
-  // Pr@$h@ntdigitalOcean0123459876vidhyarthi
 
   return (
     <div className="row me-2">
@@ -104,11 +126,25 @@ const Login: React.FC = () => {
                 <h6 className="text-center fw-normal my-5">Or Sign Up</h6>
                 <div className="flex-center">
                   {/*  */}
-                  <SocialMediaLoginOptions logo={GoogleLogo} title="Google" />
-                  <SocialMediaLoginOptions
-                    logo={FacebookLogo}
-                    title="Facebook"
-                  />
+                  <a href="/api/google">
+                    <SocialMediaLoginOptions
+                      logo={GoogleLogo}
+                      title="Google"
+                      onClick={() => {
+                        // navigate('/api/google');
+                      }}
+                    />
+                  </a>
+
+                  <a href="/api/facebook">
+                    <SocialMediaLoginOptions
+                      logo={FacebookLogo}
+                      title="Facebook"
+                      onClick={() => {
+                        // navigate('/api/facebook');
+                      }}
+                    />
+                  </a>
                 </div>
               </Form>
             )}
