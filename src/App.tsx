@@ -29,6 +29,8 @@ import { Route, Routes } from 'react-router-dom';
 import { isUserLoggedIn } from 'redux/actions/auth.action';
 import { useDispatch, useSelector } from 'react-redux';
 import { ScrollToTop } from 'components';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // ehehe
 
@@ -52,6 +54,7 @@ function App() {
 
   return (
     <div className="App">
+      <ToastContainer />
       <ScrollToTop />
       <Routes>
         <Route element={<Login />} path="/login" />

@@ -1,10 +1,10 @@
-import axiosInstance from 'config/network';
+import Service from 'setup/network';
 import { authConstant, LogoutConstant } from './user-constant';
 
 export const authAction = (user: any) => {
   return async (dispatch: any) => {
     try {
-      const { data } = await axiosInstance.post('/auth/login', user);
+      const { data } = await Service.post('/auth/login', user);
       // if (data?.data?.accessToken) {
       //   const { data: resData } = await axiosInstance.get('/auth/profile', {
       //     headers: {
@@ -54,7 +54,7 @@ export const authAction = (user: any) => {
 export const authRegisterAction = (user: any) => {
   return async (dispatch: any) => {
     try {
-      const { data } = await axiosInstance.post('/auth/register', user);
+      const { data } = await Service.post('/auth/register', user);
       // if (response?.data?.status === 'success') {
       let profile;
       if (data?.data?.accessToken) {
@@ -112,7 +112,7 @@ export const fetchProfile = async (data: {
   refreshToken: string;
   role: string;
 }) => {
-  const { data: resData } = await axiosInstance.get('/auth/profile', {
+  const { data: resData } = await Service.get('/auth/profile', {
     headers: {
       Authorization: `Bearer ${data?.accessToken}`,
     },

@@ -65,6 +65,10 @@
   font-family: 'Sofia Pro', sans-serif;
 }
 
+.react-select__control {
+  padding: 0.6rem 0.4rem !important;
+}
+
 li {
   list-style: none;
   padding: 0;
