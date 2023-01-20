@@ -1,17 +1,13 @@
-import { Field, Form, Formik } from 'formik';
-import React, { useEffect } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import * as Yup from 'yup';
 import { FacebookLogo, GoogleLogo, VidyarthiLogo } from 'assets/images';
 import { SocialMediaLoginOptions, TextField } from 'components';
 import Button from 'components/button';
 import MainHeading from 'components/main-heading';
+import { Field, Form, Formik } from 'formik';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  authAction,
-  authRegisterAction,
-  socialLoginAction,
-} from 'redux/actions/auth.action';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { authAction, socialLoginAction } from 'redux/actions/auth.action';
+import * as Yup from 'yup';
 
 const FORM_VALIDATION = Yup.object().shape({
   email: Yup.string().email('Please enter a valid mail').required('Required'),
@@ -79,7 +75,7 @@ const Login: React.FC = () => {
                 email: val?.email,
                 password: val?.password,
               };
-              dispatch(authRegisterAction(payload));
+              dispatch(authAction(payload));
             }}
             initialValues={{ email: '', password: '', checked: [] }}
             validationSchema={FORM_VALIDATION}
