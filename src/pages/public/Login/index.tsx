@@ -119,6 +119,7 @@ const Login: React.FC = () => {
                     variant="primary"
                     type="submit"
                     isSubmitting={isSubmitting}
+                    isValid={true}
                   >
                     <span className="p-5">Login</span>
                   </Button>
