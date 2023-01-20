@@ -7,7 +7,11 @@ import { SocialMediaLoginOptions, TextField } from 'components';
 import Button from 'components/button';
 import MainHeading from 'components/main-heading';
 import { useDispatch, useSelector } from 'react-redux';
-import { authAction, socialLoginAction } from 'redux/actions/auth.action';
+import {
+  authAction,
+  authRegisterAction,
+  socialLoginAction,
+} from 'redux/actions/auth.action';
 
 const FORM_VALIDATION = Yup.object().shape({
   email: Yup.string().email('Please enter a valid mail').required('Required'),
@@ -75,7 +79,7 @@ const Login: React.FC = () => {
                 email: val?.email,
                 password: val?.password,
               };
-              dispatch(authAction(payload));
+              dispatch(authRegisterAction(payload));
             }}
             initialValues={{ email: '', password: '', checked: [] }}
             validationSchema={FORM_VALIDATION}

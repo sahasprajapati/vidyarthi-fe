@@ -7,6 +7,8 @@ import { SocialMediaLoginOptions, TextField } from 'components';
 import Button from 'components/button';
 import MainHeading from 'components/main-heading';
 import Icon from 'assets/svg/Icon';
+import { useDispatch, useSelector } from 'react-redux';
+import { authRegisterAction } from 'redux/actions/auth.action';
 
 const FORM_VALIDATION = Yup.object().shape({
   email: Yup.string().email('Please enter a valid mail').required('Required'),
@@ -28,13 +30,17 @@ const FORM_VALIDATION = Yup.object().shape({
 });
 
 const Register: React.FC = () => {
+  const dispatch: any = useDispatch();
+  const userData: any = useSelector((state: any) => state.auth);
+
   const [errorText, setErrorText] = React.useState('');
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
   const handleRegister = async (val: {
     email: string;
     password: string;
     firstName: string;
     lastName: string;
+    cpassword: string;
   }) => {
     try {
       const payload = {
@@ -42,9 +48,26 @@ const Register: React.FC = () => {
         password: val?.password,
         firstName: val?.firstName,
         lastName: val?.lastName,
+        confirmPassword: val?.cpassword,
       };
+
+      dispatch(authRegisterAction(payload));
     } catch (err: any) {}
   };
+
+  console.log('Sahas auht', userData);
+  if (userData?.authenticate && userData?.userData && userData?.role) {
+    if (userData?.role === 'student') {
+      navigate('/student-dashboard');
+    }
+    if (userData?.role === 'super') {
+      navigate('/admin');
+    }
+    if (userData?.role === 'instructor') {
+      navigate('/teacher');
+    }
+  }
+
   return (
     <div className="row me-2">
       <div className="col-lg-6 register__image__banner">
@@ -138,6 +161,7 @@ const Register: React.FC = () => {
                     variant="primary"
                     type="submit"
                     isSubmitting={isSubmitting}
+                    isValid={true}
                   >
                     <span className="p-5">Register</span>
                   </Button>

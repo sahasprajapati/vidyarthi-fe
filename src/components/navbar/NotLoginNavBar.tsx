@@ -48,12 +48,12 @@ const NotLoginNavBar: React.FC<Props> = ({ variant }) => {
         </NavLink>
 
         <Link to="/login" className="mx-3">
-          <Button type="button" variant="outline">
+          <Button type="button" variant="outline" isValid={true}>
             <span className="p-3">Login</span>
           </Button>
         </Link>
         <Link to="/register" className="mx-3">
-          <Button type="button" variant="primary">
+          <Button type="button" variant="primary" isValid={true}>
             <span className="p-2">Register</span>
           </Button>
         </Link>
