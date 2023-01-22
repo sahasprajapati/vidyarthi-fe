@@ -13,9 +13,18 @@ import {
   // ratingData,
 } from './courseDetailData';
 import { BgCourse } from 'assets/images';
+import { Course, CourseReducer } from 'redux/reducers/course.reducer';
+import { useSelector } from 'react-redux';
+import course from 'pages/admin/course';
 // import VideoTest from './VideoTest.mp4';
 
 const CourseDetail: React.FC = () => {
+  const courseData: CourseReducer = useSelector((state: any) => state.course);
+  const {
+    selectedCourse,
+  }: {
+    selectedCourse: Course;
+  } = courseData ?? {};
   const rating = 4.7;
   const review = 1023;
   const totalStudent = 20327;
@@ -34,8 +43,7 @@ const CourseDetail: React.FC = () => {
           <NavBar variant="white" />
           <div className="mt-3">
             <h6 className="course__detail__title">
-              Complete Website Responsive Design: from Figma to Webflow to
-              Website Desgin
+              {selectedCourse?.title?.toUpperCase()}
             </h6>
             <div className="flex mt-4">
               {Array(Math.round(rating))
@@ -86,47 +94,23 @@ const CourseDetail: React.FC = () => {
           <div className="col-md-8">
             <Heading title="Course Description" />
             <p className="course__dec__text mt-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Feugiat
-              eu in orci, nunc amet libero. Nam scelerisque vestibulum bibendum
-              a turpis. Ante feugiat lectus massa, odio amet. Auctor sit mattis
-              non id proin elit placerat. Lectus morbi amet et aliquam magna
-              mauris. Proin pulvinar fringilla nunc, tristique urna, massa,
-              tincidunt.
+              {selectedCourse?.description}
             </p>
-            <p className="course__dec__text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Feugiat
-              eu in orci, nunc amet libero. Nam scelerisque vestibulum bibendum
-              a turpis. Ante feugiat lectus massa, odio amet. Auctor sit mattis
-              non id proin elit placerat. Lectus morbi amet et aliquam magna
-              mauris. Proin pulvinar fringilla nunc, tristique urna, massa,
-              tincidunt.
-            </p>
-            <p className="course__dec__text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Feugiat
-              eu in orci, nunc amet libero. Nam scelerisque vestibulum bibendum
-              a turpis. Ante feugiat lectus massa, odio amet. Auctor sit mattis
-              non id proin elit placerat.
-            </p>
+
             {/* Course Descriptions */}
             <aside className="my-5">
               <Heading title="What you will Learn in this course" />
               <div className="course__detail__card mt-3">
                 <div className="row ">
                   <div className="col-md-6">
-                    {learnCourse.map((e) => (
-                      <div className="flex" key={e?.id}>
-                        <Icon name="tick" />
-                        <p className="mt-4 ms-3 fs-14"> {e?.name} </p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="col-md-6">
-                    {learnCourseSecond.map((e) => (
-                      <div className="flex" key={e?.id}>
-                        <Icon name="tick" />
-                        <p className="mt-4 ms-3 fs-14"> {e?.name} </p>
-                      </div>
-                    ))}
+                    {selectedCourse?.learnableContent?.map((content, i) => {
+                      return (
+                        <div className="flex" key={i}>
+                          <Icon name="tick" />
+                          <p className="mt-4 ms-3 fs-14"> {content} </p>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -240,7 +224,12 @@ const CourseDetail: React.FC = () => {
             </aside>
           </div>
           <div className="col-md-4">
-            <h5>hello</h5>
+            <video
+              src={selectedCourse?.trailer}
+              height="300"
+              width="100%"
+              controls={true}
+            ></video>
           </div>
         </div>
         <aside className="my-5">

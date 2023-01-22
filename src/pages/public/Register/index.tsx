@@ -168,11 +168,15 @@ const Register: React.FC = () => {
                 </div>
                 <h6 className="text-center fw-normal my-5">Or Sign Up</h6>
                 <div className="flex-center">
-                  <SocialMediaLoginOptions logo={GoogleLogo} title="Google" />
-                  <SocialMediaLoginOptions
-                    logo={FacebookLogo}
-                    title="Facebook"
-                  />
+                  <a href="/api/google">
+                    <SocialMediaLoginOptions logo={GoogleLogo} title="Google" />
+                  </a>
+                  <a href="/api/facebook">
+                    <SocialMediaLoginOptions
+                      logo={FacebookLogo}
+                      title="Facebook"
+                    />
+                  </a>
                 </div>
               </Form>
             )}

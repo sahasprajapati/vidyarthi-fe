@@ -102,7 +102,7 @@ const Login: React.FC = () => {
                     placeholder="Enter your password"
                   />
                 </div>
-                <label className="mb-2">
+                {/* <label className="mb-2">
                   <div className="flex">
                     <Field
                       type="checkbox"
@@ -113,12 +113,12 @@ const Login: React.FC = () => {
 
                     <p className="ms-3 login__qn">Remember me</p>
                   </div>
-                </label>
+                </label> */}
                 <div className="mt-2 col-6">
                   <Button
                     variant="primary"
                     type="submit"
-                    isSubmitting={isSubmitting}
+                    // isSubmitting={isSubmitting}
                     isValid={true}
                   >
                     <span className="p-5">Login</span>

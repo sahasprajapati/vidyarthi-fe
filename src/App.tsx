@@ -77,8 +77,6 @@ function App() {
           <Route element={<StudentDashBoard />} path="/student-dashboard" />
           <Route element={<StudentDashBoard />} path="/dashboard" />
 
-          <Route element={<Setting />} path="/setting" />
-
           <Route element={<StudentAchievements />} path="/achievements" />
         </Route>
         <Route element={<PrivateRoute allowedRoutes={['instructor']} />}>
@@ -93,6 +91,13 @@ function App() {
           <Route element={<AdminTransaction />} path="/admin-transaction" />
           <Route element={<AdminCourse />} path="/admin-course" />
           <Route element={<AdminDashboard />} path="/admin" />
+        </Route>
+        <Route
+          element={
+            <PrivateRoute allowedRoutes={['super', 'instructor', 'student']} />
+          }
+        >
+          <Route element={<Setting />} path="/setting" />
         </Route>
       </Routes>
     </div>
