@@ -296,7 +296,7 @@ const AddCourse: React.FC = () => {
                   <div className="col-lg-3 col-md-6 ">
                     <Field
                       name="level"
-                      options={courseSubLanguage}
+                      options={courseLevel}
                       component={CustomSelect}
                       placeholder="Select.."
                       isMulti={false}

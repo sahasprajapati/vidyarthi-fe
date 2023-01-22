@@ -9,8 +9,9 @@ const Service = axios?.create({
 
 Service.interceptors.request.use(
   (config: any) => {
-    const accessToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3NDE0MTYxMSwiZXhwIjoxNjc0MjI4MDExfQ.E2WNRDt3vYR6O4c53kseXmXXOP27iGPGPcLq0TTB4zY';
+    const accessToken = JSON.parse(
+      localStorage.getItem('accessToken') ?? 'null'
+    );
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }

@@ -1,15 +1,31 @@
 import MainHeading from 'components/main-heading';
 import { AdminLayout } from 'containers';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from 'components/button';
 import Icon from 'assets/svg/Icon';
 import formatMoney from 'utils/formatMoney';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { CourseReducer } from 'redux/reducers/course.reducer';
+import { fetchCourse } from 'redux/actions/course.action';
 
 const AdminCourse: React.FC = () => {
   const navigate = useNavigate();
   const closeRef = React.useRef<any>(null);
   const [courseOption, setCourseOption] = React.useState<any>(null);
+  const courseData: CourseReducer = useSelector((state: any) => state.course);
+  const dispatch: any = useDispatch();
+  useEffect(() => {
+    dispatch(
+      fetchCourse({
+        take: courseData.take,
+        page: courseData.page,
+        filter: courseData.filter,
+        order: courseData.order,
+      })
+    );
+  }, []);
+
   return (
     <AdminLayout>
       <div className="flex-between mt-3 mb-5">
@@ -61,74 +77,65 @@ const AdminCourse: React.FC = () => {
             </div>
           ))}
 
-        {Array(15)
-          .fill('')
-          .map((e, i) => (
-            <div className="col-lg-3 col-md-4 col-sm-6 col-12 my-3" key={i}>
-              <div className="course__card__container px-2">
-                <div className="course__card__image__container">
-                  <img
-                    src="https://leverageedublog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2019/10/23170637/Graphic-Design-Courses.jpg"
-                    alt="course"
-                  />
-                </div>
-                <div className="course__card__wrapper">
-                  <h6 className="course__card__descriptions__tag mb-3">
-                    Design course
-                  </h6>
-                  <h6 className="course__card__descriptions__title">
-                    Premiere Pro CC for Beginners: Video Editiing in Premiere
-                  </h6>
-                  <div className="course__card__info__container flex-between my-3">
-                    <div className="flex">
-                      <Icon name="star" />
-                      <h6 className="course__card__info__title ms-2 mt-2">
-                        4.5
-                      </h6>
-                    </div>
-                    <div className="flex">
-                      <Icon name="user" />
-                      <h6 className="course__card__info__count mt-2 mx-2">
-                        121 students
-                      </h6>
-                    </div>
+        {courseData?.course?.map((e, i) => (
+          <div className="col-lg-3 col-md-4 col-sm-6 col-12 my-3" key={i}>
+            <div className="course__card__container px-2">
+              <div className="course__card__image__container">
+                <img src={e?.thumbnail} alt="course" />
+              </div>
+              <div className="course__card__wrapper">
+                <h6 className="course__card__descriptions__tag mb-3">
+                  {e.level}
+                </h6>
+                <h6 className="course__card__descriptions__title">{e.title}</h6>
+                <div className="course__card__info__container flex-between my-3">
+                  <div className="flex">
+                    <Icon name="star" />
+                    <h6 className="course__card__info__title ms-2 mt-2">4.5</h6>
                   </div>
-                  <div className="flex-between course__card__bottom__container pb-3 pt-2">
-                    <h6 className="course__card__info__price">
-                      {formatMoney('3000')}
+                  <div className="flex">
+                    <Icon name="user" />
+                    <h6 className="course__card__info__count mt-2 mx-2">
+                      {(Math.random() * 100).toFixed(0)}students
                     </h6>
+                  </div>
+                </div>
+                <div className="flex-between course__card__bottom__container pb-3 pt-2">
+                  <h6 className="course__card__info__price">
+                    {formatMoney('3000')}
+                  </h6>
 
-                    <div
-                      ref={closeRef}
-                      className="course__card__info__options pointer position-relative px-1"
-                      onClick={() => {
-                        courseOption === i
-                          ? setCourseOption(null)
-                          : setCourseOption(i);
-                      }}
-                    >
-                      <Icon name="dots" />
-                      {courseOption === i && (
-                        <div className="course__options__dropdown">
-                          <div className="ms-3">
-                            <h6 className="course__options__dropdown__list">
-                              View Course
-                            </h6>
-                            <h6 className="course__options__dropdown__list">
-                              Edit Course
-                            </h6>
-                            <h6 className="course__options__dropdown__list">
-                              Delete Course
-                            </h6>
-                          </div>
+                  <div
+                    ref={closeRef}
+                    className="course__card__info__options pointer position-relative px-1"
+                    onClick={() => {
+                      courseOption === i
+                        ? setCourseOption(null)
+                        : setCourseOption(i);
+                    }}
+                  >
+                    <Icon name="dots" />
+                    {courseOption === i && (
+                      <div className="course__options__dropdown">
+                        <div className="ms-3">
+                          <h6 className="course__options__dropdown__list">
+                            View Course
+                          </h6>
+                          <h6 className="course__options__dropdown__list">
+                            Edit Course
+                          </h6>
+                          <h6 className="course__options__dropdown__list">
+                            Delete Course
+                          </h6>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-          ))}
+          </div>
+        ))}
       </div>
     </AdminLayout>
   );

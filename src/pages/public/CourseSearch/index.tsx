@@ -2,9 +2,30 @@ import Icon from 'assets/svg/Icon';
 import { Accordion, CourseCard, NavBar } from 'components';
 import Heading from 'components/heading';
 import { Footer } from 'containers';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { fetchCourse, selectCourse } from 'redux/actions/course.action';
+import { courseConstant } from 'redux/actions/course.constant';
+import { CourseReducer } from 'redux/reducers/course.reducer';
 
 const CourseSearch: React.FC = () => {
+  const dispatch: any = useDispatch();
+  const courseData: CourseReducer = useSelector((state: any) => state.course);
+
+  console.log('CourseData', courseData);
+  console.log('CourseData', courseData.course);
+  useEffect(() => {
+    dispatch(
+      fetchCourse({
+        take: courseData.take,
+        page: courseData.page,
+        filter: courseData.filter,
+        order: courseData.order,
+      })
+    );
+  }, []);
+
   const categoryData = [
     {
       id: 0,
@@ -59,6 +80,7 @@ const CourseSearch: React.FC = () => {
   //
   //
   // };n
+  const navigate = useNavigate();
 
   const newString = 'prashant khanal';
 
@@ -216,24 +238,31 @@ const CourseSearch: React.FC = () => {
           </div>
           <div className="col-md-9">
             <div className="my-3">
-              <Heading title="Search Result (30)" />
+              <Heading title={`Search Result (${courseData?.totalCount})`} />
 
               <div className="row">
-                {Array(9)
-                  .fill('')
-                  .map((e, i) => (
-                    <div className="col-md-4" key={i}>
+                {courseData?.course?.map((course, i) => {
+                  return (
+                    <div
+                      className="col-md-4"
+                      key={i}
+                      onClick={() => {
+                        dispatch(selectCourse(course));
+                        navigate('/course-detail');
+                      }}
+                    >
                       <CourseCard
                         isCourseDisplay="yes"
-                        title="How to become a good designer"
-                        descriptions="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid harum sequi vero obcaecati, reiciendis dignissimos culpa quisquam non odio veritatis."
-                        courseTag="Design Course"
+                        title={course.title}
+                        descriptions={course.description ?? undefined}
+                        courseTag={course?.level as unknown as string}
                         price="$22"
-                        imageUrl="https://images.unsplash.com/photo-1557804483-ef3ae78eca57?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1044&q=80"
+                        imageUrl={course?.thumbnail}
                         icon={<Icon name="arrow-right" />}
                       />
                     </div>
-                  ))}
+                  );
+                })}
               </div>
             </div>
           </div>
