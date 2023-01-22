@@ -7,7 +7,7 @@ import formatMoney from 'utils/formatMoney';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { CourseReducer } from 'redux/reducers/course.reducer';
-import { fetchCourse } from 'redux/actions/course.action';
+import { fetchCourse, selectCourse } from 'redux/actions/course.action';
 
 const AdminCourse: React.FC = () => {
   const navigate = useNavigate();
@@ -121,7 +121,13 @@ const AdminCourse: React.FC = () => {
                           <h6 className="course__options__dropdown__list">
                             View Course
                           </h6>
-                          <h6 className="course__options__dropdown__list">
+                          <h6
+                            className="course__options__dropdown__list"
+                            onClick={() => {
+                              dispatch(selectCourse(e));
+                              navigate('/admin-course-add');
+                            }}
+                          >
                             Edit Course
                           </h6>
                           <h6 className="course__options__dropdown__list">

@@ -62,14 +62,13 @@ export const updatePaginationArgs = (paginationArgs: PaginationArgs) => {
   };
 };
 
-export const addCourse = (createData: any) => {
+export const createCourse = (createData: any) => {
   return async (dispatch: any) => {
     try {
       const url = `/course`;
 
       const { data } = await Service.post(url, createData);
       console.log('data', data.data);
-      console.log('data', data.meta);
 
       dispatch({
         type: courseConstant.COURSE_ADD_REQUSET,
@@ -91,7 +90,8 @@ export const addCourse = (createData: any) => {
 export const updateCourse = (updateData: any) => {
   return async (dispatch: any) => {
     try {
-      const url = `/course`;
+      const url = `/course/${updateData?.id}`;
+      delete updateData.id;
 
       const { data } = await Service.patch(url, updateData);
       console.log('data', data.data);

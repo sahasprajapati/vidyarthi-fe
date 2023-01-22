@@ -224,7 +224,12 @@ const CourseDetail: React.FC = () => {
             </aside>
           </div>
           <div className="col-md-4">
-            <h5>hello</h5>
+            <video
+              src={selectedCourse?.trailer}
+              height="300"
+              width="100%"
+              controls={true}
+            ></video>
           </div>
         </div>
         <aside className="my-5">

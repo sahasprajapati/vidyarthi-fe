@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import * as Yup from 'yup';
 import { AdminLayout } from 'containers';
 import Icon from 'assets/svg/Icon';
@@ -19,6 +19,10 @@ import Heading from 'components/heading';
 import useFetch from 'hooks';
 import Service from 'setup/network';
 import toastAlert from 'utils/toast';
+import { createCourse, updateCourse } from 'redux/actions/course.action';
+import { useDispatch, useSelector } from 'react-redux';
+import { CourseReducer } from 'redux/reducers/course.reducer';
+import { useNavigate } from 'react-router-dom';
 
 // "title": "string",
 //   "subtitle": "string",
@@ -44,7 +48,7 @@ const FORM_VALIDATION = Yup.object().shape({
   language: Yup.string().required(''),
   subtitleLanguage: Yup.string(),
   level: Yup.string().required(''),
-  time: Yup.string().required('Duration is required'),
+  // time: Yup.string().required('Duration is required'),
 });
 const FORM_VALIDATION_STEP_TWO = Yup.object().shape({
   description: Yup.string()
@@ -78,19 +82,20 @@ const tabData = [
   },
   {
     id: 1,
-    label: 'step 2',
+    label: 'Preview Details',
   },
-  {
-    id: 2,
-    label: 'step 3',
-  },
-  {
-    id: 3,
-    label: 'step 4',
-  },
+  // {
+  //   id: 2,
+  //   label: 'step 3',
+  // },
+  // {
+  //   id: 3,
+  //   label: 'step 4',
+  // },
 ];
 
 const AddCourse: React.FC = () => {
+  const dispatch: any = useDispatch();
   const inputImageRef = React.useRef<any>(null);
   const inputVideoRef = React.useRef<any>(null);
   const inputSkillImageRef = React.useRef<any>(null);
@@ -102,7 +107,10 @@ const AddCourse: React.FC = () => {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const [videoSourceUrl, setVideoSourceUrl] = React.useState('');
   const [videoProgressReport, setVideoProgressReport] = React.useState(0);
+  const courseData: CourseReducer = useSelector((state: any) => state.course);
+  console.log('Sahas sekectedCourse', courseData?.selectedCourse);
 
+  const navigate = useNavigate();
   const { data: categoryData } = useFetch('/category');
   const { data: subCategoryData } = useFetch(
     `/category/sub/${courseCategoryId}`
@@ -133,24 +141,14 @@ const AddCourse: React.FC = () => {
     ],
   };
 
-  const initValues = {
-    title: '',
-    subtitle: '',
-    categoryId: '',
-    subCategoryId: '',
-    topic: '',
-    language: '',
-    subtitleLanguage: '',
-    level: '',
-    time: '',
-  };
-  const handleUploadImageFile = async (e: any) => {
+  const handleUploadImageFile = async (e: any, setFieldValue: any) => {
     const file = new FormData();
     setPreviewImageUrl(e?.target?.files[0]);
 
     file.append('file', e?.target?.files[0]);
     try {
       const request = await Service.post('/upload/file', file);
+      setFieldValue('thumbnail', request?.data?.data?.url);
     } catch (error) {}
   };
 
@@ -164,16 +162,19 @@ const AddCourse: React.FC = () => {
   };
 
   const handleChangeVideo = async (
-    event: React.ChangeEvent<HTMLInputElement> | any
+    event: React.ChangeEvent<HTMLInputElement> | any,
+    setFieldValue: any
   ) => {
     const file = new FormData();
     const files = event?.target?.files[0];
     file.append('file', files);
-    const videoUrl = URL.createObjectURL(files);
-    setVideoSourceUrl(videoUrl);
+    // const videoUrl = URL.createObjectURL(files);
+    // setVideoSourceUrl(videoUrl);
     try {
       const request = await Service.post('/upload/video', file, configs);
       console.log('this is requrest', request);
+      setVideoSourceUrl(request?.data?.data?.url);
+      setFieldValue('trailer', request?.data?.data?.url);
     } catch (error) {}
   };
 
@@ -192,27 +193,82 @@ const AddCourse: React.FC = () => {
     [previewImage]
   );
   const previewVideoDiv = React.useMemo(
-    () => <video src={videoSourceUrl} width="230px" height="160px" controls />,
+    () => (
+      <video
+        src={videoSourceUrl}
+        width="230px"
+        height="160px"
+        controls
+        autoPlay
+      />
+    ),
     [previewImage]
   );
 
   const handleStepOneSubmit = async (val: any, { resetForm }: any) => {
-    try {
-      const request = await Service.post('/course', val);
-      if (request?.status === 201) {
-        toastAlert('success', request?.data?.message);
-        resetForm({ val: '' });
-      }
-      console.log('this si reqew', request);
-    } catch (err: any) {
-      toastAlert('error', err?.response?.data?.message);
+    // try {
+    //   const request = await Service.post('/course', val);
+    //   if (request?.status === 201) {
+    //     toastAlert('success', request?.data?.message);
+    //     resetForm({ val: '' });
+    //   }
+    //   console.log('this si reqew', request);
+    // } catch (err: any) {
+    //   toastAlert('error', err?.response?.data?.message);
+    // }
+
+    console.log('Sahas data', val);
+
+    if (courseData?.selectedCourse?.id) {
+      dispatch(
+        updateCourse({
+          ...val,
+          id: courseData?.selectedCourse?.id,
+        })
+      );
+    } else {
+      dispatch(
+        createCourse({
+          ...val,
+        })
+      );
     }
   };
 
   const handleSecondStep = (val: any) => {
-    console.log('second step', val);
+    if (val?.learnableContent?.length > 0) {
+      val.learnableContent = val.learnableContent?.map((content: any) => {
+        return content?.title;
+      });
+    }
+    if (val?.skills?.length > 0) {
+      val.skills = val.skills?.map((content: any) => {
+        return content?.title;
+      });
+    }
+
+    console.log('Ses des', val);
+    dispatch(
+      updateCourse({
+        ...val,
+        id: courseData?.selectedCourse?.id,
+      })
+    );
+    // navigate('/admin-course');
   };
 
+  useEffect(() => {
+    if (courseData.selectedCourse) {
+      setActiveIndex(activeIndex + 1);
+    }
+  }, [courseData.selectedCourse]);
+
+  useEffect(() => {
+    setActiveIndex(0);
+  }, []);
+  console.log('WHWWWW', courseData?.selectedCourse);
+
+  // console.log('Category options', categoryOptions);
   return (
     <AdminLayout>
       <Tabs
@@ -222,7 +278,16 @@ const AddCourse: React.FC = () => {
       />
       {activeIndex === 0 && (
         <Formik
-          initialValues={initValues}
+          initialValues={{
+            title: courseData?.selectedCourse?.title,
+            subtitle: courseData?.selectedCourse?.subtitle,
+            categoryId: courseData?.selectedCourse?.categoryId + '',
+            subCategoryId: courseData?.selectedCourse?.subCategoryId + '',
+            topic: courseData?.selectedCourse?.topic,
+            language: courseData?.selectedCourse?.language,
+            subtitleLanguage: courseData?.selectedCourse?.subtitleLanguage,
+            level: courseData?.selectedCourse?.level,
+          }}
           validationSchema={FORM_VALIDATION}
           validateOnMount
           onSubmit={handleStepOneSubmit}
@@ -303,20 +368,20 @@ const AddCourse: React.FC = () => {
                       label="Course Level"
                     />
                   </div>
-                  <div className="col-lg-3 col-md-6 mt-2">
+                  {/* <div className="col-lg-3 col-md-6 mt-2">
                     <TextField
                       label={'Duration'}
                       name="time"
                       placeholder="course duration"
                     />
-                  </div>
+                  </div> */}
                   <div className="flex flex-end my-5">
                     <Button
                       variant="primary"
                       type="submit"
                       isSubmitting={isSubmitting}
                       isValid={isValid}
-                      onClick={() => setActiveIndex(activeIndex + 1)}
+                      // onClick={() => setActiveIndex(activeIndex + 1)}
                     >
                       Save & Next
                     </Button>
@@ -330,12 +395,18 @@ const AddCourse: React.FC = () => {
       )}
       {activeIndex === 1 && (
         <Formik
-          initialValues={initValuesOne}
-          validationSchema={FORM_VALIDATION_STEP_TWO}
-          validateOnMount
+          initialValues={{
+            thumbnail: courseData?.selectedCourse?.thumbnail,
+            trailer: courseData?.selectedCourse?.trailer,
+            description: courseData?.selectedCourse?.description,
+            learnableContent: courseData?.selectedCourse?.learnableContent,
+            skills: courseData?.selectedCourse?.skills,
+          }}
+          // validationSchema={FORM_VALIDATION_STEP_TWO}
+          // validateOnMount
           onSubmit={handleSecondStep}
         >
-          {({ isSubmitting, isValid, values }) => (
+          {({ isSubmitting, isValid, values, setFieldValue }) => (
             <>
               <Form>
                 <Card>
@@ -353,7 +424,9 @@ const AddCourse: React.FC = () => {
                             name=""
                             id=""
                             accept="image/png, image/jpeg, image/jpg"
-                            onChange={handleUploadImageFile}
+                            onChange={(e) =>
+                              handleUploadImageFile(e, setFieldValue)
+                            }
                           />
                           {previewImage ? (
                             previewImageDiv
@@ -406,7 +479,9 @@ const AddCourse: React.FC = () => {
                             name="thumbnail"
                             accept=".mp4"
                             id=""
-                            onChange={handleChangeVideo}
+                            onChange={(e) =>
+                              handleChangeVideo(e, setFieldValue)
+                            }
                           />
                           {videoSourceUrl ? (
                             previewVideoDiv
@@ -461,7 +536,7 @@ const AddCourse: React.FC = () => {
                   <div className="my-5">
                     <div className="flex-between">
                       <h6 className="course__upload__adv__info__title my-5">
-                        Course Thumbnail
+                        Learnable Content
                       </h6>
 
                       <Button variant="outline" type="button" isValid>
@@ -478,12 +553,12 @@ const AddCourse: React.FC = () => {
                     </div>
                     <FieldArray name="learnableContent">
                       {({ push }) =>
-                        values.learnableContent.map((_, idx) => (
+                        values.learnableContent.map((_: any, idx: number) => (
                           <>
                             <TextField
                               label={idx + 1}
-                              name={`learnCourse.${idx}.title`}
-                              placeholder="What you will teach in this course..."
+                              name={`learnableContent.${idx}.title`}
+                              placeholder="W  hat you will teach in this course..."
                             />
                             <button
                               type="button"
@@ -520,7 +595,7 @@ const AddCourse: React.FC = () => {
                     </div>
                     <FieldArray name="skills">
                       {({ push }) =>
-                        values.skills.map((_, idx) => (
+                        values.skills.map((_: any, idx: number) => (
                           <>
                             <TextField
                               label={idx + 1}
@@ -546,11 +621,12 @@ const AddCourse: React.FC = () => {
                     <Button
                       variant="primary"
                       type="submit"
-                      isSubmitting={isSubmitting}
-                      isValid={isValid}
-                      onClick={() => setActiveIndex(activeIndex + 1)}
+                      // isSubmitting={isSubmitting}
+                      // isValid={isValid}
+                      onClick={() => console.log('Sdfsdf')}
+                      isValid={true}
                     >
-                      Save & Next
+                      Save
                     </Button>
                   </div>
                 </Card>
