@@ -15,6 +15,7 @@ const LoginNavBar: React.FC<Props> = ({ imageUrl, variant }) => {
         <img
           src={variant === 'white' ? VidyarthiWhiteLogo : VidyarthiLogo}
           alt="main-logo"
+          width={20}
         />
       </Link>
       <div className="navlist__mobile__menu">

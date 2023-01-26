@@ -68,6 +68,8 @@ function App() {
         <Route element={<NotFound />} path="/*" />
         <Route element={<CourseSearch />} path="/course" />
         <Route element={<CourseDetail />} path="/course-detail" />
+        <Route element={<AdminCourse />} path="/admin-course" />
+        <Route element={<AdminAddCourse />} path="/admin-course-add" />
 
         <Route element={<PrivateRoute allowedRoutes={['student']} />}>
           <Route element={<StudentCourse />} path="/student-course" />
@@ -86,10 +88,9 @@ function App() {
         </Route>
 
         <Route element={<PrivateRoute allowedRoutes={['super']} />}>
-          <Route element={<AdminAddCourse />} path="/admin-course-add" />
           <Route element={<AdminTransaction />} path="/admin-transaction" />
           <Route element={<AdminTransaction />} path="/admin-transaction" />
-          <Route element={<AdminCourse />} path="/admin-course" />
+
           <Route element={<AdminDashboard />} path="/admin" />
         </Route>
         <Route

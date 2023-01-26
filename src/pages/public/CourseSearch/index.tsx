@@ -13,6 +13,8 @@ const CourseSearch: React.FC = () => {
   const dispatch: any = useDispatch();
   const courseData: CourseReducer = useSelector((state: any) => state.course);
 
+  const [searchText, setSearchText] = React.useState('');
+
   console.log('CourseData', courseData);
   console.log('CourseData', courseData.course);
   useEffect(() => {
@@ -86,6 +88,16 @@ const CourseSearch: React.FC = () => {
 
   console.log('-----', newString.charAt(0).split(' ').join('').toUpperCase());
 
+  const filterCourseData = courseData.course
+    ? courseData?.course.filter((item) => {
+        if (searchText === '') {
+          return item;
+        } else {
+          return item?.title.toLowerCase().includes(searchText.toLowerCase());
+        }
+      })
+    : [];
+
   return (
     <div className="bg-home">
       <div className="container">
@@ -106,6 +118,10 @@ const CourseSearch: React.FC = () => {
                 id=""
                 placeholder="Search for courses..."
                 className="form-control shadow-none bg-transparent outline-none border-none"
+                value={searchText}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setSearchText(event?.target?.value)
+                }
               />
             </div>
           </div>
@@ -238,10 +254,10 @@ const CourseSearch: React.FC = () => {
           </div>
           <div className="col-md-9">
             <div className="my-3">
-              <Heading title={`Search Result (${courseData?.totalCount})`} />
+              <Heading title={`Search Result (${filterCourseData?.length})`} />
 
               <div className="row">
-                {courseData?.course?.map((course, i) => {
+                {filterCourseData.map((course, i) => {
                   return (
                     <div
                       className="col-md-4"

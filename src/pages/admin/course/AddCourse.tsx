@@ -84,6 +84,10 @@ const tabData = [
     id: 1,
     label: 'Preview Details',
   },
+  {
+    id: 2,
+    label: 'Course Content',
+  },
   // {
   //   id: 2,
   //   label: 'step 3',
@@ -107,8 +111,10 @@ const AddCourse: React.FC = () => {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const [videoSourceUrl, setVideoSourceUrl] = React.useState('');
   const [videoProgressReport, setVideoProgressReport] = React.useState(0);
+  const [values, setValues] = React.useState({
+    firstStepCourseId: '',
+  });
   const courseData: CourseReducer = useSelector((state: any) => state.course);
-  console.log('Sahas sekectedCourse', courseData?.selectedCourse);
 
   const navigate = useNavigate();
   const { data: categoryData } = useFetch('/category');
@@ -129,16 +135,8 @@ const AddCourse: React.FC = () => {
   //   };
   const initValuesOne = {
     description: '',
-    learnableContent: [
-      {
-        title: '',
-      },
-    ],
-    skills: [
-      {
-        title: '',
-      },
-    ],
+    learnableContent: [''],
+    skills: [''],
   };
 
   const handleUploadImageFile = async (e: any, setFieldValue: any) => {
@@ -206,67 +204,40 @@ const AddCourse: React.FC = () => {
   );
 
   const handleStepOneSubmit = async (val: any, { resetForm }: any) => {
-    // try {
-    //   const request = await Service.post('/course', val);
-    //   if (request?.status === 201) {
-    //     toastAlert('success', request?.data?.message);
-    //     resetForm({ val: '' });
-    //   }
-    //   console.log('this si reqew', request);
-    // } catch (err: any) {
-    //   toastAlert('error', err?.response?.data?.message);
-    // }
+    try {
+      const request = await Service.post('/course', val);
+      if (request?.status === 201) {
+        toastAlert('success', request?.data?.message);
+        resetForm({ val: '' });
+      }
+    } catch (err: any) {
+      toastAlert('error', err?.response?.data?.message);
+    }
 
     console.log('Sahas data', val);
 
-    if (courseData?.selectedCourse?.id) {
-      dispatch(
-        updateCourse({
-          ...val,
-          id: courseData?.selectedCourse?.id,
-        })
-      );
-    } else {
-      dispatch(
-        createCourse({
-          ...val,
-        })
-      );
-    }
+    // if (courseData?.selectedCourse?.id) {
+    //   dispatch(
+    //     updateCourse({
+    //       ...val,
+    //       id: courseData?.selectedCourse?.id,
+    //     })
+    //   );
+    // } else {
+    //   dispatch(
+    //     createCourse({
+    //       ...val,
+    //     })
+    //   );
+    // }
   };
 
   const handleSecondStep = (val: any) => {
-    if (val?.learnableContent?.length > 0) {
-      val.learnableContent = val.learnableContent?.map((content: any) => {
-        return content?.title;
-      });
-    }
-    if (val?.skills?.length > 0) {
-      val.skills = val.skills?.map((content: any) => {
-        return content?.title;
-      });
-    }
-
-    console.log('Ses des', val);
-    dispatch(
-      updateCourse({
-        ...val,
-        id: courseData?.selectedCourse?.id,
-      })
-    );
     // navigate('/admin-course');
+    console.log('this si values', val);
   };
 
-  useEffect(() => {
-    if (courseData.selectedCourse) {
-      setActiveIndex(activeIndex + 1);
-    }
-  }, [courseData.selectedCourse]);
-
-  useEffect(() => {
-    setActiveIndex(0);
-  }, []);
-  console.log('WHWWWW', courseData?.selectedCourse);
+  useEffect(() => {}, []);
 
   // console.log('Category options', categoryOptions);
   return (
@@ -396,11 +367,11 @@ const AddCourse: React.FC = () => {
       {activeIndex === 1 && (
         <Formik
           initialValues={{
-            thumbnail: courseData?.selectedCourse?.thumbnail,
-            trailer: courseData?.selectedCourse?.trailer,
-            description: courseData?.selectedCourse?.description,
-            learnableContent: courseData?.selectedCourse?.learnableContent,
-            skills: courseData?.selectedCourse?.skills,
+            thumbnail: '',
+            trailer: '',
+            description: '',
+            learnableContent: [''],
+            skills: [''],
           }}
           // validationSchema={FORM_VALIDATION_STEP_TWO}
           // validateOnMount
@@ -552,18 +523,18 @@ const AddCourse: React.FC = () => {
                       </Button>
                     </div>
                     <FieldArray name="learnableContent">
-                      {({ push }) =>
+                      {({ insert }) =>
                         values.learnableContent.map((_: any, idx: number) => (
                           <>
                             <TextField
                               label={idx + 1}
-                              name={`learnableContent.${idx}.title`}
-                              placeholder="W  hat you will teach in this course..."
+                              name={`learnableContent.${idx}`}
+                              placeholder="What you will teach in this course..."
                             />
                             <button
                               type="button"
                               className="secondary"
-                              onClick={() => push({ title: '' })}
+                              onClick={() => insert(idx, '')}
                               hidden
                               ref={inputAddMore}
                             >
@@ -594,19 +565,19 @@ const AddCourse: React.FC = () => {
                       </Button>
                     </div>
                     <FieldArray name="skills">
-                      {({ push }) =>
+                      {({ insert }) =>
                         values.skills.map((_: any, idx: number) => (
                           <>
                             <TextField
                               label={idx + 1}
-                              name={`skills.${idx}.title`}
+                              name={`skills.${idx}`}
                               placeholder="What you will teach in this course..."
                               key={idx}
                             />
                             <button
                               type="button"
                               className="secondary"
-                              onClick={() => push({ title: '' })}
+                              onClick={() => insert(idx, '')}
                               hidden
                               ref={inputSkillImageRef}
                             >
@@ -623,7 +594,6 @@ const AddCourse: React.FC = () => {
                       type="submit"
                       // isSubmitting={isSubmitting}
                       // isValid={isValid}
-                      onClick={() => console.log('Sdfsdf')}
                       isValid={true}
                     >
                       Save
@@ -635,7 +605,143 @@ const AddCourse: React.FC = () => {
           )}
         </Formik>
       )}
-      {activeIndex === 2 && <div className="">step 3</div>}
+      {activeIndex === 2 && (
+        <div className="">
+          <div className="my-4">
+            <Heading title={'Curriculum'} />
+          </div>
+          <div className="flex-between my-5">
+            <div className="flex">
+              <Icon name="menu" height={20} />
+              <p>Section 01: section name</p>
+            </div>
+
+            <div className="flex">
+              <Icon name="trash" height={20} />
+              <Icon name="plus" height={20} />
+            </div>
+          </div>
+
+          <Formik
+            initialValues={{
+              thumbnail: '',
+              trailer: '',
+              description: '',
+              learnableContent: [''],
+              skills: [''],
+            }}
+            // validationSchema={FORM_VALIDATION_STEP_TWO}
+            // validateOnMount
+            onSubmit={handleSecondStep}
+          >
+            {({ isSubmitting, isValid, values, setFieldValue }) => (
+              <>
+                <Form>
+                  <Card>
+                    <div className="row">{/* course thumbnail */}</div>
+                    <BorderBottom />
+                    <div className="my-5">
+                      <div className="flex-between">
+                        <h6 className="course__upload__adv__info__title my-5">
+                          Learnable Content
+                        </h6>
+
+                        <Button variant="outline" type="button" isValid>
+                          <div className="flex">
+                            <Icon name="plus" />
+                            <span
+                              className="ms-2"
+                              onClick={() => inputAddMore.current.click()}
+                            >
+                              Add New
+                            </span>
+                          </div>
+                        </Button>
+                      </div>
+                      <FieldArray name="learnableContent">
+                        {({ insert }) =>
+                          values.learnableContent.map((_: any, idx: number) => (
+                            <>
+                              <TextField
+                                label={idx + 1}
+                                name={`learnableContent.${idx}`}
+                                placeholder="What you will teach in this course..."
+                              />
+                              <button
+                                type="button"
+                                className="secondary"
+                                onClick={() => insert(idx, '')}
+                                hidden
+                                ref={inputAddMore}
+                              >
+                                Add Friend
+                              </button>
+                            </>
+                          ))
+                        }
+                      </FieldArray>
+                    </div>
+                    {/* What skill you get (4/8) */}
+                    <BorderBottom />
+                    <div className="my-5">
+                      <div className="flex-between">
+                        <h6 className="course__upload__adv__info__title my-5">
+                          What skill you get
+                        </h6>
+                        <Button variant="outline" type="button" isValid>
+                          <div className="flex">
+                            <Icon name="plus" />
+                            <span
+                              className="ms-2"
+                              onClick={() => inputSkillImageRef.current.click()}
+                            >
+                              Add New
+                            </span>
+                          </div>
+                        </Button>
+                      </div>
+                      <FieldArray name="skills">
+                        {({ insert }) =>
+                          values.skills.map((_: any, idx: number) => (
+                            <>
+                              <TextField
+                                label={idx + 1}
+                                name={`skills.${idx}`}
+                                placeholder="What you will teach in this course..."
+                                key={idx}
+                              />
+                              <button
+                                type="button"
+                                className="secondary"
+                                onClick={() => insert(idx, '')}
+                                hidden
+                                ref={inputSkillImageRef}
+                              >
+                                Add Friend
+                              </button>
+                            </>
+                          ))
+                        }
+                      </FieldArray>
+                    </div>
+                    <div className="flex flex-end my-5">
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        // isSubmitting={isSubmitting}
+                        // isValid={isValid}
+                        isValid={true}
+                      >
+                        Save
+                      </Button>
+                    </div>
+                  </Card>
+                </Form>
+              </>
+            )}
+          </Formik>
+        </div>
+      )}
     </AdminLayout>
   );
 };
