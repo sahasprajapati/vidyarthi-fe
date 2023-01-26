@@ -42,6 +42,32 @@ export const fetchCourse = (paginationArgs: PaginationArgs) => {
   };
 };
 
+export const fetchCourseById = (id: number) => {
+  return async (dispatch: any) => {
+    try {
+      const url = `/course/${id}`;
+
+      const { data } = await Service.get(url);
+      console.log('data', data.data);
+      console.log('data', data.meta);
+
+      dispatch({
+        type: courseConstant.COURSE_SELECTED_COURSE,
+        payload: {
+          data: {
+            course: data.data,
+          },
+        },
+      });
+    } catch (err: any) {
+      dispatch({
+        type: courseConstant.COURSE_FETCH_FAILED,
+        payload: err?.response?.data?.message,
+      });
+    }
+  };
+};
+
 export const updatePaginationArgs = (paginationArgs: PaginationArgs) => {
   return async (dispatch: any) => {
     try {

@@ -67,7 +67,7 @@ function App() {
         <Route element={<ContactUs />} path="/contact-us" />
         <Route element={<NotFound />} path="/*" />
         <Route element={<CourseSearch />} path="/course" />
-        <Route element={<CourseDetail />} path="/course-detail" />
+        <Route element={<CourseDetail />} path="/course-detail/:courseId" />
 
         <Route element={<PrivateRoute allowedRoutes={['student']} />}>
           <Route element={<StudentCourse />} path="/student-course" />

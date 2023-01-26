@@ -20,6 +20,35 @@ export enum Level {
   PROFESSIONAL,
 }
 
+export type Note = {
+  id: number;
+
+  noteDescription?: string;
+
+  // urls to note files
+  noteFiles: string[];
+};
+export type Lecture = {
+  id: number;
+  name: string;
+
+  listOrder: number;
+  description?: string;
+  length: string;
+  note?: Note;
+  section?: Section;
+  // url video
+  video: string;
+};
+
+export type Section = {
+  id: number;
+  name: string;
+
+  listOrder: number;
+  lectures: Lecture[];
+};
+
 export type Course = {
   id: number;
   courseId: string;
@@ -43,6 +72,7 @@ export type Course = {
   congratulationMessage: string;
   thumbnail: string;
   trailer: string;
+  sections: Section[];
 };
 
 export type PaginationArgs = {

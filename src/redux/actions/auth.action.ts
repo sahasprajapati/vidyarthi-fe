@@ -117,12 +117,9 @@ export const fetchProfile = async (data: {
       Authorization: `Bearer ${data?.accessToken}`,
     },
   });
-  window.localStorage.setItem('accessToken', JSON.stringify(data?.accessToken));
-  window.localStorage.setItem(
-    'refreshToken',
-    JSON.stringify(data?.refreshToken)
-  );
-  window.localStorage.setItem('role', JSON.stringify(data?.role));
+  window.localStorage.setItem('accessToken', data?.accessToken);
+  window.localStorage.setItem('refreshToken', data?.refreshToken);
+  window.localStorage.setItem('role', data?.role);
   window.localStorage.setItem('user', JSON.stringify(resData?.data));
 
   return resData?.data;
