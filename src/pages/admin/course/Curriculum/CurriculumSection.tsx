@@ -129,11 +129,13 @@ const CurriculumSection = ({
         </div>
         {sections?.map((section, i) => {
           return (
-            <div key={i}>
+            <div key={i} className="mb-5">
               <div className="flex-between mt-5">
                 <div className="flex">
                   <Icon name="menu" height={20} />
-                  <p>{`Section ${i + 1}: ${section?.name}`}</p>
+                  <p className="mt-3 ms-3">{`Section ${i + 1}: ${
+                    section?.name
+                  }`}</p>
                 </div>
 
                 <div className="flex">
@@ -142,7 +144,7 @@ const CurriculumSection = ({
                       handleSectionDelete(i);
                     }}
                   >
-                    <Icon name="trash" height={20} />
+                    <Icon name="trash" height={18} />
                   </div>
                   <div
                     onClick={() => {
@@ -151,6 +153,7 @@ const CurriculumSection = ({
                         section: i,
                       });
                     }}
+                    className="mx-3 f-14"
                   >
                     Edit
                   </div>
@@ -159,7 +162,7 @@ const CurriculumSection = ({
                       handleLectureAdd(i);
                     }}
                   >
-                    <Icon name="plus" height={20} />
+                    <Icon name="plus" height={24} />
                   </div>
                 </div>
               </div>
@@ -169,7 +172,7 @@ const CurriculumSection = ({
                   <div className="flex-between px-5 py-2" key={li}>
                     <div className="flex">
                       <Icon name="menu" height={20} />
-                      <p>{lecture?.name}</p>
+                      <p className="mt-3 ms-3">{lecture?.name}</p>
                     </div>
 
                     <div className="flex">
@@ -221,6 +224,7 @@ const CurriculumSection = ({
                             lecture: li,
                           });
                         }}
+                        className="mx-3 f-14"
                       >
                         Edit
                       </div>
@@ -230,7 +234,7 @@ const CurriculumSection = ({
                           handleLectureDelete(i, li);
                         }}
                       >
-                        <Icon name="trash" height={20} />
+                        <Icon name="trash" height={18} />
                       </div>
                     </div>
                   </div>
@@ -240,15 +244,17 @@ const CurriculumSection = ({
           );
         })}
 
-        <div
-          className="flex"
+        <Button
+          variant="secondary"
+          type="button"
+          isValid={true}
           onClick={() => {
             handleSectionAdd();
           }}
+          className="w-100 py-1"
         >
-          Add Section
-          <Icon name="plus" height={20} />
-        </div>
+          <p className="text-center mt-3">Add Section</p>
+        </Button>
         <div className="flex flex-end my-5">
           <Button
             variant="primary"
