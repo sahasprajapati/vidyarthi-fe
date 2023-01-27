@@ -9,9 +9,8 @@ const Service = axios?.create({
 
 Service.interceptors.request.use(
   (config: any) => {
-    const accessToken = JSON.parse(
-      localStorage.getItem('accessToken') ?? 'null'
-    );
+    const token = localStorage.getItem('accessToken');
+    const accessToken = token;
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }

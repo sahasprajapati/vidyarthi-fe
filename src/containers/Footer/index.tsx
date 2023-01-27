@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
       <div className="container">
         <div className="row py-5">
           <div className="col-lg-6 col-md-6 col-sm-6">
-            <img src={VidyarthiWhiteLogo} alt="vidyathilogo" />
+            <img src={VidyarthiWhiteLogo} alt="vidyathilogo" height={100} />
             <p className="footer__leftside__subtitle mt-3">
               Yet bed any for travelling assistance indulgence unpleasing. Not
               thoughts all exercise blessing. Indulgence way everything joy
@@ -70,9 +70,9 @@ const Footer: React.FC = () => {
           ))}
         </div>
         <div className="pb-4">
-          <span className="footer__copyright__text">&copy; - {todayYear}</span>
-          <span className="footer__copyright__bold">Viyarthi</span>
-          <span className="footer__copyright__text">. All right reserved</span>
+          <span className="footer__copyright__text">&copy; - {todayYear} </span>
+          <span className="footer__copyright__bold">Vidyarthi Nepal.</span>
+          <span className="footer__copyright__text"> All right reserved</span>
         </div>
       </div>
     </footer>

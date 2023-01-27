@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FieldProps } from 'formik';
 import { memo } from 'react';
 import Select from 'react-select';
@@ -25,6 +25,7 @@ export const CustomSelect = ({
   label,
   isMulti = false,
 }: CustomSelectProps) => {
+  const [initialValue, setInitialValue] = useState();
   const selectOptions = options
     ? options?.map((item: { name: string; id: string }) => {
         return {
@@ -47,11 +48,17 @@ export const CustomSelect = ({
         ? selectOptions.filter(
             (option: any) => field.value.indexOf(option.label) >= 0
           )
-        : selectOptions.find((option: any) => option.label === field.value);
+        : selectOptions.find(
+            (option: any) => option.value + '' === field.value + ''
+          );
     } else {
       return isMulti ? [] : ('' as any);
     }
   };
+
+  useEffect(() => {
+    setInitialValue(getValue());
+  }, [options]);
   return (
     <>
       <label className="input__label  mt-4" htmlFor={field.name}>
@@ -60,7 +67,7 @@ export const CustomSelect = ({
       <Select
         className={`${className} mb-4`}
         name={field.name}
-        value={getValue()}
+        value={initialValue}
         onChange={onChange}
         placeholder={placeholder}
         options={selectOptions}

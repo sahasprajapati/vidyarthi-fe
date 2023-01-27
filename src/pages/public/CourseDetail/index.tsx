@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Accordion, CourseCard, NavBar } from 'components';
 import { Footer } from 'containers';
 import Icon from 'assets/svg/Icon';
@@ -14,8 +14,10 @@ import {
 } from './courseDetailData';
 import { BgCourse } from 'assets/images';
 import { Course, CourseReducer } from 'redux/reducers/course.reducer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import course from 'pages/admin/course';
+import { useParams } from 'react-router-dom';
+import { fetchCourseById } from 'redux/actions/course.action';
 // import VideoTest from './VideoTest.mp4';
 
 const CourseDetail: React.FC = () => {
@@ -28,6 +30,11 @@ const CourseDetail: React.FC = () => {
   const rating = 4.7;
   const review = 1023;
   const totalStudent = 20327;
+  const { courseId } = useParams();
+  const dispatch: any = useDispatch();
+  useEffect(() => {
+    dispatch(fetchCourseById(+(courseId ?? '')));
+  }, []);
   return (
     <main className="bg-main">
       <div
@@ -119,13 +126,15 @@ const CourseDetail: React.FC = () => {
             <aside className="my-5">
               <Heading title="Curriculum" />
               <div className="course__detail__card">
-                {courseCurriculum.map((e, i) => (
+                {selectedCourse?.sections?.map((section, i) => (
                   <div className="course__curriculum__container" key={i}>
-                    <Accordion title={e?.title} variant="small">
-                      {e?.content.map((el, i) => (
+                    <Accordion title={section?.name} variant="small">
+                      {section?.lectures?.map((lecture, i) => (
                         <div className="flex-between mt-4 mx-1 " key={i}>
-                          <p className="f-16">{el.title}</p>
-                          <p className="course__detail__length">{el?.length}</p>
+                          <p className="f-16">{lecture.name}</p>
+                          <p className="course__detail__length">
+                            {lecture.description}
+                          </p>
                         </div>
                       ))}
                     </Accordion>

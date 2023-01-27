@@ -10,8 +10,6 @@ export const fetchCourse = (paginationArgs: PaginationArgs) => {
         url += `&filter=${paginationArgs?.filter}`;
       }
       const { data } = await Service.get(url);
-      console.log('data', data.data);
-      console.log('data', data.meta);
 
       dispatch({
         type: courseConstant.COURSE_FETCH_SUCCESS,
@@ -30,6 +28,30 @@ export const fetchCourse = (paginationArgs: PaginationArgs) => {
             totalCount: data?.meta?.itemCount,
             hasNextPage: data?.meta?.hasNextPage,
             hasPreviousPage: data?.meta?.hasPreviousPage,
+          },
+        },
+      });
+    } catch (err: any) {
+      dispatch({
+        type: courseConstant.COURSE_FETCH_FAILED,
+        payload: err?.response?.data?.message,
+      });
+    }
+  };
+};
+
+export const fetchCourseById = (id: number) => {
+  return async (dispatch: any) => {
+    try {
+      const url = `/course/${id}`;
+
+      const { data } = await Service.get(url);
+
+      dispatch({
+        type: courseConstant.COURSE_SELECTED_COURSE,
+        payload: {
+          data: {
+            course: data.data,
           },
         },
       });
@@ -68,7 +90,6 @@ export const createCourse = (createData: any) => {
       const url = `/course`;
 
       const { data } = await Service.post(url, createData);
-      console.log('data', data.data);
 
       dispatch({
         type: courseConstant.COURSE_ADD_REQUSET,
@@ -94,8 +115,6 @@ export const updateCourse = (updateData: any) => {
       delete updateData.id;
 
       const { data } = await Service.patch(url, updateData);
-      console.log('data', data.data);
-      console.log('data', data.meta);
 
       dispatch({
         type: courseConstant.COURSE_ADD_SUCCESS,

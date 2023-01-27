@@ -12,30 +12,20 @@ const AboutUs: React.FC<IProps> = ({}) => {
         <NavBar variant="black" />
         <Heading title={'About Us'} className="text-center mb-5" />
         <p className="f-14">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum,
-          soluta? Quas, impedit rem qui consectetur atque optio eveniet, soluta
-          ab maiores cum et saepe totam fuga amet aspernatur quis similique
-          voluptatibus voluptatum ipsa magni. Architecto blanditiis accusantium
-          laborum. Vero excepturi totam voluptas dolorum ipsam dolores,
-          dignissimos tenetur quod libero amet quam! Accusantium magnam eos,
-          ipsum aut cupiditate quas neque, consectetur reprehenderit quos
-          dolorem enim excepturi amet voluptatibus blanditiis eligendi illo
-          voluptatum, et impedit? Sunt dolorum temporibus recusandae modi
-          asperiores corporis! Cumque, dolorum culpa. Corrupti magnam
-          blanditiis, eveniet incidunt at ducimus iusto explicabo qui ipsam
-          suscipit tempora quo, minus soluta impedit similique doloribus dolorum
-          optio. Voluptatem quo magni dolores distinctio dolorum, earum id
-          similique dicta eligendi porro adipisci veniam deleniti iusto animi
-          aperiam necessitatibus molestiae corporis tenetur. Pariatur ipsum
-          architecto accusamus debitis, sequi dolorum alias saepe ex provident
-          velit? Ea doloribus error dicta culpa commodi ab accusantium repellat
-          quos totam ullam consequuntur labore nam quis repellendus
-          exercitationem aliquam at, magnam odit repudiandae? Soluta cupiditate
-          error rerum nulla consequuntur exercitationem odit deleniti,
-          distinctio architecto est sed quas nesciunt asperiores veritatis
-          voluptas? Nostrum incidunt autem quam laboriosam blanditiis nam porro,
-          error saepe eos veniam ad nesciunt dolores qui! Deleniti dolores modi
-          ipsa possimus.
+          {` We are an online education platform that aims to reform the online
+          education industry in the country. At Vidyarthi, we aim for much more
+          than just teaching; our goal is to get young Nepalese minds on par
+          with global standards through effective, goal-oriented education
+          imparting essential skills that are (or will soon be) a “Must Know” in
+          order to survive, excel and grow. We are a value-driven firm with a
+          special emphasis on minimizing our costs to make our products and
+          services affordable for everyone. We are well aware, however, that
+          learning does not stop at school. Vidyarthi thus provides
+          opportunities not only for children but also for adults and young
+          professionals to develop their skill sets. Whether it’s upskilling or
+          getting ready for your career; whether you're learning for fun or for
+          your personal well-being, or whether you're learning to increase your
+          self-worth or to earn more; Vidyarthi does it all.`}
         </p>
       </div>
       <Footer />

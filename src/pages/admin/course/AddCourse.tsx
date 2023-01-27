@@ -5,13 +5,7 @@ import { AdminLayout } from 'containers';
 import Icon from 'assets/svg/Icon';
 import Button from 'components/button';
 import { defaultImage } from 'assets/images';
-import {
-  BorderBottom,
-  CustomSelect,
-  Editor,
-  TextField,
-  Tabs,
-} from 'components';
+import { BorderBottom, CustomSelect, TextField, Tabs } from 'components';
 import Card from 'components/card';
 import { Field, FieldArray, Form, Formik } from 'formik';
 import MainHeading from 'components/main-heading';
@@ -19,11 +13,15 @@ import Heading from 'components/heading';
 import useFetch from 'hooks';
 import Service from 'setup/network';
 import toastAlert from 'utils/toast';
-import { createCourse, updateCourse } from 'redux/actions/course.action';
+import {
+  createCourse,
+  selectCourse,
+  updateCourse,
+} from 'redux/actions/course.action';
 import { useDispatch, useSelector } from 'react-redux';
 import { CourseReducer } from 'redux/reducers/course.reducer';
 import { useNavigate } from 'react-router-dom';
-
+import CurriculumSection from './Curriculum/CurriculumSection';
 // "title": "string",
 //   "subtitle": "string",
 //   "categoryId": 0,
@@ -84,6 +82,14 @@ const tabData = [
     id: 1,
     label: 'Preview Details',
   },
+  {
+    id: 2,
+    label: 'Course Content',
+  },
+  {
+    id: 3,
+    label: 'Publish Course',
+  },
   // {
   //   id: 2,
   //   label: 'step 3',
@@ -107,14 +113,21 @@ const AddCourse: React.FC = () => {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const [videoSourceUrl, setVideoSourceUrl] = React.useState('');
   const [videoProgressReport, setVideoProgressReport] = React.useState(0);
+  const [values, setValues] = React.useState({
+    firstStepCourseId: '',
+  });
   const courseData: CourseReducer = useSelector((state: any) => state.course);
-  console.log('Sahas sekectedCourse', courseData?.selectedCourse);
+  const [searchText, setSearchText] = React.useState('');
+  const [activeInstructor, setActiveInstructor] = React.useState(0);
 
   const navigate = useNavigate();
   const { data: categoryData } = useFetch('/category');
+  const { data: usersData } = useFetch('/users/instructor');
   const { data: subCategoryData } = useFetch(
     `/category/sub/${courseCategoryId}`
   );
+
+  console.log('usersss data', usersData);
 
   //   const initValues = {
   //     title: '',
@@ -129,16 +142,8 @@ const AddCourse: React.FC = () => {
   //   };
   const initValuesOne = {
     description: '',
-    learnableContent: [
-      {
-        title: '',
-      },
-    ],
-    skills: [
-      {
-        title: '',
-      },
-    ],
+    learnableContent: [''],
+    skills: [''],
   };
 
   const handleUploadImageFile = async (e: any, setFieldValue: any) => {
@@ -206,436 +211,673 @@ const AddCourse: React.FC = () => {
   );
 
   const handleStepOneSubmit = async (val: any, { resetForm }: any) => {
-    // try {
-    //   const request = await Service.post('/course', val);
-    //   if (request?.status === 201) {
-    //     toastAlert('success', request?.data?.message);
-    //     resetForm({ val: '' });
-    //   }
-    //   console.log('this si reqew', request);
-    // } catch (err: any) {
-    //   toastAlert('error', err?.response?.data?.message);
-    // }
-
-    console.log('Sahas data', val);
-
     if (courseData?.selectedCourse?.id) {
-      dispatch(
-        updateCourse({
-          ...val,
-          id: courseData?.selectedCourse?.id,
-        })
-      );
+      try {
+        const request = await Service.patch(
+          `/course/${courseData?.selectedCourse?.id}`,
+          val
+        );
+        if (request?.status === 200) {
+          toastAlert('success', request?.data?.message);
+          dispatch(selectCourse(request?.data?.data));
+          setActiveIndex(activeIndex + 1);
+        }
+      } catch (err: any) {
+        toastAlert('error', err?.response?.data?.message);
+      }
     } else {
-      dispatch(
-        createCourse({
-          ...val,
-        })
-      );
+      try {
+        const request = await Service.post('/course', val);
+
+        if (request?.status === 201) {
+          toastAlert('success', request?.data?.message);
+          dispatch(selectCourse(request?.data?.data));
+          setActiveIndex(activeIndex + 1);
+        }
+      } catch (err: any) {
+        toastAlert('error', err?.response?.data?.message);
+      }
+    }
+
+    // if (courseData?.selectedCourse?.id) {
+    //   dispatch(
+    //     updateCourse({
+    //       ...val,
+    //       id: courseData?.selectedCourse?.id,
+    //     })
+    //   );
+    // } else {
+    //   dispatch(
+    //     createCourse({
+    //       ...val,
+    //     })
+    //   );
+    // }
+  };
+
+  const handleSecondStep = async (val: any) => {
+    if (courseData?.selectedCourse?.id) {
+      try {
+        const request = await Service.patch(
+          `/course/${courseData?.selectedCourse?.id}`,
+          val
+        );
+        if (request?.status === 200) {
+          toastAlert('success', request?.data?.message);
+          dispatch(selectCourse(request?.data?.data));
+          setActiveIndex(activeIndex + 1);
+        }
+      } catch (err: any) {
+        toastAlert('error', err?.response?.data?.message);
+      }
     }
   };
 
-  const handleSecondStep = (val: any) => {
-    if (val?.learnableContent?.length > 0) {
-      val.learnableContent = val.learnableContent?.map((content: any) => {
-        return content?.title;
-      });
+  const handleThirdStep = async (val: any) => {
+    if (courseData?.selectedCourse?.id) {
+      try {
+        const request = await Service.patch(
+          `/course/${courseData?.selectedCourse?.id}`,
+          val
+        );
+        if (request?.status === 200) {
+          toastAlert('success', request?.data?.message);
+          dispatch(selectCourse(request?.data?.data));
+          setActiveIndex(activeIndex + 1);
+        }
+      } catch (err: any) {
+        toastAlert('error', err?.response?.data?.message);
+      }
     }
-    if (val?.skills?.length > 0) {
-      val.skills = val.skills?.map((content: any) => {
-        return content?.title;
-      });
-    }
+  };
 
-    console.log('Ses des', val);
-    dispatch(
-      updateCourse({
-        ...val,
-        id: courseData?.selectedCourse?.id,
+  useEffect(() => {}, []);
+
+  const filterInstructorData = usersData.data
+    ? usersData?.data.filter((item: { name: string }) => {
+        if (searchText === '') {
+          return item;
+        } else {
+          return item?.name.toLowerCase().includes(searchText.toLowerCase());
+        }
       })
-    );
-    // navigate('/admin-course');
+    : [];
+
+  const handleInstructorChoose = (item: { name: string; id: number }) => {
+    toastAlert('success', `${item?.name} instructor is selected`);
+    setActiveInstructor(item.id);
+  };
+
+  const handleFourthStep = async (val: {
+    welcomeMessage: string;
+    congratulationMessage: string;
+  }) => {
+    if (courseData?.selectedCourse?.id) {
+      try {
+        const payload = {
+          instructorIds: [activeInstructor],
+          ...val,
+        };
+        console.log('this is payloaf', payload);
+
+        const request = await Service.patch(
+          `/course/${courseData?.selectedCourse?.id}`,
+          payload
+        );
+        if (request?.status === 200) {
+          toastAlert('success', request?.data?.message);
+          dispatch(selectCourse(request?.data?.data));
+          navigate('/admin-course');
+        }
+      } catch (err: any) {
+        toastAlert('error', err?.response?.data?.message);
+      }
+    }
   };
 
   useEffect(() => {
-    if (courseData.selectedCourse) {
-      setActiveIndex(activeIndex + 1);
-    }
-  }, [courseData.selectedCourse]);
-
-  useEffect(() => {
-    setActiveIndex(0);
-  }, []);
-  console.log('WHWWWW', courseData?.selectedCourse);
+    if (courseData?.selectedCourse?.instructors?.length > 0)
+      setActiveInstructor(
+        courseData?.selectedCourse?.instructors?.length > 0
+          ? courseData?.selectedCourse?.instructors[0]?.id
+          : activeInstructor
+      );
+  }, [courseData?.selectedCourse?.instructors]);
 
   // console.log('Category options', categoryOptions);
   return (
     <AdminLayout>
-      <Tabs
-        tabData={tabData}
-        activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
-      />
-      {activeIndex === 0 && (
-        <Formik
-          initialValues={{
-            title: courseData?.selectedCourse?.title,
-            subtitle: courseData?.selectedCourse?.subtitle,
-            categoryId: courseData?.selectedCourse?.categoryId + '',
-            subCategoryId: courseData?.selectedCourse?.subCategoryId + '',
-            topic: courseData?.selectedCourse?.topic,
-            language: courseData?.selectedCourse?.language,
-            subtitleLanguage: courseData?.selectedCourse?.subtitleLanguage,
-            level: courseData?.selectedCourse?.level,
-          }}
-          validationSchema={FORM_VALIDATION}
-          validateOnMount
-          onSubmit={handleStepOneSubmit}
-        >
-          {({ isSubmitting, isValid, values }) => (
-            <>
-              <Form>
-                <div className="row">
-                  <div className="col-12">
-                    <TextField
-                      label="Title"
-                      name="title"
-                      placeholder="Your course title"
-                    />
-                  </div>
-                  <div className="col-12">
-                    <TextField
-                      label="Subtitle"
-                      name="subtitle"
-                      placeholder="Your course Subtitle"
-                    />
-                  </div>
-                  <div className="col-lg-6 col-md-6">
-                    <Field
-                      name="categoryId"
-                      options={categoryData?.data}
-                      component={CustomSelect}
-                      placeholder="Select.."
-                      isMulti={false}
-                      label="Course Category"
-                    />
-                  </div>
-                  <div className="col-lg-6 col-md-6 ">
-                    <Field
-                      name="subCategoryId"
-                      options={subCategoryData?.data}
-                      component={CustomSelect}
-                      placeholder="Select.."
-                      isMulti={false}
-                      label="Course Sub-Category"
-                    />
-                  </div>
+      <Card>
+        <Tabs
+          tabData={tabData}
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+        />
+        {activeIndex === 0 && (
+          <Formik
+            initialValues={{
+              title: courseData?.selectedCourse?.title,
+              subtitle: courseData?.selectedCourse?.subtitle,
+              categoryId: courseData?.selectedCourse?.categoryId + '',
+              subCategoryId: courseData?.selectedCourse?.subCategoryId + '',
+              topic: courseData?.selectedCourse?.topic,
+              language: courseData?.selectedCourse?.language,
+              subtitleLanguage: courseData?.selectedCourse?.subtitleLanguage,
+              level: courseData?.selectedCourse?.level,
+            }}
+            validationSchema={FORM_VALIDATION}
+            validateOnMount
+            onSubmit={handleStepOneSubmit}
+          >
+            {({ isSubmitting, isValid, values }) => (
+              <>
+                <Form>
+                  <div className="row">
+                    <div className="col-12">
+                      <TextField
+                        label="Title"
+                        name="title"
+                        placeholder="Your course title"
+                      />
+                    </div>
+                    <div className="col-12">
+                      <TextField
+                        label="Subtitle"
+                        name="subtitle"
+                        placeholder="Your course Subtitle"
+                      />
+                    </div>
+                    <div className="col-lg-6 col-md-6">
+                      <Field
+                        name="categoryId"
+                        options={categoryData?.data}
+                        component={CustomSelect}
+                        placeholder="Select.."
+                        isMulti={false}
+                        label="Course Category"
+                      />
+                    </div>
+                    <div className="col-lg-6 col-md-6 ">
+                      <Field
+                        name="subCategoryId"
+                        options={subCategoryData?.data}
+                        component={CustomSelect}
+                        placeholder="Select.."
+                        isMulti={false}
+                        label="Course Sub-Category"
+                      />
+                    </div>
 
-                  <div className="col-12">
-                    <TextField
-                      label="Course Topic"
-                      name="topic"
-                      placeholder="Your Course topic"
-                    />
-                  </div>
-                  <div className="col-lg-3 col-md-6">
-                    <Field
-                      name="language"
-                      options={courseLanguage}
-                      component={CustomSelect}
-                      placeholder="Select.."
-                      isMulti={false}
-                      label="Course Languages"
-                    />
-                  </div>
-                  <div className="col-lg-3 col-md-6 ">
-                    <Field
-                      name="subtitleLanguage"
-                      options={courseLanguage}
-                      component={CustomSelect}
-                      placeholder="Select.."
-                      isMulti={false}
-                      label="Subtitle Languages (Optional)"
-                    />
-                  </div>
-                  <div className="col-lg-3 col-md-6 ">
-                    <Field
-                      name="level"
-                      options={courseLevel}
-                      component={CustomSelect}
-                      placeholder="Select.."
-                      isMulti={false}
-                      label="Course Level"
-                    />
-                  </div>
-                  {/* <div className="col-lg-3 col-md-6 mt-2">
+                    <div className="col-12">
+                      <TextField
+                        label="Course Topic"
+                        name="topic"
+                        placeholder="Your Course topic"
+                      />
+                    </div>
+                    <div className="col-lg-3 col-md-6">
+                      <Field
+                        name="language"
+                        options={courseLanguage}
+                        component={CustomSelect}
+                        placeholder="Select.."
+                        isMulti={false}
+                        label="Course Languages"
+                      />
+                    </div>
+                    <div className="col-lg-3 col-md-6 ">
+                      <Field
+                        name="subtitleLanguage"
+                        options={courseLanguage}
+                        component={CustomSelect}
+                        placeholder="Select.."
+                        isMulti={false}
+                        label="Subtitle Languages (Optional)"
+                      />
+                    </div>
+                    <div className="col-lg-3 col-md-6 ">
+                      <Field
+                        name="level"
+                        options={courseLevel}
+                        component={CustomSelect}
+                        placeholder="Select.."
+                        isMulti={false}
+                        label="Course Level"
+                      />
+                    </div>
+                    {/* <div className="col-lg-3 col-md-6 mt-2">
                     <TextField
                       label={'Duration'}
                       name="time"
                       placeholder="course duration"
                     />
                   </div> */}
-                  <div className="flex flex-end my-5">
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      isSubmitting={isSubmitting}
-                      isValid={isValid}
-                      // onClick={() => setActiveIndex(activeIndex + 1)}
-                    >
-                      Save & Next
-                    </Button>
+                    <div className="flex flex-end my-5">
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        isSubmitting={isSubmitting}
+                        isValid={isValid}
+                        // onClick={() => setActiveIndex(activeIndex + 1)}
+                      >
+                        Save & Next
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </Form>
-              {setCourseCategoryId(+values?.categoryId)}
-            </>
-          )}
-        </Formik>
-      )}
-      {activeIndex === 1 && (
-        <Formik
-          initialValues={{
-            thumbnail: courseData?.selectedCourse?.thumbnail,
-            trailer: courseData?.selectedCourse?.trailer,
-            description: courseData?.selectedCourse?.description,
-            learnableContent: courseData?.selectedCourse?.learnableContent,
-            skills: courseData?.selectedCourse?.skills,
-          }}
-          // validationSchema={FORM_VALIDATION_STEP_TWO}
-          // validateOnMount
-          onSubmit={handleSecondStep}
-        >
-          {({ isSubmitting, isValid, values, setFieldValue }) => (
-            <>
-              <Form>
-                <Card>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <h6 className="course__upload__adv__info__title">
-                        Course Thumbnail
-                      </h6>
-                      <div className="flex">
-                        <div className="me-3">
-                          <input
-                            hidden
-                            ref={inputImageRef}
-                            type="file"
-                            name=""
-                            id=""
-                            accept="image/png, image/jpeg, image/jpg"
-                            onChange={(e) =>
-                              handleUploadImageFile(e, setFieldValue)
-                            }
-                          />
-                          {previewImage ? (
-                            previewImageDiv
-                          ) : (
-                            <img
-                              src={defaultImage}
-                              alt="image_logo"
-                              width={230}
-                              height={160}
-                            />
-                          )}
+                </Form>
+                {setCourseCategoryId(+values?.categoryId)}
+              </>
+            )}
+          </Formik>
+        )}
+        {activeIndex === 1 && (
+          <Formik
+            initialValues={{
+              thumbnail: courseData?.selectedCourse?.thumbnail ?? '',
+              trailer: courseData?.selectedCourse?.trailer ?? '',
+              description: courseData?.selectedCourse?.description ?? '',
+              learnableContent:
+                courseData?.selectedCourse?.learnableContent?.length > 0
+                  ? courseData?.selectedCourse?.learnableContent
+                  : [''],
+              skills:
+                courseData?.selectedCourse?.skills?.length > 0
+                  ? courseData?.selectedCourse?.skills
+                  : [''],
+            }}
+            // validationSchema={FORM_VALIDATION_STEP_TWO}
+            // validateOnMount
+            onSubmit={handleSecondStep}
+          >
+            {({ isSubmitting, isValid, values, setFieldValue }) => {
+              console.log(values);
+              return (
+                <>
+                  <Form>
+                    <Card>
+                      <div className="row">
+                        <div className="col-md-6">
+                          <h6 className="course__upload__adv__info__title">
+                            Course Thumbnail
+                          </h6>
+                          <div className="flex">
+                            <div className="me-3">
+                              <input
+                                hidden
+                                ref={inputImageRef}
+                                type="file"
+                                name=""
+                                id=""
+                                accept="image/png, image/jpeg, image/jpg"
+                                onChange={(e) =>
+                                  handleUploadImageFile(e, setFieldValue)
+                                }
+                              />
+                              {previewImage ? (
+                                previewImageDiv
+                              ) : (
+                                <img
+                                  src={values?.thumbnail || defaultImage}
+                                  alt="image_logo"
+                                  width={230}
+                                  height={160}
+                                />
+                              )}
+                            </div>
+
+                            <div className="flex-col">
+                              <p className="course__thumbnail__text">
+                                Upload your course Thumbnail here.
+                                <span className="font-weight-bold">
+                                  {' '}
+                                  Important guidelines:
+                                </span>
+                                1200x800 pixels or 12:8 Ratio. Supported format:
+                                .jpg, .jpeg, or .png
+                              </p>
+                              <Button
+                                variant="secondary"
+                                type="button"
+                                onClick={() => inputImageRef.current.click()}
+                                isValid={true}
+                              >
+                                <div className="flex">
+                                  <span className="me-3">Upload Image</span>
+                                  <Icon name="upload" />
+                                </div>
+                              </Button>
+                            </div>
+                          </div>
                         </div>
 
-                        <div className="flex-col">
-                          <p className="course__thumbnail__text">
-                            Upload your course Thumbnail here.
-                            <span className="font-weight-bold">
-                              {' '}
-                              Important guidelines:
-                            </span>
-                            1200x800 pixels or 12:8 Ratio. Supported format:
-                            .jpg, .jpeg, or .png
-                          </p>
-                          <Button
-                            variant="secondary"
-                            type="button"
-                            onClick={() => inputImageRef.current.click()}
-                            isValid={true}
-                          >
+                        {/* course thumbnail */}
+                        <div className="col-md-6">
+                          <h6 className="course__upload__adv__info__title">
+                            Course Trailer
+                          </h6>
+                          <div className="flex">
+                            <div className="me-3">
+                              <input
+                                hidden
+                                ref={inputVideoRef}
+                                type="file"
+                                name="thumbnail"
+                                accept=".mp4"
+                                id=""
+                                onChange={(e) =>
+                                  handleChangeVideo(e, setFieldValue)
+                                }
+                              />
+                              {values?.trailer ? (
+                                <video
+                                  src={values?.trailer}
+                                  width="230px"
+                                  height="160px"
+                                  controls
+                                  autoPlay
+                                />
+                              ) : videoSourceUrl ? (
+                                previewVideoDiv
+                              ) : (
+                                <img
+                                  src={defaultImage}
+                                  width={230}
+                                  height={160}
+                                />
+                              )}
+                            </div>
+
+                            <div className="flex-col">
+                              <p className="course__thumbnail__text">
+                                Upload your course Thumbnail here.
+                                <span className="font-weight-bold">
+                                  Important guidelines:
+                                </span>
+                                1200x800 pixels or 12:8 Ratio. Supported format:
+                                .jpg, .jpeg, or .png
+                              </p>
+                              {videoProgressReport > 0 ? (
+                                <p>Uploading {videoProgressReport} % </p>
+                              ) : (
+                                <Button
+                                  type="button"
+                                  variant="secondary"
+                                  onClick={() => inputVideoRef.current.click()}
+                                  isValid={true}
+                                >
+                                  <div className="flex">
+                                    <span className="me-3">Upload Image</span>
+                                    <Icon name="upload" />
+                                  </div>
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="col-12 mb-5">
+                          <div className="mt-5">
+                            <h6 className="course__upload__adv__info__title">
+                              Course Descriptions
+                            </h6>
+                            <Field
+                              component="textarea"
+                              name="description"
+                              className="w-100 p-3 rounded"
+                              cols={100}
+                              rows={10}
+                            ></Field>
+                          </div>
+                        </div>
+                      </div>
+                      <BorderBottom />
+                      <div className="my-5">
+                        <div className="flex-between">
+                          <h6 className="course__upload__adv__info__title my-5">
+                            Learnable Content
+                          </h6>
+
+                          <Button variant="outline" type="button" isValid>
                             <div className="flex">
-                              <span className="me-3">Upload Image</span>
-                              <Icon name="upload" />
+                              <Icon name="plus" />
+                              <span
+                                className="ms-2"
+                                onClick={() => inputAddMore.current.click()}
+                              >
+                                Add New
+                              </span>
                             </div>
                           </Button>
                         </div>
+                        <FieldArray name="learnableContent">
+                          {({ insert }) =>
+                            values.learnableContent.map(
+                              (_: any, idx: number) => (
+                                <>
+                                  <TextField
+                                    label={idx + 1}
+                                    name={`learnableContent.${idx}`}
+                                    placeholder="What you will teach in this course..."
+                                  />
+                                  <button
+                                    type="button"
+                                    className="secondary"
+                                    onClick={() => insert(idx, '')}
+                                    hidden
+                                    ref={inputAddMore}
+                                  >
+                                    Add Friend
+                                  </button>
+                                </>
+                              )
+                            )
+                          }
+                        </FieldArray>
                       </div>
-                    </div>
-
-                    {/* course thumbnail */}
-                    <div className="col-md-6">
-                      <h6 className="course__upload__adv__info__title">
-                        Course Trailer
-                      </h6>
-                      <div className="flex">
-                        <div className="me-3">
-                          <input
-                            hidden
-                            ref={inputVideoRef}
-                            type="file"
-                            name="thumbnail"
-                            accept=".mp4"
-                            id=""
-                            onChange={(e) =>
-                              handleChangeVideo(e, setFieldValue)
-                            }
-                          />
-                          {videoSourceUrl ? (
-                            previewVideoDiv
-                          ) : (
-                            <img src={defaultImage} width={230} height={160} />
-                          )}
+                      {/* What skill you get (4/8) */}
+                      <BorderBottom />
+                      <div className="my-5">
+                        <div className="flex-between">
+                          <h6 className="course__upload__adv__info__title my-5">
+                            What skill you get
+                          </h6>
+                          <Button variant="outline" type="button" isValid>
+                            <div className="flex">
+                              <Icon name="plus" />
+                              <span
+                                className="ms-2"
+                                onClick={() =>
+                                  inputSkillImageRef.current.click()
+                                }
+                              >
+                                Add New
+                              </span>
+                            </div>
+                          </Button>
                         </div>
-
-                        <div className="flex-col">
-                          <p className="course__thumbnail__text">
-                            Upload your course Thumbnail here.
-                            <span className="font-weight-bold">
-                              Important guidelines:
-                            </span>
-                            1200x800 pixels or 12:8 Ratio. Supported format:
-                            .jpg, .jpeg, or .png
-                          </p>
-                          {videoProgressReport > 0 ? (
-                            <p>Uploading {videoProgressReport} % </p>
-                          ) : (
-                            <Button
-                              type="button"
-                              variant="secondary"
-                              onClick={() => inputVideoRef.current.click()}
-                              isValid={true}
-                            >
-                              <div className="flex">
-                                <span className="me-3">Upload Image</span>
-                                <Icon name="upload" />
-                              </div>
-                            </Button>
-                          )}
-                        </div>
+                        <FieldArray name="skills">
+                          {({ insert }) =>
+                            values.skills.map((_: any, idx: number) => (
+                              <>
+                                <TextField
+                                  label={idx + 1}
+                                  name={`skills.${idx}`}
+                                  placeholder="What you will teach in this course..."
+                                  key={idx}
+                                />
+                                <button
+                                  type="button"
+                                  className="secondary"
+                                  onClick={() => insert(idx, '')}
+                                  hidden
+                                  ref={inputSkillImageRef}
+                                >
+                                  Add Friend
+                                </button>
+                              </>
+                            ))
+                          }
+                        </FieldArray>
                       </div>
-                    </div>
+                      <div className="flex flex-end my-5">
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          // isSubmitting={isSubmitting}
+                          // isValid={isValid}
+                          isValid={true}
+                        >
+                          Save & Next
+                        </Button>
+                      </div>
+                    </Card>
+                  </Form>
+                </>
+              );
+            }}
+          </Formik>
+        )}
+        {activeIndex === 2 && (
+          <CurriculumSection
+            handleSubmit={handleThirdStep}
+            initialSection={courseData?.selectedCourse?.sections}
+          />
+        )}
 
-                    <div className="col-12 mb-5">
+        {activeIndex === 3 && (
+          <Formik
+            initialValues={{
+              welcomeMessage: courseData?.selectedCourse?.welcomeMessage ?? '',
+              congratulationMessage:
+                courseData?.selectedCourse?.congratulationMessage ?? '',
+            }}
+            // validationSchema={FORM_VALIDATION_STEP_TWO}
+            // validateOnMount
+            onSubmit={handleFourthStep}
+          >
+            {({ isSubmitting, isValid, values, setFieldValue }) => (
+              <Form>
+                <Heading title={'Publish Course'} className="my-5" />
+                <BorderBottom />
+                <div className="mt-5">
+                  <h6 className="f-f-24">Message</h6>
+                  <div className="row">
+                    <div className="col-xl-6 col-lg-6 col-md-6 mb-5">
                       <div className="mt-5">
                         <h6 className="course__upload__adv__info__title">
-                          Course Descriptions
+                          welcome Message
                         </h6>
-                        <textarea
-                          name="description"
+                        <Field
+                          as="textarea"
+                          name="welcomeMessage"
                           className="w-100 p-3 rounded"
-                          cols={100}
-                          rows={10}
-                        ></textarea>
+                          cols={50}
+                          rows={5}
+                          placeholder="Enter course starting message here..."
+                        />
+                      </div>
+                    </div>
+                    <div className="col-xl-6 col-lg-6 col-md-6 mb-5">
+                      <div className="mt-5">
+                        <h6 className="course__upload__adv__info__title">
+                          congratulations Message
+                        </h6>
+                        <Field
+                          as="textarea"
+                          name="congratulationMessage"
+                          className="w-100 p-3 rounded"
+                          cols={50}
+                          rows={5}
+                          placeholder="Enter course starting message here..."
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <h6 className="f-24">Add Instructor</h6>
+                      <div className="mt-4">
+                        <div
+                          className="flex course__search__container mb-5"
+                          style={{ border: '1px solid #00000033' }}
+                        >
+                          <Icon name="search" />
+                          <input
+                            type="text"
+                            placeholder="Search for instructor..."
+                            className="form-control shadow-none bg-transparent outline-none border-none"
+                            value={searchText}
+                            onChange={(
+                              event: React.ChangeEvent<HTMLInputElement>
+                            ) => setSearchText(event?.target?.value)}
+                          />
+                        </div>
+                        <div className="row">
+                          {filterInstructorData ? (
+                            filterInstructorData
+                              .slice(0, 4)
+                              .map(
+                                (item: {
+                                  name: string;
+                                  image: string;
+                                  id: number;
+                                }) => (
+                                  <div
+                                    className="col-6 mb-4"
+                                    key={item?.id}
+                                    onClick={() => handleInstructorChoose(item)}
+                                  >
+                                    <div
+                                      className="flex px-3 py-2 pointer"
+                                      style={{
+                                        background: '#F4F5F9',
+                                        borderRadius: 4,
+                                        border: `${
+                                          activeInstructor === item?.id
+                                            ? '1px solid #6b8e4e'
+                                            : 'none'
+                                        }`,
+                                      }}
+                                    >
+                                      <img
+                                        src="https://cdn.pixabay.com/photo/2015/01/06/16/14/woman-590490_960_720.jpg"
+                                        alt=""
+                                        width={50}
+                                        height={50}
+                                        style={{
+                                          objectFit: 'cover',
+                                          borderRadius: '50px',
+                                        }}
+                                      />
+                                      <p className="ms-3 mt-2">
+                                        {' '}
+                                        {item?.name}{' '}
+                                      </p>
+                                    </div>
+                                  </div>
+                                )
+                              )
+                          ) : (
+                            <p>No instructor found with is name</p>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <BorderBottom />
-                  <div className="my-5">
-                    <div className="flex-between">
-                      <h6 className="course__upload__adv__info__title my-5">
-                        Learnable Content
-                      </h6>
-
-                      <Button variant="outline" type="button" isValid>
-                        <div className="flex">
-                          <Icon name="plus" />
-                          <span
-                            className="ms-2"
-                            onClick={() => inputAddMore.current.click()}
-                          >
-                            Add New
-                          </span>
-                        </div>
-                      </Button>
-                    </div>
-                    <FieldArray name="learnableContent">
-                      {({ push }) =>
-                        values.learnableContent.map((_: any, idx: number) => (
-                          <>
-                            <TextField
-                              label={idx + 1}
-                              name={`learnableContent.${idx}.title`}
-                              placeholder="W  hat you will teach in this course..."
-                            />
-                            <button
-                              type="button"
-                              className="secondary"
-                              onClick={() => push({ title: '' })}
-                              hidden
-                              ref={inputAddMore}
-                            >
-                              Add Friend
-                            </button>
-                          </>
-                        ))
-                      }
-                    </FieldArray>
-                  </div>
-                  {/* What skill you get (4/8) */}
-                  <BorderBottom />
-                  <div className="my-5">
-                    <div className="flex-between">
-                      <h6 className="course__upload__adv__info__title my-5">
-                        What skill you get
-                      </h6>
-                      <Button variant="outline" type="button" isValid>
-                        <div className="flex">
-                          <Icon name="plus" />
-                          <span
-                            className="ms-2"
-                            onClick={() => inputSkillImageRef.current.click()}
-                          >
-                            Add New
-                          </span>
-                        </div>
-                      </Button>
-                    </div>
-                    <FieldArray name="skills">
-                      {({ push }) =>
-                        values.skills.map((_: any, idx: number) => (
-                          <>
-                            <TextField
-                              label={idx + 1}
-                              name={`skills.${idx}.title`}
-                              placeholder="What you will teach in this course..."
-                              key={idx}
-                            />
-                            <button
-                              type="button"
-                              className="secondary"
-                              onClick={() => push({ title: '' })}
-                              hidden
-                              ref={inputSkillImageRef}
-                            >
-                              Add Friend
-                            </button>
-                          </>
-                        ))
-                      }
-                    </FieldArray>
-                  </div>
-                  <div className="flex flex-end my-5">
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      // isSubmitting={isSubmitting}
-                      // isValid={isValid}
-                      onClick={() => console.log('Sdfsdf')}
-                      isValid={true}
-                    >
-                      Save
-                    </Button>
-                  </div>
-                </Card>
+                </div>
+                <div className="flex-end">
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    isSubmitting={isSubmitting}
+                    isValid={isValid}
+                  >
+                    Save
+                  </Button>
+                </div>
               </Form>
-            </>
-          )}
-        </Formik>
-      )}
-      {activeIndex === 2 && <div className="">step 3</div>}
+            )}
+          </Formik>
+        )}
+      </Card>
     </AdminLayout>
   );
 };

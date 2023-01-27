@@ -32,7 +32,10 @@ const AdminCourse: React.FC = () => {
         <MainHeading title="All Courses" />
         <Button
           variant="primary"
-          onClick={() => navigate('/admin-course-add')}
+          onClick={() => {
+            dispatch(selectCourse({}));
+            navigate('/admin-course-add');
+          }}
           type="button"
           isValid={true}
         >
