@@ -23,7 +23,7 @@ import { createCourse, updateCourse } from 'redux/actions/course.action';
 import { useDispatch, useSelector } from 'react-redux';
 import { CourseReducer } from 'redux/reducers/course.reducer';
 import { useNavigate } from 'react-router-dom';
-
+import CurriculumSection from './Curriculum/CurriculumSection';
 // "title": "string",
 //   "subtitle": "string",
 //   "categoryId": 0,
@@ -494,12 +494,12 @@ const AddCourse: React.FC = () => {
                         <h6 className="course__upload__adv__info__title">
                           Course Descriptions
                         </h6>
-                        <textarea
+                        <Field
                           name="description"
                           className="w-100 p-3 rounded"
                           cols={100}
                           rows={10}
-                        ></textarea>
+                        ></Field>
                       </div>
                     </div>
                   </div>
@@ -524,7 +524,7 @@ const AddCourse: React.FC = () => {
                     </div>
                     <FieldArray name="learnableContent">
                       {({ insert }) =>
-                        values.learnableContent.map((_: any, idx: number) => (
+                        values?.learnableContent?.map((_: any, idx: number) => (
                           <>
                             <TextField
                               label={idx + 1}
@@ -605,143 +605,7 @@ const AddCourse: React.FC = () => {
           )}
         </Formik>
       )}
-      {activeIndex === 2 && (
-        <div className="">
-          <div className="my-4">
-            <Heading title={'Curriculum'} />
-          </div>
-          <div className="flex-between my-5">
-            <div className="flex">
-              <Icon name="menu" height={20} />
-              <p>Section 01: section name</p>
-            </div>
-
-            <div className="flex">
-              <Icon name="trash" height={20} />
-              <Icon name="plus" height={20} />
-            </div>
-          </div>
-
-          <Formik
-            initialValues={{
-              thumbnail: '',
-              trailer: '',
-              description: '',
-              learnableContent: [''],
-              skills: [''],
-            }}
-            // validationSchema={FORM_VALIDATION_STEP_TWO}
-            // validateOnMount
-            onSubmit={handleSecondStep}
-          >
-            {({ isSubmitting, isValid, values, setFieldValue }) => (
-              <>
-                <Form>
-                  <Card>
-                    <div className="row">{/* course thumbnail */}</div>
-                    <BorderBottom />
-                    <div className="my-5">
-                      <div className="flex-between">
-                        <h6 className="course__upload__adv__info__title my-5">
-                          Learnable Content
-                        </h6>
-
-                        <Button variant="outline" type="button" isValid>
-                          <div className="flex">
-                            <Icon name="plus" />
-                            <span
-                              className="ms-2"
-                              onClick={() => inputAddMore.current.click()}
-                            >
-                              Add New
-                            </span>
-                          </div>
-                        </Button>
-                      </div>
-                      <FieldArray name="learnableContent">
-                        {({ insert }) =>
-                          values.learnableContent.map((_: any, idx: number) => (
-                            <>
-                              <TextField
-                                label={idx + 1}
-                                name={`learnableContent.${idx}`}
-                                placeholder="What you will teach in this course..."
-                              />
-                              <button
-                                type="button"
-                                className="secondary"
-                                onClick={() => insert(idx, '')}
-                                hidden
-                                ref={inputAddMore}
-                              >
-                                Add Friend
-                              </button>
-                            </>
-                          ))
-                        }
-                      </FieldArray>
-                    </div>
-                    {/* What skill you get (4/8) */}
-                    <BorderBottom />
-                    <div className="my-5">
-                      <div className="flex-between">
-                        <h6 className="course__upload__adv__info__title my-5">
-                          What skill you get
-                        </h6>
-                        <Button variant="outline" type="button" isValid>
-                          <div className="flex">
-                            <Icon name="plus" />
-                            <span
-                              className="ms-2"
-                              onClick={() => inputSkillImageRef.current.click()}
-                            >
-                              Add New
-                            </span>
-                          </div>
-                        </Button>
-                      </div>
-                      <FieldArray name="skills">
-                        {({ insert }) =>
-                          values.skills.map((_: any, idx: number) => (
-                            <>
-                              <TextField
-                                label={idx + 1}
-                                name={`skills.${idx}`}
-                                placeholder="What you will teach in this course..."
-                                key={idx}
-                              />
-                              <button
-                                type="button"
-                                className="secondary"
-                                onClick={() => insert(idx, '')}
-                                hidden
-                                ref={inputSkillImageRef}
-                              >
-                                Add Friend
-                              </button>
-                            </>
-                          ))
-                        }
-                      </FieldArray>
-                    </div>
-                    <div className="flex flex-end my-5">
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        // isSubmitting={isSubmitting}
-                        // isValid={isValid}
-                        isValid={true}
-                      >
-                        Save
-                      </Button>
-                    </div>
-                  </Card>
-                </Form>
-              </>
-            )}
-          </Formik>
-        </div>
-      )}
+      {activeIndex === 2 && <CurriculumSection handleSubmit={() => {}} />}
     </AdminLayout>
   );
 };
