@@ -2,6 +2,7 @@ import Icon from 'assets/svg/Icon';
 import { Accordion, CourseCard, NavBar } from 'components';
 import Heading from 'components/heading';
 import { Footer } from 'containers';
+import useFetch from 'hooks';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -15,8 +16,6 @@ const CourseSearch: React.FC = () => {
 
   const [searchText, setSearchText] = React.useState('');
 
-  console.log('CourseData', courseData);
-  console.log('CourseData', courseData.course);
   useEffect(() => {
     dispatch(
       fetchCourse({
@@ -28,33 +27,38 @@ const CourseSearch: React.FC = () => {
     );
   }, []);
 
-  const categoryData = [
-    {
-      id: 0,
-      title: 'programming',
-      count: 10,
-    },
-    {
-      id: 1,
-      title: 'Marketing',
-      count: 15,
-    },
-    {
-      id: 2,
-      title: 'Web Developemt',
-      count: 46,
-    },
-    {
-      id: 3,
-      title: 'UI & UX Design',
-      count: 26,
-    },
-    {
-      id: 4,
-      title: 'Bussiness',
-      count: 50,
-    },
-  ];
+  const { data: categoryData } = useFetch('/category');
+  const { data: instructorData } = useFetch('/user/instructor');
+  console.log('Sahas', categoryData);
+  console.log('Sahas', instructorData);
+
+  // const categoryData = [
+  //   {
+  //     id: 0,
+  //     title: 'programming',
+  //     count: 10,
+  //   },
+  //   {
+  //     id: 1,
+  //     title: 'Marketing',
+  //     count: 15,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Web Developemt',
+  //     count: 46,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'UI & UX Design',
+  //     count: 26,
+  //   },
+  //   {
+  //     id: 4,
+  //     title: 'Bussiness',
+  //     count: 50,
+  //   },
+  // ];
 
   // const [values, setValues] = React.useState({});
   // const newObject = {};
@@ -70,13 +74,13 @@ const CourseSearch: React.FC = () => {
 
   // const newArray = [];
 
-  for (let i = 0; i < categoryData.length; i++) {
-    // console.log('this is index', categoryData[i].title.split(' ').join(''));
-    // const data = categoryData[i].title.split(' ').join('');
-    // const newString = data.split(data.charAt(data.length - 1)).join(': ""');
-    // console.log('-----<<', newString);
-    // newArray.push(data);
-  }
+  // for (let i = 0; i < categoryData.length; i++) {
+  // console.log('this is index', categoryData[i].title.split(' ').join(''));
+  // const data = categoryData[i].title.split(' ').join('');
+  // const newString = data.split(data.charAt(data.length - 1)).join(': ""');
+  // console.log('-----<<', newString);
+  // newArray.push(data);
+  // }
   // console.log('new aerat', newArray);
   // const handleInputChange = (e: HTMLInputElement) => {
   //
@@ -209,44 +213,23 @@ const CourseSearch: React.FC = () => {
           <div className="col-md-3">
             <div className="category__container my-3">
               <Accordion title="Category">
-                {categoryData.map((e) => (
+                {categoryData?.data?.map((e: any) => (
                   <div className="flex-between" key={e?.id}>
                     <div className="flex">
                       <input
                         type="checkbox"
-                        name={e?.title}
-                        value={e?.title}
+                        name={e?.name}
+                        value={e?.id}
                         // onChange={handleInputChange}
                         id="checkedCategory"
                       />
-                      <p className="f-16 mt-3 ps-3"> {e?.title} </p>
+                      <p className="f-16 mt-3 ps-3"> {e?.name} </p>
                     </div>
-                    <div className="course__category__count__container">
+                    {/* <div className="course__category__count__container">
                       <p className="text-center mt-1 course__category__count">
                         {e?.count}
                       </p>
-                    </div>
-                  </div>
-                ))}
-              </Accordion>
-              <Accordion title="Category">
-                {categoryData.map((e) => (
-                  <div className="flex-between" key={e?.id}>
-                    <div className="flex">
-                      <input
-                        type="checkbox"
-                        name={e?.title}
-                        value={e?.title}
-                        // onChange={handleInputChange}
-                        id="checkedCategory"
-                      />
-                      <p className="f-16 mt-3 ps-3"> {e?.title} </p>
-                    </div>
-                    <div className="course__category__count__container">
-                      <p className="text-center mt-1 course__category__count">
-                        {e?.count}
-                      </p>
-                    </div>
+                    </div> */}
                   </div>
                 ))}
               </Accordion>
@@ -264,7 +247,7 @@ const CourseSearch: React.FC = () => {
                       key={i}
                       onClick={() => {
                         dispatch(selectCourse(course));
-                        navigate('/course-detail');
+                        navigate(`/course-detail/${course.id}`);
                       }}
                     >
                       <CourseCard
