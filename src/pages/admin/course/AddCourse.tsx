@@ -122,7 +122,7 @@ const AddCourse: React.FC = () => {
 
   const navigate = useNavigate();
   const { data: categoryData } = useFetch('/category');
-  const { data: usersData } = useFetch('/users');
+  const { data: usersData } = useFetch('/users/instructor');
   const { data: subCategoryData } = useFetch(
     `/category/sub/${courseCategoryId}`
   );
@@ -870,7 +870,7 @@ const AddCourse: React.FC = () => {
                     isSubmitting={isSubmitting}
                     isValid={isValid}
                   >
-                    Submit for review
+                    Save
                   </Button>
                 </div>
               </Form>
