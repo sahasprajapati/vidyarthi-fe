@@ -4,7 +4,6 @@ export { default as Chart } from './chart';
 export { default as TextField } from './text-field';
 export { default as CustomSelect } from './custom-select';
 export { default as Tabs } from './tabs';
-export { default as Editor } from './CkEditor';
 export { default as BorderBottom } from './border-bottom';
 export { default as SocialMediaLoginOptions } from './socialmedia-login-options';
 export { default as NavBar } from './navbar';
