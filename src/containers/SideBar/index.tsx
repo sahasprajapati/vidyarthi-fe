@@ -10,7 +10,6 @@ interface Props {
 
 const SideBar: React.FC<Props> = ({ responsive, setResponsive }) => {
   //   const token: any = window.localStorage.getItem('accessToken');
-  //   const checkRole = JSON.parse(token);
   return (
     <aside className="flex-col">
       <div

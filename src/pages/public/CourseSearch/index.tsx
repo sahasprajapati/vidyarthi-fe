@@ -29,63 +29,7 @@ const CourseSearch: React.FC = () => {
 
   const { data: categoryData } = useFetch('/category');
   const { data: instructorData } = useFetch('/user/instructor');
-  console.log('Sahas', categoryData);
-  console.log('Sahas', instructorData);
 
-  // const categoryData = [
-  //   {
-  //     id: 0,
-  //     title: 'programming',
-  //     count: 10,
-  //   },
-  //   {
-  //     id: 1,
-  //     title: 'Marketing',
-  //     count: 15,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Web Developemt',
-  //     count: 46,
-  //   },
-  //   {
-  //     id: 3,
-  //     title: 'UI & UX Design',
-  //     count: 26,
-  //   },
-  //   {
-  //     id: 4,
-  //     title: 'Bussiness',
-  //     count: 50,
-  //   },
-  // ];
-
-  // const [values, setValues] = React.useState({});
-  // const newObject = {};
-  // const data = categoryData.map((e) => console.log(e.title));
-
-  // console.log('this is object', newObject);
-  // console.log('this is data', data);
-
-  // for (let index = 0; index < array.length; index++) {
-  //   const element = array[index];
-
-  // }
-
-  // const newArray = [];
-
-  // for (let i = 0; i < categoryData.length; i++) {
-  // console.log('this is index', categoryData[i].title.split(' ').join(''));
-  // const data = categoryData[i].title.split(' ').join('');
-  // const newString = data.split(data.charAt(data.length - 1)).join(': ""');
-  // console.log('-----<<', newString);
-  // newArray.push(data);
-  // }
-  // console.log('new aerat', newArray);
-  // const handleInputChange = (e: HTMLInputElement) => {
-  //
-  //
-  // };n
   const navigate = useNavigate();
 
   const newString = 'prashant khanal';

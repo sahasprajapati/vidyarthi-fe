@@ -13,7 +13,11 @@ import Heading from 'components/heading';
 import useFetch from 'hooks';
 import Service from 'setup/network';
 import toastAlert from 'utils/toast';
-import { createCourse, updateCourse } from 'redux/actions/course.action';
+import {
+  createCourse,
+  selectCourse,
+  updateCourse,
+} from 'redux/actions/course.action';
 import { useDispatch, useSelector } from 'react-redux';
 import { CourseReducer } from 'redux/reducers/course.reducer';
 import { useNavigate } from 'react-router-dom';
@@ -207,17 +211,33 @@ const AddCourse: React.FC = () => {
   );
 
   const handleStepOneSubmit = async (val: any, { resetForm }: any) => {
-    try {
-      const request = await Service.post('/course', val);
-      if (request?.status === 201) {
-        toastAlert('success', request?.data?.message);
-        resetForm({ val: '' });
+    if (courseData?.selectedCourse?.id) {
+      try {
+        const request = await Service.patch(
+          `/course/${courseData?.selectedCourse?.id}`,
+          val
+        );
+        if (request?.status === 200) {
+          toastAlert('success', request?.data?.message);
+          dispatch(selectCourse(request?.data?.data));
+          setActiveIndex(activeIndex + 1);
+        }
+      } catch (err: any) {
+        toastAlert('error', err?.response?.data?.message);
       }
-    } catch (err: any) {
-      toastAlert('error', err?.response?.data?.message);
-    }
+    } else {
+      try {
+        const request = await Service.post('/course', val);
 
-    console.log('Sahas data', val);
+        if (request?.status === 201) {
+          toastAlert('success', request?.data?.message);
+          dispatch(selectCourse(request?.data?.data));
+          setActiveIndex(activeIndex + 1);
+        }
+      } catch (err: any) {
+        toastAlert('error', err?.response?.data?.message);
+      }
+    }
 
     // if (courseData?.selectedCourse?.id) {
     //   dispatch(
@@ -235,9 +255,40 @@ const AddCourse: React.FC = () => {
     // }
   };
 
-  const handleSecondStep = (val: any) => {
-    // navigate('/admin-course');
-    console.log('this si values', val);
+  const handleSecondStep = async (val: any) => {
+    if (courseData?.selectedCourse?.id) {
+      try {
+        const request = await Service.patch(
+          `/course/${courseData?.selectedCourse?.id}`,
+          val
+        );
+        if (request?.status === 200) {
+          toastAlert('success', request?.data?.message);
+          dispatch(selectCourse(request?.data?.data));
+          setActiveIndex(activeIndex + 1);
+        }
+      } catch (err: any) {
+        toastAlert('error', err?.response?.data?.message);
+      }
+    }
+  };
+
+  const handleThirdStep = async (val: any) => {
+    if (courseData?.selectedCourse?.id) {
+      try {
+        const request = await Service.patch(
+          `/course/${courseData?.selectedCourse?.id}`,
+          val
+        );
+        if (request?.status === 200) {
+          toastAlert('success', request?.data?.message);
+          dispatch(selectCourse(request?.data?.data));
+          setActiveIndex(activeIndex + 1);
+        }
+      } catch (err: any) {
+        toastAlert('error', err?.response?.data?.message);
+      }
+    }
   };
 
   useEffect(() => {}, []);
@@ -257,19 +308,41 @@ const AddCourse: React.FC = () => {
     setActiveInstructor(item.id);
   };
 
-  const handleThirdStep = async (val: {
+  const handleFourthStep = async (val: {
     welcomeMessage: string;
     congratulationMessage: string;
   }) => {
-    const payload = {
-      instructorIds: [activeInstructor],
-      ...val,
-    };
-    console.log('this is payloaf', payload);
-    try {
-      // console.log()
-    } catch (error) {}
+    if (courseData?.selectedCourse?.id) {
+      try {
+        const payload = {
+          instructorIds: [activeInstructor],
+          ...val,
+        };
+        console.log('this is payloaf', payload);
+
+        const request = await Service.patch(
+          `/course/${courseData?.selectedCourse?.id}`,
+          payload
+        );
+        if (request?.status === 200) {
+          toastAlert('success', request?.data?.message);
+          dispatch(selectCourse(request?.data?.data));
+          navigate('/admin-course');
+        }
+      } catch (err: any) {
+        toastAlert('error', err?.response?.data?.message);
+      }
+    }
   };
+
+  useEffect(() => {
+    if (courseData?.selectedCourse?.instructors?.length > 0)
+      setActiveInstructor(
+        courseData?.selectedCourse?.instructors?.length > 0
+          ? courseData?.selectedCourse?.instructors[0]?.id
+          : activeInstructor
+      );
+  }, [courseData?.selectedCourse?.instructors]);
 
   // console.log('Category options', categoryOptions);
   return (
@@ -400,120 +473,72 @@ const AddCourse: React.FC = () => {
         {activeIndex === 1 && (
           <Formik
             initialValues={{
-              thumbnail: '',
-              trailer: '',
-              description: '',
-              learnableContent: [''],
-              skills: [''],
+              thumbnail: courseData?.selectedCourse?.thumbnail ?? '',
+              trailer: courseData?.selectedCourse?.trailer ?? '',
+              description: courseData?.selectedCourse?.description ?? '',
+              learnableContent:
+                courseData?.selectedCourse?.learnableContent?.length > 0
+                  ? courseData?.selectedCourse?.learnableContent
+                  : [''],
+              skills:
+                courseData?.selectedCourse?.skills?.length > 0
+                  ? courseData?.selectedCourse?.skills
+                  : [''],
             }}
             // validationSchema={FORM_VALIDATION_STEP_TWO}
             // validateOnMount
             onSubmit={handleSecondStep}
           >
-            {({ isSubmitting, isValid, values, setFieldValue }) => (
-              <>
-                <Form>
-                  <Card>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <h6 className="course__upload__adv__info__title">
-                          Course Thumbnail
-                        </h6>
-                        <div className="flex">
-                          <div className="me-3">
-                            <input
-                              hidden
-                              ref={inputImageRef}
-                              type="file"
-                              name=""
-                              id=""
-                              accept="image/png, image/jpeg, image/jpg"
-                              onChange={(e) =>
-                                handleUploadImageFile(e, setFieldValue)
-                              }
-                            />
-                            {previewImage ? (
-                              previewImageDiv
-                            ) : (
-                              <img
-                                src={defaultImage}
-                                alt="image_logo"
-                                width={230}
-                                height={160}
+            {({ isSubmitting, isValid, values, setFieldValue }) => {
+              console.log(values);
+              return (
+                <>
+                  <Form>
+                    <Card>
+                      <div className="row">
+                        <div className="col-md-6">
+                          <h6 className="course__upload__adv__info__title">
+                            Course Thumbnail
+                          </h6>
+                          <div className="flex">
+                            <div className="me-3">
+                              <input
+                                hidden
+                                ref={inputImageRef}
+                                type="file"
+                                name=""
+                                id=""
+                                accept="image/png, image/jpeg, image/jpg"
+                                onChange={(e) =>
+                                  handleUploadImageFile(e, setFieldValue)
+                                }
                               />
-                            )}
-                          </div>
+                              {previewImage ? (
+                                previewImageDiv
+                              ) : (
+                                <img
+                                  src={values?.thumbnail || defaultImage}
+                                  alt="image_logo"
+                                  width={230}
+                                  height={160}
+                                />
+                              )}
+                            </div>
 
-                          <div className="flex-col">
-                            <p className="course__thumbnail__text">
-                              Upload your course Thumbnail here.
-                              <span className="font-weight-bold">
-                                {' '}
-                                Important guidelines:
-                              </span>
-                              1200x800 pixels or 12:8 Ratio. Supported format:
-                              .jpg, .jpeg, or .png
-                            </p>
-                            <Button
-                              variant="secondary"
-                              type="button"
-                              onClick={() => inputImageRef.current.click()}
-                              isValid={true}
-                            >
-                              <div className="flex">
-                                <span className="me-3">Upload Image</span>
-                                <Icon name="upload" />
-                              </div>
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* course thumbnail */}
-                      <div className="col-md-6">
-                        <h6 className="course__upload__adv__info__title">
-                          Course Trailer
-                        </h6>
-                        <div className="flex">
-                          <div className="me-3">
-                            <input
-                              hidden
-                              ref={inputVideoRef}
-                              type="file"
-                              name="thumbnail"
-                              accept=".mp4"
-                              id=""
-                              onChange={(e) =>
-                                handleChangeVideo(e, setFieldValue)
-                              }
-                            />
-                            {videoSourceUrl ? (
-                              previewVideoDiv
-                            ) : (
-                              <img
-                                src={defaultImage}
-                                width={230}
-                                height={160}
-                              />
-                            )}
-                          </div>
-
-                          <div className="flex-col">
-                            <p className="course__thumbnail__text">
-                              Upload your course Thumbnail here.
-                              <span className="font-weight-bold">
-                                Important guidelines:
-                              </span>
-                              1200x800 pixels or 12:8 Ratio. Supported format:
-                              .jpg, .jpeg, or .png
-                            </p>
-                            {videoProgressReport > 0 ? (
-                              <p>Uploading {videoProgressReport} % </p>
-                            ) : (
+                            <div className="flex-col">
+                              <p className="course__thumbnail__text">
+                                Upload your course Thumbnail here.
+                                <span className="font-weight-bold">
+                                  {' '}
+                                  Important guidelines:
+                                </span>
+                                1200x800 pixels or 12:8 Ratio. Supported format:
+                                .jpg, .jpeg, or .png
+                              </p>
                               <Button
-                                type="button"
                                 variant="secondary"
-                                onClick={() => inputVideoRef.current.click()}
+                                type="button"
+                                onClick={() => inputImageRef.current.click()}
                                 isValid={true}
                               >
                                 <div className="flex">
@@ -521,139 +546,214 @@ const AddCourse: React.FC = () => {
                                   <Icon name="upload" />
                                 </div>
                               </Button>
-                            )}
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="col-12 mb-5">
-                        <div className="mt-5">
+                        {/* course thumbnail */}
+                        <div className="col-md-6">
                           <h6 className="course__upload__adv__info__title">
-                            Course Descriptions
+                            Course Trailer
                           </h6>
-                          <Field
-                            component="textarea"
-                            name="description"
-                            className="w-100 p-3 rounded"
-                            cols={100}
-                            rows={10}
-                          ></Field>
+                          <div className="flex">
+                            <div className="me-3">
+                              <input
+                                hidden
+                                ref={inputVideoRef}
+                                type="file"
+                                name="thumbnail"
+                                accept=".mp4"
+                                id=""
+                                onChange={(e) =>
+                                  handleChangeVideo(e, setFieldValue)
+                                }
+                              />
+                              {values?.trailer ? (
+                                <video
+                                  src={values?.trailer}
+                                  width="230px"
+                                  height="160px"
+                                  controls
+                                  autoPlay
+                                />
+                              ) : videoSourceUrl ? (
+                                previewVideoDiv
+                              ) : (
+                                <img
+                                  src={defaultImage}
+                                  width={230}
+                                  height={160}
+                                />
+                              )}
+                            </div>
+
+                            <div className="flex-col">
+                              <p className="course__thumbnail__text">
+                                Upload your course Thumbnail here.
+                                <span className="font-weight-bold">
+                                  Important guidelines:
+                                </span>
+                                1200x800 pixels or 12:8 Ratio. Supported format:
+                                .jpg, .jpeg, or .png
+                              </p>
+                              {videoProgressReport > 0 ? (
+                                <p>Uploading {videoProgressReport} % </p>
+                              ) : (
+                                <Button
+                                  type="button"
+                                  variant="secondary"
+                                  onClick={() => inputVideoRef.current.click()}
+                                  isValid={true}
+                                >
+                                  <div className="flex">
+                                    <span className="me-3">Upload Image</span>
+                                    <Icon name="upload" />
+                                  </div>
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="col-12 mb-5">
+                          <div className="mt-5">
+                            <h6 className="course__upload__adv__info__title">
+                              Course Descriptions
+                            </h6>
+                            <Field
+                              component="textarea"
+                              name="description"
+                              className="w-100 p-3 rounded"
+                              cols={100}
+                              rows={10}
+                            ></Field>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <BorderBottom />
-                    <div className="my-5">
-                      <div className="flex-between">
-                        <h6 className="course__upload__adv__info__title my-5">
-                          Learnable Content
-                        </h6>
+                      <BorderBottom />
+                      <div className="my-5">
+                        <div className="flex-between">
+                          <h6 className="course__upload__adv__info__title my-5">
+                            Learnable Content
+                          </h6>
 
-                        <Button variant="outline" type="button" isValid>
-                          <div className="flex">
-                            <Icon name="plus" />
-                            <span
-                              className="ms-2"
-                              onClick={() => inputAddMore.current.click()}
-                            >
-                              Add New
-                            </span>
-                          </div>
+                          <Button variant="outline" type="button" isValid>
+                            <div className="flex">
+                              <Icon name="plus" />
+                              <span
+                                className="ms-2"
+                                onClick={() => inputAddMore.current.click()}
+                              >
+                                Add New
+                              </span>
+                            </div>
+                          </Button>
+                        </div>
+                        <FieldArray name="learnableContent">
+                          {({ insert }) =>
+                            values.learnableContent.map(
+                              (_: any, idx: number) => (
+                                <>
+                                  <TextField
+                                    label={idx + 1}
+                                    name={`learnableContent.${idx}`}
+                                    placeholder="What you will teach in this course..."
+                                  />
+                                  <button
+                                    type="button"
+                                    className="secondary"
+                                    onClick={() => insert(idx, '')}
+                                    hidden
+                                    ref={inputAddMore}
+                                  >
+                                    Add Friend
+                                  </button>
+                                </>
+                              )
+                            )
+                          }
+                        </FieldArray>
+                      </div>
+                      {/* What skill you get (4/8) */}
+                      <BorderBottom />
+                      <div className="my-5">
+                        <div className="flex-between">
+                          <h6 className="course__upload__adv__info__title my-5">
+                            What skill you get
+                          </h6>
+                          <Button variant="outline" type="button" isValid>
+                            <div className="flex">
+                              <Icon name="plus" />
+                              <span
+                                className="ms-2"
+                                onClick={() =>
+                                  inputSkillImageRef.current.click()
+                                }
+                              >
+                                Add New
+                              </span>
+                            </div>
+                          </Button>
+                        </div>
+                        <FieldArray name="skills">
+                          {({ insert }) =>
+                            values.skills.map((_: any, idx: number) => (
+                              <>
+                                <TextField
+                                  label={idx + 1}
+                                  name={`skills.${idx}`}
+                                  placeholder="What you will teach in this course..."
+                                  key={idx}
+                                />
+                                <button
+                                  type="button"
+                                  className="secondary"
+                                  onClick={() => insert(idx, '')}
+                                  hidden
+                                  ref={inputSkillImageRef}
+                                >
+                                  Add Friend
+                                </button>
+                              </>
+                            ))
+                          }
+                        </FieldArray>
+                      </div>
+                      <div className="flex flex-end my-5">
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          // isSubmitting={isSubmitting}
+                          // isValid={isValid}
+                          isValid={true}
+                        >
+                          Save & Next
                         </Button>
                       </div>
-                      <FieldArray name="learnableContent">
-                        {({ insert }) =>
-                          values.learnableContent.map((_: any, idx: number) => (
-                            <>
-                              <TextField
-                                label={idx + 1}
-                                name={`learnableContent.${idx}`}
-                                placeholder="What you will teach in this course..."
-                              />
-                              <button
-                                type="button"
-                                className="secondary"
-                                onClick={() => insert(idx, '')}
-                                hidden
-                                ref={inputAddMore}
-                              >
-                                Add Friend
-                              </button>
-                            </>
-                          ))
-                        }
-                      </FieldArray>
-                    </div>
-                    {/* What skill you get (4/8) */}
-                    <BorderBottom />
-                    <div className="my-5">
-                      <div className="flex-between">
-                        <h6 className="course__upload__adv__info__title my-5">
-                          What skill you get
-                        </h6>
-                        <Button variant="outline" type="button" isValid>
-                          <div className="flex">
-                            <Icon name="plus" />
-                            <span
-                              className="ms-2"
-                              onClick={() => inputSkillImageRef.current.click()}
-                            >
-                              Add New
-                            </span>
-                          </div>
-                        </Button>
-                      </div>
-                      <FieldArray name="skills">
-                        {({ insert }) =>
-                          values.skills.map((_: any, idx: number) => (
-                            <>
-                              <TextField
-                                label={idx + 1}
-                                name={`skills.${idx}`}
-                                placeholder="What you will teach in this course..."
-                                key={idx}
-                              />
-                              <button
-                                type="button"
-                                className="secondary"
-                                onClick={() => insert(idx, '')}
-                                hidden
-                                ref={inputSkillImageRef}
-                              >
-                                Add Friend
-                              </button>
-                            </>
-                          ))
-                        }
-                      </FieldArray>
-                    </div>
-                    <div className="flex flex-end my-5">
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        // isSubmitting={isSubmitting}
-                        // isValid={isValid}
-                        isValid={true}
-                      >
-                        Save
-                      </Button>
-                    </div>
-                  </Card>
-                </Form>
-              </>
-            )}
+                    </Card>
+                  </Form>
+                </>
+              );
+            }}
           </Formik>
         )}
-        {activeIndex === 2 && <CurriculumSection handleSubmit={() => {}} />}
+        {activeIndex === 2 && (
+          <CurriculumSection
+            handleSubmit={handleThirdStep}
+            initialSection={courseData?.selectedCourse?.sections}
+          />
+        )}
 
         {activeIndex === 3 && (
           <Formik
             initialValues={{
-              welcomeMessage: '',
-              congratulationMessage: '',
+              welcomeMessage: courseData?.selectedCourse?.welcomeMessage ?? '',
+              congratulationMessage:
+                courseData?.selectedCourse?.congratulationMessage ?? '',
             }}
             // validationSchema={FORM_VALIDATION_STEP_TWO}
             // validateOnMount
-            onSubmit={handleThirdStep}
+            onSubmit={handleFourthStep}
           >
             {({ isSubmitting, isValid, values, setFieldValue }) => (
               <Form>

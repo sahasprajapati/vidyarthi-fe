@@ -7,7 +7,7 @@ interface Props {
 
 const PrivateRoute: React.FC<Props> = ({ allowedRoutes }) => {
   const token: any = localStorage.getItem('accessToken');
-  const role = JSON.parse(localStorage.getItem('role') ?? 'null');
+  const role = localStorage.getItem('role');
   const location = useLocation();
   return allowedRoutes.includes(role) ? (
     <Outlet />

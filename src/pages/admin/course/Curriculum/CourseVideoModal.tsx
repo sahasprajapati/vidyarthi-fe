@@ -37,7 +37,6 @@ const CourseVideoModal = ({
     // setVideoSourceUrl(videoUrl);
     try {
       const request = await Service.post('/upload/video', file, configs);
-      console.log('this is requrest', request);
       setVideoSourceUrl(request?.data?.data?.url);
       setFieldValue('video', request?.data?.data?.url);
     } catch (error) {}
@@ -88,7 +87,15 @@ const CourseVideoModal = ({
                     id=""
                     onChange={(e) => handleChangeVideo(e, setFieldValue)}
                   />
-                  {videoSourceUrl ? (
+                  {initialValue ? (
+                    <video
+                      src={initialValue}
+                      width="230px"
+                      height="160px"
+                      controls
+                      autoPlay
+                    />
+                  ) : videoSourceUrl ? (
                     previewVideoDiv
                   ) : (
                     <img src={defaultImage} width={230} height={160} />
@@ -133,12 +140,7 @@ const CourseVideoModal = ({
                 Cancel
               </Button>
 
-              <Button
-                onClick={handleModal}
-                variant={'primary'}
-                type={'button'}
-                isValid={true}
-              >
+              <Button variant={'primary'} type={'submit'} isValid={true}>
                 Save Changes
               </Button>
             </div>

@@ -1,4 +1,5 @@
 import Icon from 'assets/svg/Icon';
+import Button from 'components/button';
 import Heading from 'components/heading';
 import React, { useState } from 'react';
 import CourseDescriptionModal from './CourseDescriptionModal';
@@ -13,10 +14,16 @@ export interface Lecture {
 }
 export interface Section {
   name: string;
-  lecture: Lecture[];
+  lectures: Lecture[];
   listOrder: number;
 }
-const CurriculumSection = ({ handleSubmit }: { handleSubmit: () => void }) => {
+const CurriculumSection = ({
+  handleSubmit,
+  initialSection,
+}: {
+  handleSubmit: (data: any) => void;
+  initialSection: Section[];
+}) => {
   const [showNameModal, setShowNameModal] = useState(false);
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
@@ -28,7 +35,7 @@ const CurriculumSection = ({ handleSubmit }: { handleSubmit: () => void }) => {
   });
   const initialValue = {
     name: 'Section name',
-    lecture: [
+    lectures: [
       {
         name: 'Lecture name',
         listOrder: 1,
@@ -36,13 +43,20 @@ const CurriculumSection = ({ handleSubmit }: { handleSubmit: () => void }) => {
     ],
     listOrder: 1,
   };
-  const [sections, setSections] = useState<Section[]>([initialValue]);
+  const [sections, setSections] = useState<Section[]>(
+    initialSection ? initialSection : [initialValue]
+  );
 
   const handleSectionAdd = () => {
-    setSections([
-      ...sections,
-      { ...initialValue, listOrder: (sections?.length ?? 0) + 1 },
-    ]);
+    if (sections.length > 0)
+      setSections([
+        ...sections,
+        { ...initialValue, listOrder: (sections?.length ?? 0) + 1 },
+      ]);
+    else
+      setSections([
+        { ...initialValue, listOrder: (sections?.length ?? 0) + 1 },
+      ]);
   };
   const handleSectionDelete = (sectionIndex: number) => {
     const section = [...sections];
@@ -52,22 +66,29 @@ const CurriculumSection = ({ handleSubmit }: { handleSubmit: () => void }) => {
   const handleLectureDelete = (sectionIndex: number, lectureIndex: number) => {
     const newSections = [...sections];
 
-    const lecture = [...newSections[sectionIndex]?.lecture];
+    const lecture = [...newSections[sectionIndex]?.lectures];
     lecture.splice(lectureIndex, 1);
     if (newSections[sectionIndex])
-      newSections[sectionIndex].lecture = [...lecture];
+      newSections[sectionIndex].lectures = [...lecture];
     setSections([...newSections]);
   };
 
   const handleLectureAdd = (index: number) => {
     const newSections = [...sections];
 
-    if (newSections[index])
-      newSections[index].lecture = [
-        ...newSections[index]?.lecture,
+    if (newSections[index] && newSections[index]?.lectures?.length > 0)
+      newSections[index].lectures = [
+        ...newSections[index]?.lectures,
         {
           name: 'Lecture name',
-          listOrder: (newSections[index]?.lecture?.length ?? 0) + 1,
+          listOrder: (newSections[index]?.lectures?.length ?? 0) + 1,
+        },
+      ];
+    else
+      newSections[index].lectures = [
+        {
+          name: 'Lecture name',
+          listOrder: (newSections[index]?.lectures?.length ?? 0) + 1,
         },
       ];
     setSections([...newSections]);
@@ -80,7 +101,7 @@ const CurriculumSection = ({ handleSubmit }: { handleSubmit: () => void }) => {
   ) => {
     const newSections = [...sections];
 
-    const lecture = [...newSections[sectionIndex]?.lecture];
+    const lecture = [...newSections[sectionIndex]?.lectures];
     if (lecture?.length > 0) {
       if (lecture[lectureIndex]) {
         lecture[lectureIndex] = {
@@ -90,7 +111,7 @@ const CurriculumSection = ({ handleSubmit }: { handleSubmit: () => void }) => {
       }
     }
     if (newSections[sectionIndex])
-      newSections[sectionIndex].lecture = [...lecture];
+      newSections[sectionIndex].lectures = [...lecture];
     setSections([...newSections]);
   };
   const handleSectionEdit = (sectionIndex: number, data: any) => {
@@ -100,8 +121,6 @@ const CurriculumSection = ({ handleSubmit }: { handleSubmit: () => void }) => {
       newSections[sectionIndex] = { ...newSections[sectionIndex], ...data };
     setSections([...newSections]);
   };
-
-  console.log('Sections', sections);
   return (
     <>
       <div className="">
@@ -145,7 +164,7 @@ const CurriculumSection = ({ handleSubmit }: { handleSubmit: () => void }) => {
                 </div>
               </div>
 
-              {section?.lecture?.map((lecture, li) => {
+              {section?.lectures?.map((lecture, li) => {
                 return (
                   <div className="flex-between px-5 py-2" key={li}>
                     <div className="flex">
@@ -158,36 +177,34 @@ const CurriculumSection = ({ handleSubmit }: { handleSubmit: () => void }) => {
                         <div className="flex-between course__filter__container">
                           <select
                             value="content"
+                            onChange={(e) => {
+                              switch (e.target.value) {
+                                case 'video':
+                                  setShowVideoModal(true);
+                                  setSelectedSection({
+                                    section: i,
+                                    lecture: li,
+                                  });
+                                  break;
+
+                                case 'description':
+                                  setShowDescriptionModal(true);
+                                  setSelectedSection({
+                                    section: i,
+                                    lecture: li,
+                                  });
+                                  break;
+                              }
+                            }}
                             id=""
                             className="form-control shadow-none bg-transparent outline-none border-none"
                           >
-                            <option value="content">Content</option>
-                            <option
-                              onClick={(e) => {
-                                setShowVideoModal(true);
-                                setSelectedSection({
-                                  section: i,
-                                  lecture: li,
-                                });
-                              }}
-                            >
-                              Video
-                            </option>
+                            <option hidden>Content</option>
+                            <option value="video">Video</option>
                             {/* <option value="file" onClick={(e) => {}}>
                               Attach File
                             </option> */}
-                            <option
-                              value="description"
-                              onClick={(e) => {
-                                setShowDescriptionModal(true);
-                                setSelectedSection({
-                                  section: i,
-                                  lecture: li,
-                                });
-                              }}
-                            >
-                              Descriptions
-                            </option>
+                            <option value="description">Descriptions</option>
                             {/* <option value="note" onClick={(e) => {}}>
                               Course Notes
                             </option> */}
@@ -232,6 +249,16 @@ const CurriculumSection = ({ handleSubmit }: { handleSubmit: () => void }) => {
           Add Section
           <Icon name="plus" height={20} />
         </div>
+        <div className="flex flex-end my-5">
+          <Button
+            variant="primary"
+            type="submit"
+            isValid={true}
+            onClick={() => handleSubmit({ sections: sections })}
+          >
+            Save & Next
+          </Button>
+        </div>
       </div>
 
       {showNameModal && (
@@ -242,9 +269,9 @@ const CurriculumSection = ({ handleSubmit }: { handleSubmit: () => void }) => {
             sections[selectedSection?.section]
               ? isNaN(selectedSection.lecture ?? NaN)
                 ? sections[selectedSection?.section].name
-                : sections[selectedSection?.section]?.lecture?.length > 0 &&
+                : sections[selectedSection?.section]?.lectures?.length > 0 &&
                   selectedSection?.lecture &&
-                  sections[selectedSection?.section]?.lecture[
+                  sections[selectedSection?.section]?.lectures[
                     selectedSection?.lecture
                   ]?.name
               : null
@@ -265,18 +292,19 @@ const CurriculumSection = ({ handleSubmit }: { handleSubmit: () => void }) => {
       {showDescriptionModal && (
         <CourseDescriptionModal
           initialValue={
-            sections &&
             sections?.length > 0 &&
-            sections[selectedSection?.section] &&
-            sections[selectedSection?.section]?.lecture?.length > 0 &&
-            selectedSection?.lecture &&
-            sections[selectedSection?.section]?.lecture[
-              selectedSection?.lecture
-            ]?.description
+            !isNaN(selectedSection?.section) &&
+            sections[selectedSection.section] &&
+            sections[selectedSection.section]?.lectures?.length > 0 &&
+            (selectedSection?.lecture === 0 || selectedSection?.lecture) &&
+            sections[selectedSection.section].lectures[selectedSection.lecture]
+              ? sections[selectedSection.section].lectures[
+                  selectedSection.lecture
+                ].description
+              : ''
           }
           handleModal={() => setShowDescriptionModal(!showDescriptionModal)}
           handleChange={(data: any) => {
-            console.log('Sahas data', data);
             handleLectureEdit(
               selectedSection.section,
               selectedSection.lecture as number,
@@ -288,14 +316,16 @@ const CurriculumSection = ({ handleSubmit }: { handleSubmit: () => void }) => {
       {showVideoModal && (
         <CourseVideoModal
           initialValue={
-            sections &&
             sections?.length > 0 &&
-            sections[selectedSection?.section] &&
-            sections[selectedSection?.section]?.lecture?.length > 0 &&
-            selectedSection?.lecture &&
-            sections[selectedSection?.section]?.lecture[
-              selectedSection?.lecture
-            ]?.video
+            !isNaN(selectedSection?.section) &&
+            sections[selectedSection.section] &&
+            sections[selectedSection.section]?.lectures?.length > 0 &&
+            (selectedSection?.lecture === 0 || selectedSection?.lecture) &&
+            sections[selectedSection.section].lectures[selectedSection.lecture]
+              ? sections[selectedSection.section].lectures[
+                  selectedSection.lecture
+                ].video
+              : ''
           }
           handleModal={() => setShowVideoModal(!showVideoModal)}
           handleChange={(data: any) => {

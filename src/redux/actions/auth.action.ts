@@ -5,6 +5,9 @@ export const authAction = (user: any) => {
   return async (dispatch: any) => {
     try {
       const { data } = await Service.post('/auth/login', user);
+      window.localStorage.setItem('accessToken', data?.data?.accessToken);
+      window.localStorage.setItem('refreshToken', data?.data?.refreshToken);
+
       // if (data?.data?.accessToken) {
       //   const { data: resData } = await axiosInstance.get('/auth/profile', {
       //     headers: {

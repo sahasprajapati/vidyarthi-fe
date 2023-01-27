@@ -55,7 +55,6 @@ const Register: React.FC = () => {
     } catch (err: any) {}
   };
 
-  console.log('Sahas auht', userData);
   if (userData?.authenticate && userData?.userData && userData?.role) {
     if (userData?.role === 'student') {
       navigate('/student-dashboard');
