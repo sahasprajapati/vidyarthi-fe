@@ -7,6 +7,7 @@ interface Props {
   type: 'button' | 'submit' | 'reset' | undefined;
   isSubmitting?: boolean;
   isValid?: boolean;
+  className?: string;
 }
 
 const Button: React.FC<Props> = ({
@@ -16,6 +17,7 @@ const Button: React.FC<Props> = ({
   type = 'button',
   isSubmitting,
   isValid,
+  className,
 }) => {
   return (
     <div className="">
@@ -29,7 +31,7 @@ const Button: React.FC<Props> = ({
             : variant === 'outline'
             ? 'outline__btn'
             : null
-        }`}
+        } ${className}`}
         type={type}
         disabled={!isValid || isSubmitting}
       >
