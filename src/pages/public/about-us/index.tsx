@@ -8,10 +8,12 @@ interface IProps {}
 const AboutUs: React.FC<IProps> = ({}) => {
   return (
     <React.Fragment>
-      <div className="container mx-auto">
-        <NavBar variant="black" />
-        <Heading title={'About Us'} className="text-center mb-5" />
-        <p className="f-14">
+      <div className="banner-container">
+        <NavBar variant="white" />
+        <h5 className="banner-container-text">About us</h5>
+      </div>
+      <div className="container mx-auto my-5">
+        <p className="f-16 py-5">
           {` We are an online education platform that aims to reform the online
           education industry in the country. At Vidyarthi, we aim for much more
           than just teaching; our goal is to get young Nepalese minds on par

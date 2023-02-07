@@ -9,11 +9,12 @@ interface Props {
 }
 
 const NavBar: React.FC<Props> = ({ variant }) => {
-  const userData = useSelector((state: any) => state.auth);
+  const userData: any = useSelector((state: any) => state.auth);
+
   const login = userData?.authenticate ? true : false;
 
   return (
-    <header className="">
+    <header className="container">
       {login ? (
         <LoginNavBar imageUrl={Profile} variant={variant} />
       ) : (

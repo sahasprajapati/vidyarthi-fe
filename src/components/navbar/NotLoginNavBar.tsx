@@ -15,6 +15,7 @@ const NotLoginNavBar: React.FC<Props> = ({ variant }) => {
         <img
           src={variant === 'white' ? VidyarthiWhiteLogo : VidyarthiLogo}
           alt="main-logo"
+          style={{ height: '50px', width: '200px', objectFit: 'cover' }}
         />
       </Link>
       <div className="navlist__mobile__menu">

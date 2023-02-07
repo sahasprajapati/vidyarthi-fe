@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
           ))}
         </div>
         <div className="pb-4">
-          <span className="footer__copyright__text">&copy; - {todayYear} </span>
+          <span className="footer__copyright__text">&copy;{todayYear} </span>
           <span className="footer__copyright__bold">Vidyarthi Nepal.</span>
           <span className="footer__copyright__text"> All right reserved</span>
         </div>

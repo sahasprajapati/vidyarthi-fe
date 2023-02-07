@@ -18,7 +18,18 @@ const SideBar: React.FC<Props> = ({ responsive, setResponsive }) => {
         }`}
       >
         <div className="sidebar__top flex-between mx-3 my-3">
-          {!responsive && <img src={VidyarthiLogo} alt="logo" />}
+          {!responsive && (
+            <img
+              src={VidyarthiLogo}
+              alt="main-logo"
+              style={{
+                height: '50px',
+                width: '200px',
+                objectFit: 'cover',
+                marginBottom: '20px',
+              }}
+            />
+          )}
           <div className="pointer" onClick={() => setResponsive(!responsive)}>
             <Icon name="menu" />
           </div>

@@ -100,10 +100,6 @@ const Home: React.FC = () => {
                   src={HomePageCourse}
                   className="home__page__third__image__course me-2"
                 />
-                <img
-                  src={HomePageCourse}
-                  className="home__page__fourth__image__course me-2"
-                />
               </div>
             </div>
           </div>
