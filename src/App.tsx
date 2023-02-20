@@ -14,7 +14,8 @@ import {
   Setting,
   StudentAchievements,
   StudentCart,
-  StudentCourse,
+  StudentCourseDetail,
+  StudentCourseList,
   StudentDashBoard,
   TeacherDashboard,
   TeacherTransaction,
@@ -26,11 +27,12 @@ import {
 import PrivateRoute from 'PrivateRoute';
 
 import { Route, Routes } from 'react-router-dom';
-import { isUserLoggedIn } from 'redux/actions/auth.action';
+import { fetchProfile, isUserLoggedIn } from 'redux/actions/auth.action';
 import { useDispatch, useSelector } from 'react-redux';
 import { ScrollToTop } from 'components';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Service from 'setup/network';
 
 // ehehe
 
@@ -40,6 +42,9 @@ import 'react-toastify/dist/ReactToastify.css';
  */
 
 function App() {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const role = localStorage.getItem('role');
   const dispatch: any = useDispatch();
   const auth = useSelector((state: any) => state.auth);
   console.log('this is auth', auth);
@@ -50,6 +55,13 @@ function App() {
   }, [auth.authenticate]);
   React.useEffect(() => {
     window.scrollTo(0, 0);
+    if (accessToken) {
+      fetchProfile({
+        accessToken: accessToken ?? '',
+        refreshToken: refreshToken ?? '',
+        role: role ?? '',
+      });
+    }
   }, []);
 
   return (
@@ -72,7 +84,11 @@ function App() {
         <Route element={<AdminAddCourse />} path="/admin-course-add" />
 
         <Route element={<PrivateRoute allowedRoutes={['student']} />}>
-          <Route element={<StudentCourse />} path="/student-course" />
+          <Route
+            element={<StudentCourseDetail />}
+            path="/student-course/:courseId"
+          />
+          <Route element={<StudentCourseList />} path="/student-course" />
 
           <Route element={<StudentCart />} path="/student-cart" />
 

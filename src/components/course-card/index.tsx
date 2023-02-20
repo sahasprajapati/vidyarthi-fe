@@ -48,7 +48,7 @@ const CourseCard: React.FC<Props> = ({
           <div>
             {isPrice && (
               <span>
-                <span className="course__card__price">{price}</span>
+                <span className="course__card__price">{price ?? 0}</span>
                 <span> / </span>
               </span>
             )}

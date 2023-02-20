@@ -2,7 +2,7 @@ import Button from 'components/button';
 import Modal from 'components/modal';
 import TextField from 'components/text-field';
 import { Form, Formik } from 'formik';
-import React from 'react';
+import React, { useRef } from 'react';
 import Service from 'setup/network';
 import { defaultImage } from 'assets/images';
 import Icon from 'assets/svg/Icon';
@@ -42,6 +42,7 @@ const CourseVideoModal = ({
     } catch (error) {}
   };
 
+  const videoRef = useRef<HTMLVideoElement>(null);
   const previewVideoDiv = React.useMemo(
     () => (
       <video
@@ -49,10 +50,10 @@ const CourseVideoModal = ({
         width="230px"
         height="160px"
         controls
-        autoPlay
+        ref={videoRef}
       />
     ),
-    [previewImage]
+    [previewImage, videoSourceUrl]
   );
   return (
     <Modal
@@ -62,12 +63,20 @@ const CourseVideoModal = ({
     >
       <Formik
         onSubmit={(val) => {
-          handleChange(val);
+          const length = videoRef.current?.duration ?? initialValue?.length;
+          handleChange({
+            ...val,
+            ...(length
+              ? {
+                  length: new Date(length * 1000).toISOString().slice(11, 19),
+                }
+              : {}),
+          });
           handleModal();
         }}
         validateOnMount
         initialValues={{
-          video: initialValue ?? '',
+          video: initialValue?.video ?? '',
         }}
       >
         {({ setFieldValue }) => (
@@ -87,13 +96,12 @@ const CourseVideoModal = ({
                     id=""
                     onChange={(e) => handleChangeVideo(e, setFieldValue)}
                   />
-                  {initialValue ? (
+                  {initialValue?.video ? (
                     <video
-                      src={initialValue}
+                      src={initialValue?.video}
                       width="230px"
                       height="160px"
                       controls
-                      autoPlay
                     />
                   ) : videoSourceUrl ? (
                     previewVideoDiv

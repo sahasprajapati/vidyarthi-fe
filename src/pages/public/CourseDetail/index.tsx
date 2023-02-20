@@ -18,10 +18,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import course from 'pages/admin/course';
 import { useParams } from 'react-router-dom';
 import { fetchCourseById } from 'redux/actions/course.action';
+import Service from 'setup/network';
+import { toast } from 'react-toastify';
 // import VideoTest from './VideoTest.mp4';
 
 const CourseDetail: React.FC = () => {
   const courseData: CourseReducer = useSelector((state: any) => state.course);
+  const userData = JSON.parse(localStorage.getItem('user') ?? 'null');
+
   const {
     selectedCourse,
   }: {
@@ -35,6 +39,36 @@ const CourseDetail: React.FC = () => {
   useEffect(() => {
     dispatch(fetchCourseById(+(courseId ?? '')));
   }, []);
+
+  const handleAddToCart = async () => {
+    try {
+      const set = new Set([
+        ...(userData?.cart?.course?.map((c: any) => c?.id) ?? []),
+        selectedCourse.id,
+      ]);
+      console.log(set);
+      console.log(set);
+      console.log(Array.from(set));
+      const res = await Service.put('/profile/cart', {
+        courseIds: Array.from(set),
+      });
+
+      if (res?.data?.data?.cart) {
+        localStorage.setItem(
+          'user',
+          JSON.stringify({
+            ...userData,
+            cart: res?.data?.data?.cart,
+          })
+        );
+      }
+      toast.success('Added course to cart');
+    } catch (err: any) {
+      toast.error(err);
+
+      console.error(err);
+    }
+  };
   return (
     <main className="bg-main">
       <div
@@ -53,19 +87,29 @@ const CourseDetail: React.FC = () => {
               {selectedCourse?.title?.toUpperCase()}
             </h6>
             <div className="flex mt-4">
-              {Array(Math.round(rating))
+              {Array(Math.round(selectedCourse?.ratingsAvg ?? 5))
                 .fill('')
                 .map((e, i) => (
                   <div className="mx-1" key={i}>
                     <Icon name="star" fill="#FAA307" />
                   </div>
                 ))}
-              <span className="ms-2 pt-1 color-white f-18"> {rating}/5 </span>
+              {Array(Math.round(5 - (selectedCourse?.ratingsAvg ?? 5)))
+                .fill('')
+                .map((e, i) => (
+                  <div className="mx-1" key={i}>
+                    <Icon name="star" fill="grey" />
+                  </div>
+                ))}
               <span className="ms-2 pt-1 color-white f-18">
-                ({review} Reviews)
+                {' '}
+                {selectedCourse?.ratingsAvg ?? 5}/5{' '}
               </span>
               <span className="ms-2 pt-1 color-white f-18">
-                {totalStudent} Student
+                ({selectedCourse?.ratingsUserCount ?? 0} Reviews)
+              </span>
+              <span className="ms-2 pt-1 color-white f-18">
+                {selectedCourse?.coursesOnStudents?.length ?? 0} Student
               </span>
             </div>
             <div className="flex mt-4">
@@ -75,13 +119,23 @@ const CourseDetail: React.FC = () => {
                   alt="instructor-image"
                 />
               </div>
-              <h6 className="f-24 color-white ms-4 pt-2">Prashant Khanal</h6>
+              <h6 className="f-24 color-white ms-4 pt-2">
+                {selectedCourse?.instructors?.length > 0 &&
+                  selectedCourse?.instructors[0]?.name}
+              </h6>
             </div>
             <div className="flex mt-4">
               <div className="me-4">
-                <Button variant="primary" type="button">
+                <Button
+                  variant="primary"
+                  type="button"
+                  isValid={true}
+                  onClick={() => {
+                    handleAddToCart();
+                  }}
+                >
                   <div className="flex py-1">
-                    <span className="me-2">Add to Wishlist</span>
+                    <span className="me-2">Add to Cart</span>
                     <Icon name="plus" fill="#ffff" width={24} height={24} />
                   </div>
                 </Button>
@@ -133,7 +187,7 @@ const CourseDetail: React.FC = () => {
                         <div className="flex-between mt-4 mx-1 " key={i}>
                           <p className="f-16">{lecture.name}</p>
                           <p className="course__detail__length">
-                            {lecture.description}
+                            {lecture?.length?.slice(3)}
                           </p>
                         </div>
                       ))}
@@ -189,7 +243,7 @@ const CourseDetail: React.FC = () => {
             {/* Reviews comment */}
             <aside className="my-5">
               <Heading title="Reviews" />
-              {courseReview.map((e) => (
+              {selectedCourse?.ratings?.map((e) => (
                 <div className="" key={e?.id}>
                   <div className="flex my-3" key={e?.id}>
                     <div className="course__detail__review__container">
@@ -199,11 +253,11 @@ const CourseDetail: React.FC = () => {
                       />
                     </div>
                     <div className="flex-col ms-3">
-                      <h6 className="f-18-f500 pt-3">{e?.name}</h6>
+                      <h6 className="f-18-f500 pt-3">{e?.ratedBy?.name}</h6>
                       <div className="flex">
-                        <h6 className="f-18-f500">{e?.ratingPoint} </h6>
+                        <h6 className="f-18-f500">{e?.rate} </h6>
                         <div className="flex mb-3 ms-3">
-                          {Array(Math.round(e?.rating))
+                          {Array(Math.round(e?.rate))
                             .fill('')
                             .map((_, i) => (
                               <div className="me-1" key={i}>
@@ -215,19 +269,27 @@ const CourseDetail: React.FC = () => {
                                 />
                               </div>
                             ))}
+                          {Array(Math.round(5 - e?.rate))
+                            .fill('')
+                            .map((_, i) => (
+                              <div className="me-1" key={i}>
+                                <Icon
+                                  name="star"
+                                  fill="grey"
+                                  width={24}
+                                  height={24}
+                                />
+                              </div>
+                            ))}
                         </div>
                         <div className="pipe mb-3 ms-3" />
                         <p className="text-capitalize f-18 opacity-half ms-3">
-                          1 Month ago
+                          {new Date(e?.createdAt).getMonth() + ' month ago'}
                         </p>
                       </div>
                     </div>
                   </div>
-                  <p className="f-18">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.{' '}
-                  </p>
+                  <p className="f-18">{e.message}</p>
                 </div>
               ))}
             </aside>
