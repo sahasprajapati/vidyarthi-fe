@@ -73,6 +73,17 @@ export type Course = {
   thumbnail: string;
   trailer: string;
   sections: Section[];
+  ratings: {
+    id: number;
+    message: string;
+    rate: number;
+    ratedBy: { name: string };
+    createdAt: string;
+  }[];
+  instructors: { name: string; occupation: string }[];
+  ratingsAvg: number;
+  ratingsUserCount: number;
+  coursesOnStudents: any[];
 };
 
 export type PaginationArgs = {

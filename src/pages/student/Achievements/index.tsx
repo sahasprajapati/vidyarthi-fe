@@ -58,6 +58,7 @@ const StudentAchievements = () => {
               </div>
               <div className="col-md-6">
                 <CartCard
+                  label="Place Order"
                   variant="light-dark"
                   tax="1058"
                   couponDiscount="20%"

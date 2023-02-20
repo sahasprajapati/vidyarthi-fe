@@ -8,24 +8,24 @@ import Accordion from 'components/accordion';
 interface Props {}
 
 const PAYMENT_VALIDATION = Yup.object().shape({
-  accountNumber: Yup.string().required('Account Number is required'),
-  accountHolderName: Yup.string().required('Account Number is required'),
-  bankName: Yup.string().required('Account Number is required'),
-  khaltiPhoneNumber: Yup.string().required('Phone number is required'),
-  phoneNumber: Yup.string().required('Phone number is required'),
+  accountNumber: Yup.string(),
+  accountHolderName: Yup.string(),
+  bankName: Yup.string(),
+  khaltiPhoneNumber: Yup.string(),
+  phoneNumber: Yup.string(),
 });
 
 const paymentData = [
   {
     id: 0,
-    title: 'credit card',
+    title: 'Credit Card',
     label: 'Account Holder Name',
     name: 'accountHolderName',
     placeholder: '',
   },
   {
     id: 0,
-    title: 'Payment e-sewa',
+    title: 'Payment E-Sewa',
     label: 'Phone Number',
     name: 'phoneNumber',
     placeholder: '',

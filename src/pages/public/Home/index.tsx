@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -19,6 +19,8 @@ import {
 } from 'assets/images';
 import HomeCard from './components/HomeCard';
 import { Footer } from 'containers';
+import Service from 'setup/network';
+import { useNavigate } from 'react-router-dom';
 
 const settings = {
   dots: false,
@@ -58,6 +60,16 @@ const settings = {
 
 const Home: React.FC = () => {
   const controlRef = React.useRef<any>(null);
+
+  const [popularCourses, setPopularCourses] = useState<any>([]);
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    Service.get('/course/popular').then((res) => {
+      setPopularCourses(res.data.data);
+    });
+  }, []);
+  console.log(popularCourses);
   return (
     <React.Fragment>
       <div className="home__container">
@@ -127,23 +139,27 @@ const Home: React.FC = () => {
           </div>
           <div className="my-5">
             <Slider ref={controlRef} {...settings}>
-              {Array(20)
-                .fill('')
-                .map((_, i) => (
+              {popularCourses?.map((course: any, i: number) => (
+                <div
+                  key={i}
+                  onClick={() => {
+                    navigate(`course-detail/${course?.id}`);
+                  }}
+                >
                   <CourseCard
-                    key={i}
                     types="cursoul"
                     isCourseDisplay="yes"
-                    title="How to become a good designer"
-                    descriptions="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid harum sequi vero obcaecati, reiciendis dignissimos culpa quisquam non odio veritatis."
-                    courseTag="Design Course"
+                    title={course?.title}
+                    descriptions={course?.description}
+                    courseTag={course?.level}
                     isPrice="yes"
-                    price="$22"
-                    isIcon="yes"
-                    imageUrl="https://images.unsplash.com/photo-1557804483-ef3ae78eca57?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1044&q=80"
+                    price={course?.price}
+                    isIcon={course?.price ? 'yes' : 'no'}
+                    imageUrl={course?.thumbnail}
                     icon={<Icon name="arrow-right" />}
                   />
-                ))}
+                </div>
+              ))}
             </Slider>
           </div>
         </div>

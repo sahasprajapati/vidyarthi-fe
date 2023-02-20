@@ -330,8 +330,8 @@ const CurriculumSection = ({
             sections[selectedSection.section].lectures[selectedSection.lecture]
               ? sections[selectedSection.section].lectures[
                   selectedSection.lecture
-                ].video
-              : ''
+                ]
+              : {}
           }
           handleModal={() => setShowVideoModal(!showVideoModal)}
           handleChange={(data: any) => {

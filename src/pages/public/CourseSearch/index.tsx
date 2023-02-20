@@ -199,9 +199,10 @@ const CourseSearch: React.FC = () => {
                         title={course.title}
                         descriptions={course.description ?? undefined}
                         courseTag={course?.level as unknown as string}
-                        price="$22"
+                        price={'$' + (course?.price ?? 0)}
                         imageUrl={course?.thumbnail}
                         icon={<Icon name="arrow-right" />}
+                        isPrice="yes"
                       />
                     </div>
                   );

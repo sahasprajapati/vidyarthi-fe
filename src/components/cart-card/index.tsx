@@ -7,10 +7,11 @@ import CartAmountTitle from './CartAmountTitle';
 interface Props {
   variant?: 'light' | 'light-dark';
   subTotal: string;
-  tax: string;
-  couponDiscount: string;
+  tax?: string;
+  couponDiscount?: string;
   total: string;
   onClick?: () => void;
+  label: string;
 }
 
 const CartCard: React.FC<Props> = ({
@@ -20,6 +21,7 @@ const CartCard: React.FC<Props> = ({
   onClick,
   couponDiscount,
   total,
+  label,
 }) => {
   return (
     <div
@@ -32,15 +34,22 @@ const CartCard: React.FC<Props> = ({
           <Heading title="Cart summary" />
         </div>
         <CartAmountTitle amount={subTotal} title="Subtotal" />
-        <CartAmountTitle amount={tax} title="Tax" />
-        <CartAmountTitle amount={couponDiscount} title="Coupon Discount" />
+        {tax && <CartAmountTitle amount={tax} title="Tax" />}
+        {couponDiscount && (
+          <CartAmountTitle amount={couponDiscount} title="Coupon Discount" />
+        )}
         <BorderBottom />
         <div className="mt-3">
           <CartAmountTitle amount={total} title="Total" />
         </div>
         <div className="flex-center">
-          <Button variant="primary" type="button" onClick={onClick}>
-            Complete Checkout
+          <Button
+            variant="primary"
+            type="button"
+            onClick={onClick}
+            isValid={true}
+          >
+            {label}
           </Button>
         </div>
       </div>

@@ -19,7 +19,8 @@ export { default as PrivacyPolicy } from './public/privacy-policy';
 // Student Dashboard
 export { default as StudentDashBoard } from './student/DashBoard';
 export { default as StudentAchievements } from './student/Achievements';
-export { default as StudentCourse } from './student/Course';
+export { default as StudentCourseDetail } from './student/Course/Detail';
+export { default as StudentCourseList } from './student/Course/List';
 export { default as StudentCart } from './student/Cart';
 
 // Teacher Dashboard

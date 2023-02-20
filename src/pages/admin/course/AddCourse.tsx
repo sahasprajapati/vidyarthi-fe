@@ -177,13 +177,10 @@ const AddCourse: React.FC = () => {
     // setVideoSourceUrl(videoUrl);
     try {
       const request = await Service.post('/upload/video', file, configs);
-      console.log('this is requrest', request);
       setVideoSourceUrl(request?.data?.data?.url);
       setFieldValue('trailer', request?.data?.data?.url);
     } catch (error) {}
   };
-
-  console.log('discriptions text', videoSourceUrl);
 
   if (previewImageUrl) {
     const reader = new FileReader();
@@ -198,16 +195,8 @@ const AddCourse: React.FC = () => {
     [previewImage]
   );
   const previewVideoDiv = React.useMemo(
-    () => (
-      <video
-        src={videoSourceUrl}
-        width="230px"
-        height="160px"
-        controls
-        autoPlay
-      />
-    ),
-    [previewImage]
+    () => <video src={videoSourceUrl} width="230px" height="160px" controls />,
+    [previewImage, videoSourceUrl]
   );
 
   const handleStepOneSubmit = async (val: any, { resetForm }: any) => {
@@ -364,6 +353,7 @@ const AddCourse: React.FC = () => {
               language: courseData?.selectedCourse?.language,
               subtitleLanguage: courseData?.selectedCourse?.subtitleLanguage,
               level: courseData?.selectedCourse?.level,
+              price: courseData?.selectedCourse?.price,
             }}
             validationSchema={FORM_VALIDATION}
             validateOnMount
@@ -445,13 +435,13 @@ const AddCourse: React.FC = () => {
                         label="Course Level"
                       />
                     </div>
-                    {/* <div className="col-lg-3 col-md-6 mt-2">
-                    <TextField
-                      label={'Duration'}
-                      name="time"
-                      placeholder="course duration"
-                    />
-                  </div> */}
+                    <div className="col-lg-3 col-md-6 mt-2">
+                      <TextField
+                        label={'Price'}
+                        name="price"
+                        placeholder="Course Price"
+                      />
+                    </div>
                     <div className="flex flex-end my-5">
                       <Button
                         variant="primary"
@@ -574,7 +564,6 @@ const AddCourse: React.FC = () => {
                                   width="230px"
                                   height="160px"
                                   controls
-                                  autoPlay
                                 />
                               ) : videoSourceUrl ? (
                                 previewVideoDiv

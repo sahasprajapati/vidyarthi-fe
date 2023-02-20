@@ -40,6 +40,44 @@ export const fetchCourse = (paginationArgs: PaginationArgs) => {
   };
 };
 
+export const fetchMyCourse = (paginationArgs: PaginationArgs) => {
+  return async (dispatch: any) => {
+    try {
+      let url = `/course/me?order=${paginationArgs?.order}&page=${paginationArgs?.page}&take=${paginationArgs?.take}`;
+      if (paginationArgs?.filter) {
+        url += `&filter=${paginationArgs?.filter}`;
+      }
+      const { data } = await Service.get(url);
+
+      dispatch({
+        type: courseConstant.COURSE_FETCH_SUCCESS,
+        payload: {
+          data: {
+            course: data.data,
+          },
+        },
+      });
+
+      dispatch({
+        type: courseConstant.COURSE_UPDATE_PAGINATION_ARGS,
+        payload: {
+          data: {
+            ...paginationArgs,
+            totalCount: data?.meta?.itemCount,
+            hasNextPage: data?.meta?.hasNextPage,
+            hasPreviousPage: data?.meta?.hasPreviousPage,
+          },
+        },
+      });
+    } catch (err: any) {
+      dispatch({
+        type: courseConstant.COURSE_FETCH_FAILED,
+        payload: err?.response?.data?.message,
+      });
+    }
+  };
+};
+
 export const fetchCourseById = (id: number) => {
   return async (dispatch: any) => {
     try {

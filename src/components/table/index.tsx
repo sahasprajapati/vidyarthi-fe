@@ -63,26 +63,32 @@ const Table: React.FC<IProps> = ({
             ))}
           </thead>
           <tbody {...getTableBodyProps()} className="table-body-container">
-            {page.map((row: any, i: number) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={i} className="table-body">
-                  {row.cells.map((cell: any, idx: number) => {
-                    return (
-                      <td
-                        {...cell.getCellProps()}
-                        key={idx}
-                        className={`${
-                          notPadding ? 'table-padding-10' : 'table-padding-30'
-                        }`}
-                      >
-                        {cell.render('Cell')}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
+            {page?.length > 0 ? (
+              page.map((row: any, i: number) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()} key={i} className="table-body">
+                    {row.cells.map((cell: any, idx: number) => {
+                      return (
+                        <td
+                          {...cell.getCellProps()}
+                          key={idx}
+                          className={`${
+                            notPadding ? 'table-padding-10' : 'table-padding-30'
+                          }`}
+                        >
+                          {cell.render('Cell')}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan={5}>No data available</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
