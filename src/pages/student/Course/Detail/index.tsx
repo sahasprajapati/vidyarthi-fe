@@ -1,14 +1,13 @@
 import Icon from 'assets/svg/Icon';
-import { TestVideo } from 'assets/video';
 import { DashBoardScrollContent, Tabs, VideoPlayer } from 'components';
 import Heading from 'components/heading';
 import MainHeading from 'components/main-heading';
 import { AdminLayout } from 'containers';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchCourseById, selectCourse } from 'redux/actions/course.action';
-import { Course, CourseReducer } from 'redux/reducers/course.reducer';
+import { fetchMyCourseById } from 'redux/actions/course.action';
+import { Course, CourseReducer, Lecture } from 'redux/reducers/course.reducer';
 
 interface IProps {}
 
@@ -16,6 +15,11 @@ const StudentCourse: React.FC<IProps> = ({}) => {
   const courseData: CourseReducer = useSelector((state: any) => state.course);
   const userData = JSON.parse(localStorage.getItem('user') ?? 'null');
 
+  const [selectedLecture, setSelectedLecture] = useState({
+    sectionId: 0,
+    lectureId: 0,
+  });
+  const [currentLecture, setCurrentLecture] = useState<Lecture>();
   const {
     selectedCourse,
   }: {
@@ -23,9 +27,6 @@ const StudentCourse: React.FC<IProps> = ({}) => {
   } = courseData ?? {};
   const { courseId } = useParams();
   const dispatch: any = useDispatch();
-  useEffect(() => {
-    dispatch(fetchCourseById(+(courseId ?? '')));
-  }, []);
 
   const handleCheckVideo = (val: any) => {
     console.log(val);
@@ -50,6 +51,25 @@ const StudentCourse: React.FC<IProps> = ({}) => {
       label: 'Reviews',
     },
   ];
+
+  useEffect(() => {
+    if (selectedLecture) {
+      if (selectedCourse?.sections?.length > 0) {
+        const sections = selectedCourse.sections;
+        if (sections[selectedLecture?.sectionId]?.lectures?.length > 0) {
+          const lecture =
+            sections[selectedLecture?.sectionId]?.lectures[
+              selectedLecture?.lectureId
+            ];
+          setCurrentLecture(lecture);
+        }
+      }
+    }
+  }, [selectedLecture]);
+
+  useEffect(() => {
+    dispatch(fetchMyCourseById(courseId ? +courseId : 0));
+  }, []);
   return (
     <AdminLayout variant="not-spacing">
       <div className="row bg-white border-top">
@@ -83,9 +103,9 @@ const StudentCourse: React.FC<IProps> = ({}) => {
             </p>
           </div>
           <VideoPlayer
-            VideoSource={selectedCourse?.trailer}
+            VideoSource={currentLecture?.video ?? ''}
             handleProgress={handleCheckVideo}
-            thumbnail={selectedCourse?.thumbnail}
+            thumbnail={selectedCourse?.thumbnail ?? ''}
           />
           <div className="max-w-half mt-4">
             <div className="max-w-half">
@@ -100,7 +120,7 @@ const StudentCourse: React.FC<IProps> = ({}) => {
               <div className="tab-content">
                 <div className="tab-pane fade show active mt-4 mx-4">
                   <Heading title="About Course" />
-                  {selectedCourse?.description ?? ''}
+                  {currentLecture?.description ?? ''}
                 </div>
               </div>
             )}
@@ -143,7 +163,7 @@ const StudentCourse: React.FC<IProps> = ({}) => {
             </div>
           </div>
           <p className="color-light-black mt-1 mb-5">
-            {selectedCourse?.subtitle}
+            {selectedCourse?.description}
           </p>
           <Heading title="Course Completion" className="mb-4" />
           <div className="flex justify-content-between mb-1">
@@ -158,15 +178,58 @@ const StudentCourse: React.FC<IProps> = ({}) => {
             />
           </div>
           <DashBoardScrollContent title="">
-            <div className="flex justify-content-between mt-5 me-3">
-              <div className="flex align-items-center">
-                <h6>01</h6>
-                <p className="f-14 px-4 text-capitalize">
-                  introduction to project management
-                </p>
-              </div>
-              <Icon name="tick" />
-            </div>
+            {selectedCourse?.sections?.map((section, index) => {
+              return (
+                <>
+                  <div
+                    className="flex justify-content-between mt-5 me-3"
+                    key={index}
+                  >
+                    <div className="flex align-items-center">
+                      <h6>{index + 1}</h6>
+                      <p className="f-14 px-4 text-capitalize">
+                        {section?.name}
+                      </p>
+                    </div>
+                    <Icon name="tick" />
+                  </div>
+                  <div
+                    style={{
+                      paddingLeft: '2px',
+                    }}
+                  >
+                    {section?.lectures?.map((lecture, lecIndex) => {
+                      return (
+                        // <div
+                        //   className="flex justify-content-between mt-5 me-3"
+                        //   key={index}
+                        // >
+                        <div
+                          className="flex justify-content-between  me-3 pointer"
+                          key={lecIndex}
+                          onClick={() => {
+                            setSelectedLecture({
+                              sectionId: index,
+                              lectureId: lecIndex,
+                            });
+                          }}
+                        >
+                          <div className="px-4 flex align-items-center">
+                            <h6>o</h6>
+                            <p className="f-14 px-4 text-capitalize">
+                              {lecture?.name}
+                            </p>
+                          </div>
+                          <Icon name="tick" />
+                        </div>
+
+                        // </div>
+                      );
+                    })}
+                  </div>
+                </>
+              );
+            })}
           </DashBoardScrollContent>
         </div>
       </div>

@@ -22,7 +22,7 @@ import { Footer } from 'containers';
 import Service from 'setup/network';
 import { useNavigate } from 'react-router-dom';
 
-const settings = {
+export const settings = {
   dots: false,
   arrow: false,
   infinite: false,
@@ -143,7 +143,7 @@ const Home: React.FC = () => {
                 <div
                   key={i}
                   onClick={() => {
-                    navigate(`course-detail/${course?.id}`);
+                    navigate(`/course-detail/${course?.id}`);
                   }}
                 >
                   <CourseCard
