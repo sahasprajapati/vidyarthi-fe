@@ -1,31 +1,28 @@
-import React, { useEffect } from 'react';
-import { Accordion, CourseCard, NavBar } from 'components';
-import { Footer } from 'containers';
+import { BgCourse } from 'assets/images';
 import Icon from 'assets/svg/Icon';
+import { Accordion, CourseCard, NavBar } from 'components';
 import Button from 'components/button';
 import Heading from 'components/heading';
-import {
-  courseCurriculum,
-  courseReview,
-  learnCourse,
-  learnCourseSecond,
-  ratingData,
-  // ratingData,
-} from './courseDetailData';
-import { BgCourse } from 'assets/images';
-import { Course, CourseReducer } from 'redux/reducers/course.reducer';
+import { Footer } from 'containers';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import course from 'pages/admin/course';
-import { useParams } from 'react-router-dom';
-import { fetchCourseById } from 'redux/actions/course.action';
-import Service from 'setup/network';
+import { useNavigate, useParams } from 'react-router-dom';
+import Slider from 'react-slick';
 import { toast } from 'react-toastify';
+import { fetchCourseById } from 'redux/actions/course.action';
+import { Course, CourseReducer } from 'redux/reducers/course.reducer';
+import Service from 'setup/network';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
+import { settings } from '../Home';
 // import VideoTest from './VideoTest.mp4';
 
 const CourseDetail: React.FC = () => {
   const courseData: CourseReducer = useSelector((state: any) => state.course);
   const userData = JSON.parse(localStorage.getItem('user') ?? 'null');
+  const [suggestedCourses, setSuggestedCourses] = useState<any>([]);
 
+  const navigate = useNavigate();
   const {
     selectedCourse,
   }: {
@@ -36,9 +33,16 @@ const CourseDetail: React.FC = () => {
   const totalStudent = 20327;
   const { courseId } = useParams();
   const dispatch: any = useDispatch();
+
   useEffect(() => {
     dispatch(fetchCourseById(+(courseId ?? '')));
-  }, []);
+
+    Service.get(`/course/suggested/${courseId}`).then((res) => {
+      setSuggestedCourses(res.data.data);
+    });
+  }, [courseId]);
+
+  const controlRef = React.useRef<any>(null);
 
   const handleAddToCart = async () => {
     try {
@@ -46,9 +50,7 @@ const CourseDetail: React.FC = () => {
         ...(userData?.cart?.course?.map((c: any) => c?.id) ?? []),
         selectedCourse.id,
       ]);
-      console.log(set);
-      console.log(set);
-      console.log(Array.from(set));
+
       const res = await Service.put('/profile/cart', {
         courseIds: Array.from(set),
       });
@@ -201,41 +203,70 @@ const CourseDetail: React.FC = () => {
               <Heading title="Rating" />
               <div className="flex">
                 <div className="mt-4">
-                  <Heading title={rating} />
+                  <Heading title={selectedCourse?.ratingsAvg ?? 5} />
                   <div className="flex ">
-                    {Array(Math.round(rating))
+                    {Array(Math.round(selectedCourse?.ratingsAvg ?? 5))
                       .fill('')
                       .map((_, i) => (
                         <div className="me-1" key={i}>
-                          <Icon name="star" fill="#FAA307" />
+                          <Icon
+                            name="star"
+                            fill="#FAA307"
+                            width={24}
+                            height={24}
+                          />
+                        </div>
+                      ))}
+                    {Array(Math.round(5 - (selectedCourse?.ratingsAvg ?? 5)))
+                      .fill('')
+                      .map((_, i) => (
+                        <div className="me-1" key={i}>
+                          <Icon
+                            name="star"
+                            fill="grey"
+                            width={24}
+                            height={24}
+                          />
                         </div>
                       ))}
                   </div>
                   <h6 className="f-16 mt-3 flex-1">Course Rating</h6>
                 </div>
                 <div className="flex-col">
-                  {ratingData.map((e, i) => (
-                    <div className="flex" key={i}>
-                      <div className="ms-4">
-                        <progress
-                          value={e?.minValue}
-                          max={e?.maxValue}
-                          className="progress__container"
-                        ></progress>
-                      </div>
+                  {Array(5)
+                    .fill('')
+                    .map((e, i) => {
+                      const groupRating = selectedCourse?.groupedRatings?.find(
+                        (rating) => rating?.rate === i + 1
+                      );
+                      const percent =
+                        (groupRating?._count?.rate ?? 0) /
+                        (selectedCourse?.ratings?.length ?? 1);
+                      return (
+                        <div className="flex" key={i}>
+                          <div className="ms-4">
+                            <progress
+                              value={percent * 500}
+                              max={500}
+                              className="progress__container"
+                            ></progress>
+                          </div>
 
-                      <div className="flex ms-5">
-                        {Array(Math.round(e?.star))
-                          .fill('')
-                          .map((_, i) => (
-                            <div className="me-1" key={i}>
-                              <Icon name="star" fill="#FAA307" />
-                            </div>
-                          ))}
-                        <h6>{e?.title}</h6>
-                      </div>
-                    </div>
-                  ))}
+                          <div className="flex ms-5">
+                            {Array(Math.round(i + 1 ?? 0))
+                              .fill('')
+                              .map((_, i) => (
+                                <div className="me-1" key={i}>
+                                  <Icon name="star" fill="#FAA307" />
+                                </div>
+                              ))}
+                            <h6>{`${
+                              groupRating?._count?.rate ?? 0
+                            } Review`}</h6>
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
               {/*  */}
@@ -304,24 +335,48 @@ const CourseDetail: React.FC = () => {
           </div>
         </div>
         <aside className="my-5">
-          <Heading title="Suggested for you" />
-          <div className="row">
-            {Array(4)
-              .fill('')
-              .map((_, i) => (
-                <div className="col-lg-3" key={i}>
-                  <CourseCard
-                    isCourseDisplay="yes"
-                    title="How to become a good designer"
-                    descriptions="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid harum sequi vero obcaecati, reiciendis dignissimos culpa quisquam non odio veritatis."
-                    courseTag="Design Course"
-                    price="$22"
-                    imageUrl="https://images.unsplash.com/photo-1557804483-ef3ae78eca57?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1044&q=80"
-                    icon={<Icon name="arrow-right" />}
-                  />
-                </div>
-              ))}
+          <div className="pt-5 flex-between">
+            <Heading title="Suggested for you" />
+
+            <div className="flex">
+              <div
+                className="homepage__move__course__icon pointer flex-center me-5"
+                onClick={() => controlRef.current.slickPrev()}
+              >
+                <Icon name="arrow-left" fill="#111" />
+              </div>
+              <div
+                className="homepage__move__course__icon pointer flex-center"
+                onClick={() => controlRef.current.slickNext()}
+              >
+                <Icon name="arrow-right" fill="#ffffff" />
+              </div>
+            </div>
           </div>
+          <Slider ref={controlRef} {...settings}>
+            {suggestedCourses?.map((course: any, i: number) => (
+              <div
+                className="col-lg-3"
+                key={i}
+                onClick={() => {
+                  navigate(`/course-detail/${course?.id}`);
+                }}
+              >
+                <CourseCard
+                  types="cursoul"
+                  isCourseDisplay="yes"
+                  title={course?.title}
+                  descriptions={course?.description}
+                  courseTag={course?.level}
+                  isPrice="yes"
+                  price={course?.price}
+                  isIcon={course?.price ? 'yes' : 'no'}
+                  imageUrl={course?.thumbnail}
+                  icon={<Icon name="arrow-right" />}
+                />
+              </div>
+            ))}
+          </Slider>
         </aside>
       </div>
 

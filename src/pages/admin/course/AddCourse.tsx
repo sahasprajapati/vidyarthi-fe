@@ -127,19 +127,6 @@ const AddCourse: React.FC = () => {
     `/category/sub/${courseCategoryId}`
   );
 
-  console.log('usersss data', usersData);
-
-  //   const initValues = {
-  //     title: '',
-  //     subTitle: '',
-  //     courseCategory: '',
-  //     courseSubCategory: '',
-  //     courseTopic: '',
-  //     courseLanguage: '',
-  //     subtitleLanguage: '',
-  //     courseLevel: '',
-  //     duration: '',
-  //   };
   const initValuesOne = {
     description: '',
     learnableContent: [''],
@@ -307,7 +294,6 @@ const AddCourse: React.FC = () => {
           instructorIds: [activeInstructor],
           ...val,
         };
-        console.log('this is payloaf', payload);
 
         const request = await Service.patch(
           `/course/${courseData?.selectedCourse?.id}`,
@@ -333,7 +319,6 @@ const AddCourse: React.FC = () => {
       );
   }, [courseData?.selectedCourse?.instructors]);
 
-  // console.log('Category options', categoryOptions);
   return (
     <AdminLayout>
       <Card>
@@ -480,7 +465,6 @@ const AddCourse: React.FC = () => {
             onSubmit={handleSecondStep}
           >
             {({ isSubmitting, isValid, values, setFieldValue }) => {
-              console.log(values);
               return (
                 <>
                   <Form>

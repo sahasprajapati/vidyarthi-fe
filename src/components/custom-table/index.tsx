@@ -36,6 +36,7 @@ const CustomTable: React.FC<Props> = ({
   highlightOnHover,
   pointerOnHover,
 }) => {
+  console.log('Sda', data);
   return (
     <DataTable
       title={title}

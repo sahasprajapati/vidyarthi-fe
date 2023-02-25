@@ -80,10 +80,14 @@ export type Course = {
     ratedBy: { name: string };
     createdAt: string;
   }[];
+  groupedRatings: { _count: { rate: number }; rate: number }[];
   instructors: { name: string; occupation: string }[];
   ratingsAvg: number;
   ratingsUserCount: number;
   coursesOnStudents: any[];
+  myCourse: {
+    progress: { completedLectures: any[]; progressPercentage: number };
+  };
 };
 
 export type PaginationArgs = {

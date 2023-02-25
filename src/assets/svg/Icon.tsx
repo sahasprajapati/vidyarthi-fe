@@ -32,6 +32,7 @@ import CreditSvg from './CreditCard';
 import RectangleSvg from './Rectangle';
 import PlayBtnSvg from './PlayBtn';
 import TrashSvg from './Trash';
+import DownloadSvg from './Download';
 export interface Props {
   name: string;
   height?: number | string;
@@ -72,6 +73,7 @@ const IconsList: any = {
   rectangle: (props: Props) => <RectangleSvg {...props} />,
   'play-btn': (props: Props) => <PlayBtnSvg {...props} />,
   trash: (props: Props) => <TrashSvg {...props} />,
+  download: (props: Props) => <DownloadSvg {...props} />,
 };
 
 const Icon: React.FC<Props> = ({ name, ...props }) => {
