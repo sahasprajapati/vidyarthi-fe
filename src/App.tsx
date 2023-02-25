@@ -47,7 +47,6 @@ function App() {
   const role = localStorage.getItem('role');
   const dispatch: any = useDispatch();
   const auth = useSelector((state: any) => state.auth);
-  console.log('this is auth', auth);
   React.useEffect(() => {
     if (!auth.authenticate) {
       dispatch(isUserLoggedIn());

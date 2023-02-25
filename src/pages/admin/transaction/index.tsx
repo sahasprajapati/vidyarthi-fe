@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Icon from 'assets/svg/Icon';
 import Heading from 'components/heading';
 import { AdminLayout } from 'containers';
 import { Table } from 'components';
+import Service from 'setup/network';
+import { format } from 'date-fns';
 // import { TableColumn } from 'react-data-table-component';
 
 // interface DataRow {
@@ -253,10 +255,45 @@ const AdminTransaction = () => {
     },
   ];
 
+  const [transactions, setTransactions] = useState<any[]>([]);
+  useEffect(() => {
+    const url = `/transaction`;
+    Service.get(url).then((res) => {
+      setTransactions(res?.data?.data);
+    });
+  }, []);
+  console.log('table', transactions);
+
   return (
     <AdminLayout>
       <Heading title={`Transaction (${data.length.toString()})`} />
-      <Table tableData={data} tableColumn={tableColumn} />
+      <Table
+        tableData={
+          transactions?.length > 0
+            ? transactions?.map((transaction) => {
+                return {
+                  requestData: 'June 1, 08:22 AM',
+                  id: transaction.id + '',
+                  status: transaction.status,
+                  method: transaction.medium,
+                  amount: transaction.total,
+                  instructorName: {
+                    name: transaction?.paidTo?.name,
+                    imageUrl:
+                      'https://cdn.pixabay.com/photo/2022/02/12/21/37/woman-7009979_960_720.jpg',
+                  },
+                  date: format(
+                    transaction.createdAt
+                      ? new Date(transaction.createdAt)
+                      : new Date(),
+                    'dd-mm-yyyy'
+                  ),
+                };
+              })
+            : []
+        }
+        tableColumn={tableColumn}
+      />
     </AdminLayout>
   );
 };

@@ -59,7 +59,6 @@ export const CustomSelect = ({
   useEffect(() => {
     setInitialValue(getValue());
   }, [options]);
-  console.log('options', options);
   return (
     <>
       <label className="input__label  mt-4" htmlFor={field.name}>

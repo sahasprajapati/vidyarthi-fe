@@ -34,8 +34,6 @@ const CourseSearch: React.FC = () => {
 
   const newString = 'prashant khanal';
 
-  console.log('-----', newString.charAt(0).split(' ').join('').toUpperCase());
-
   const filterCourseData = courseData.course
     ? courseData?.course.filter((item) => {
         if (searchText === '') {

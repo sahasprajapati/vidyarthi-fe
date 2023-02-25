@@ -200,7 +200,6 @@ const StudentProfile = () => {
       validationSchema={FORM_VALIDATION}
       validateOnMount
       onSubmit={async (val) => {
-        console.log('vale', val);
         try {
           const res = await Service.patch(`/profile/${userData?.id}`, val);
           toast.success('Profile updated successfully');
@@ -325,7 +324,6 @@ const TeacherProfile = () => {
       validationSchema={FORM_TEACHER_VALIDATION}
       validateOnMount
       onSubmit={async (val) => {
-        console.log('vale', val);
         try {
           const res = await Service.patch(`/profile/${userData?.id}`, val);
         } catch (err: any) {
@@ -390,7 +388,6 @@ const TeacherProfile = () => {
 const Setting: React.FC = () => {
   const userData = JSON.parse(localStorage.getItem('user') ?? 'null');
   const names = userData?.name?.split(' ');
-  console.log('User', userData);
 
   const initValPassword = {
     rePassword: '',
@@ -459,8 +456,6 @@ const Setting: React.FC = () => {
     );
   }, [userData]);
 
-  console.log('su', userData);
-  console.log('su', userData?.role?.name);
   return (
     <AdminLayout>
       {userData?.role?.name === 'student' && <StudentProfile />}

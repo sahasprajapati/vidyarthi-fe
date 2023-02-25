@@ -69,7 +69,6 @@ const Home: React.FC = () => {
       setPopularCourses(res.data.data);
     });
   }, []);
-  console.log(popularCourses);
   return (
     <React.Fragment>
       <div className="home__container">

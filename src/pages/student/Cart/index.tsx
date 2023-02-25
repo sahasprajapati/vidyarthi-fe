@@ -18,7 +18,6 @@ const StudentCart: React.FC<IProps> = ({}) => {
 
   useEffect(() => {
     Service.get('/profile/cart').then((res) => {
-      console.log('res', res?.data?.data);
       setCart(res?.data?.data);
     });
   }, []);
@@ -29,8 +28,6 @@ const StudentCart: React.FC<IProps> = ({}) => {
       toast.success('Added course to cart');
     } catch (err: any) {
       toast.error(err);
-
-      console.error(err);
     }
   };
 
@@ -38,8 +35,6 @@ const StudentCart: React.FC<IProps> = ({}) => {
     {
       Header: 'Course',
       Cell: (row: any) => {
-        console.log('row', row?.row?.original);
-
         const course = row?.row?.original;
         const sum = course?.ratings?.reduce(
           (acc: number, curr: { rate: number }) => {

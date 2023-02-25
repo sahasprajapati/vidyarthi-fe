@@ -15,7 +15,6 @@ import Service from 'setup/network';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import { settings } from '../Home';
-import { ratingData } from './courseDetailData';
 // import VideoTest from './VideoTest.mp4';
 
 const CourseDetail: React.FC = () => {
@@ -51,9 +50,7 @@ const CourseDetail: React.FC = () => {
         ...(userData?.cart?.course?.map((c: any) => c?.id) ?? []),
         selectedCourse.id,
       ]);
-      console.log(set);
-      console.log(set);
-      console.log(Array.from(set));
+
       const res = await Service.put('/profile/cart', {
         courseIds: Array.from(set),
       });
@@ -208,13 +205,6 @@ const CourseDetail: React.FC = () => {
                 <div className="mt-4">
                   <Heading title={selectedCourse?.ratingsAvg ?? 5} />
                   <div className="flex ">
-                    {/* {Array(Math.round(rating))
-                      .fill('')
-                      .map((_, i) => (
-                        <div className="me-1" key={i}>
-                          <Icon name="star" fill="#FAA307" />
-                        </div>
-                      ))} */}
                     {Array(Math.round(selectedCourse?.ratingsAvg ?? 5))
                       .fill('')
                       .map((_, i) => (
@@ -246,7 +236,7 @@ const CourseDetail: React.FC = () => {
                   {Array(5)
                     .fill('')
                     .map((e, i) => {
-                      const groupRating = selectedCourse?.groupedRatings.find(
+                      const groupRating = selectedCourse?.groupedRatings?.find(
                         (rating) => rating?.rate === i + 1
                       );
                       const percent =

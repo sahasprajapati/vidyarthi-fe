@@ -40,6 +40,7 @@ const Table: React.FC<IProps> = ({
     setPageSize,
     state: { pageIndex, pageSize },
   } = tableInstance;
+  console.log('table', data);
   return (
     <div>
       <div className="overflow-auto relative bg-white rounded-4 p-2 mb-5">

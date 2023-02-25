@@ -8,16 +8,6 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 const StudentDashBoard: React.FC = () => {
-  // const [textLength, setTextLength] = React.useState(false);
-  // const data = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur
-  //         tenetur soluta aperiam expedita fugiat officiis minima, repellendus
-  //         animi quia vel nesciunt veritatis explicabo ad! Hic accusantium
-  //         possimus suscipit porro tenetur  jfjdfjjdf dfjdjjdfjkdjfd jkdfjdfjjdfdf  jdfjdfj`;
-
-  // const newDagta = data.length === 20;
-
-  // const displayText = data.slice(0, 150);
-  // console.log('this splitted-----?', newDagta);
   return (
     <AdminLayout>
       <MainHeading title="overview" />

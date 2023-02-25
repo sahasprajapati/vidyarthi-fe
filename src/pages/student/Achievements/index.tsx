@@ -1,8 +1,6 @@
 import Icon from 'assets/svg/Icon';
-import { CartCard, CourseCard, PaymentMethod } from 'components';
 import AchievementCard from 'components/course-card/achievement-card';
 import MainHeading from 'components/main-heading';
-import Modal from 'components/modal';
 import { AdminLayout } from 'containers';
 import React, { useEffect, useState } from 'react';
 import Service from 'setup/network';
@@ -20,7 +18,6 @@ const StudentAchievements = () => {
 
   useEffect(() => {
     Service.get('/achievement/').then((res) => {
-      console.log('res', res?.data?.data);
       setAchievements(res?.data?.data);
     });
   }, []);
@@ -60,11 +57,21 @@ const StudentAchievements = () => {
                   courseTag={achievement?.coursesOnStudents?.course?.level}
                   imageUrl="https://images.unsplash.com/photo-1557804483-ef3ae78eca57?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1044&q=80"
                 /> */}
+
                 <AchievementCard
                   types="normal"
                   title={achievement?.coursesOnStudents?.course?.title}
                   courseTag={achievement?.coursesOnStudents?.course?.level}
                   imageUrl={achievement?.image}
+                  isIcon={'yes'}
+                  icon={
+                    <a
+                      href={achievement?.image}
+                      // download={`${achievement?.coursesOnStudents?.course?.title}.pdf`}
+                    >
+                      <Icon name="download" />
+                    </a>
+                  }
                 />
               </div>
             ))}

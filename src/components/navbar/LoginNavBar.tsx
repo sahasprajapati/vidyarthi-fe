@@ -51,13 +51,13 @@ const LoginNavBar: React.FC<Props> = ({ imageUrl, variant }) => {
         >
           Contact Us
         </NavLink>
-        <div className="position-relative ms-5 pointer">
+        {/* <div className="position-relative ms-5 pointer">
           <Icon
             name="wish-list"
             fill={variant === 'white' ? '#FFFFFF' : '#120D26'}
           />
           <div className="wishlist__badge">3</div>
-        </div>
+        </div> */}
         <div
           className="position-relative mx-5 pointer"
           onClick={() => {

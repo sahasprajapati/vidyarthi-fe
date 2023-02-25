@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Chart, CustomTable, InstructorCard, Tabs } from 'components';
 import Card from 'components/card';
 import Heading from 'components/heading';
@@ -6,6 +6,8 @@ import { AdminLayout } from 'containers';
 import { instructorTransactionLineGraph } from 'pages/admin/dashboard/__chartdata__/chartData';
 import { TableColumn } from 'react-data-table-component';
 import formatMoney from 'utils/formatMoney';
+import Service from 'setup/network';
+import { format } from 'date-fns';
 
 interface DataRow {
   date: string;
@@ -179,6 +181,15 @@ const Transaction: React.FC = ({}) => {
     },
   ];
 
+  const [transactions, setTransactions] = useState<any[]>([]);
+  useEffect(() => {
+    const url = `/transaction/me`;
+    Service.get(url).then((res) => {
+      setTransactions(res?.data?.data);
+    });
+  }, []);
+
+  console.log('VV', transactions);
   return (
     <AdminLayout>
       <div className="row">
@@ -230,7 +241,27 @@ const Transaction: React.FC = ({}) => {
           <Card>
             <Heading title="Withdraw History" />
             {/* <Heading title=""> */}
-            <CustomTable columns={columns} title="" data={data} />
+            <CustomTable
+              columns={columns}
+              title=""
+              data={
+                transactions?.length > 0
+                  ? transactions?.map((transaction) => {
+                      return {
+                        status: transaction.status,
+                        method: transaction.medium,
+                        amount: transaction.total,
+                        date: format(
+                          transaction.createdAt
+                            ? new Date(transaction.createdAt)
+                            : new Date(),
+                          'dd-mm-yyyy'
+                        ),
+                      };
+                    })
+                  : []
+              }
+            />
           </Card>
         </div>
         {/* tabs */}

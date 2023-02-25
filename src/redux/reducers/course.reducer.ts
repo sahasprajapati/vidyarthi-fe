@@ -85,6 +85,9 @@ export type Course = {
   ratingsAvg: number;
   ratingsUserCount: number;
   coursesOnStudents: any[];
+  myCourse: {
+    progress: { completedLectures: any[]; progressPercentage: number };
+  };
 };
 
 export type PaginationArgs = {
