@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MainHeading from 'components/main-heading';
 import { AdminLayout } from 'containers';
 import Icon from 'assets/svg/Icon';
@@ -11,6 +11,7 @@ import Card from 'components/card';
 import Heading from 'components/heading';
 import formatMoney from 'utils/formatMoney';
 import Feedback from './Feedback';
+import Service from 'setup/network';
 
 interface IProps {}
 
@@ -189,36 +190,6 @@ const TeacherDashboard: React.FC<IProps> = ({}) => {
     },
   };
 
-  const instructorCardData = [
-    {
-      id: 0,
-      title: formatMoney('30000'),
-      subtitle: 'Total Course',
-      bgColor: '#92C9FB',
-      iconName: 'book',
-      fontWeight: 'fw-700',
-      color: 'color-white',
-    },
-    {
-      id: 1,
-      title: formatMoney('50000'),
-      subtitle: 'Course Content',
-      bgColor: '#787878',
-      iconName: 'rectangle',
-      fontWeight: 'fw-700',
-      color: 'color-white',
-    },
-    {
-      id: 1,
-      title: formatMoney('80000'),
-      subtitle: 'Review',
-      bgColor: '#6B8E4E',
-      iconName: 'like',
-      fontWeight: 'fw-700',
-      color: 'color-white',
-    },
-  ];
-
   // Instuctor doughnutConfig
 
   const doughnutConfig = {
@@ -241,15 +212,83 @@ const TeacherDashboard: React.FC<IProps> = ({}) => {
       },
     },
   };
-  const doughnut = {
-    labels: doughnutDataInstructor.map((e) => e?.label),
+
+  const [topSales, setTopSales] = useState<any>([]);
+  const [dashboard, setDashboard] = useState<any>({});
+  const [instructorCardData, setInstructorCardData] = useState<any[]>([]);
+  const [doughnut, setDoughnut] = useState<any>({
+    labels: [],
     datasets: [
       {
-        data: doughnutDataInstructor.map((e) => e?.data),
-        backgroundColor: doughnutDataInstructor.map((e) => e?.color),
+        data: [],
+        backgroundColor: [],
       },
     ],
-  };
+  });
+  useEffect(() => {
+    Service.get('profile/dashboard').then((res) => {
+      const dashboard = res?.data?.data?.dashboard;
+      setDashboard(dashboard);
+
+      setTopSales(dashboard?.topSales);
+      const totalCourse = dashboard.coursesLevel?.reduce(
+        (sum: number, course: any) => {
+          return sum + (course?._count?.id ?? 0);
+        },
+        0
+      );
+      setInstructorCardData([
+        {
+          id: 0,
+          title: formatMoney(totalCourse ?? 0),
+          subtitle: 'Total Course',
+          bgColor: '#92C9FB',
+          iconName: 'book',
+          fontWeight: 'fw-700',
+          color: 'color-white',
+        },
+        {
+          id: 1,
+          title: formatMoney(dashboard?.totalContent ?? 0),
+          subtitle: 'Course Content',
+          bgColor: '#787878',
+          iconName: 'rectangle',
+          fontWeight: 'fw-700',
+          color: 'color-white',
+        },
+        {
+          id: 1,
+          title: formatMoney(dashboard?.totalReviews ?? 0),
+          subtitle: 'Review',
+          bgColor: '#6B8E4E',
+          iconName: 'like',
+          fontWeight: 'fw-700',
+          color: 'color-white',
+        },
+      ]);
+
+      const dashboardCourse = dashboard?.coursesLevel?.map(
+        (course: any, index: number) => {
+          return {
+            label: course?.level,
+            data: course?._count?.id ?? 0,
+            color: doughnutDataInstructor[index]?.color,
+          };
+        }
+      );
+
+      const doughnut = {
+        labels: dashboardCourse.map((e: any) => e?.label),
+        datasets: [
+          {
+            data: dashboardCourse.map((e: any) => e?.data),
+            backgroundColor: dashboardCourse.map((e: any) => e?.color),
+          },
+        ],
+      };
+      setDoughnut(doughnut);
+    });
+  }, []);
 
   return (
     <AdminLayout>
@@ -257,7 +296,7 @@ const TeacherDashboard: React.FC<IProps> = ({}) => {
         <Heading title="Overview" />
         <div className="col-md-8">
           <div className="row">
-            <div className="col-sm-4 instructor__graph__card">
+            <div className="col-sm-12 instructor__graph__card">
               <Card>
                 <div className="instructor__graph__card">
                   <Heading title="Total Students" />
@@ -282,7 +321,7 @@ const TeacherDashboard: React.FC<IProps> = ({}) => {
                 </div>
               </Card>
             </div>
-            <div className="col-sm-4">
+            {/* <div className="col-sm-4">
               <Card>
                 <div className="instructor__graph__card">
                   <Heading title="Course" />
@@ -317,7 +356,7 @@ const TeacherDashboard: React.FC<IProps> = ({}) => {
                   </div>
                 </div>
               </Card>
-            </div>
+            </div> */}
             {instructorCardData?.map((e) => (
               <div className="col-sm-4 instructor__graph__card" key={e?.id}>
                 <InstructorCard
@@ -342,7 +381,7 @@ const TeacherDashboard: React.FC<IProps> = ({}) => {
         </div>
         <div className="flex-between">
           <MainHeading title="Course Statistics" />
-          <div className=" course__filter__container flex-between ">
+          {/* <div className=" course__filter__container flex-between ">
             <select
               name=""
               id=""
@@ -355,9 +394,9 @@ const TeacherDashboard: React.FC<IProps> = ({}) => {
             <div className="me-2">
               <Icon name="down-arrow" />
             </div>
-          </div>
+          </div> */}
         </div>
-        <div className="col-md-8 my-5">
+        {/* <div className="col-md-8 my-5">
           <Card>
             <div className="instructor__bottom__graph__card">
               <Chart
@@ -368,35 +407,30 @@ const TeacherDashboard: React.FC<IProps> = ({}) => {
               />
             </div>
           </Card>
-        </div>
-        <div className="col-md-4 my-5">
+        </div> */}
+        <div className="col-md-12 my-5">
           {/* course sales */}
           <div className="mb-4">
             <Card>
               <Heading title="Top Sales" />
-              {Array(3)
-                .fill('')
-                .map((_, i) => (
-                  <div className="flex-between my-4" key={i}>
-                    <div className="flex">
-                      <div className="me-3 bg-primary-color p-3 b16 opacity-1">
-                        <div className="">
-                          <Icon
-                            name="book"
-                            fill="black"
-                            width={32}
-                            height={32}
-                          />
-                        </div>
-                      </div>
+              {topSales?.map((topSale: any, i: number) => (
+                <div className="flex-between my-4" key={i}>
+                  <div className="flex">
+                    <div className="me-3 bg-primary-color p-3 b16 opacity-1">
                       <div className="">
-                        <p className="p-0 m-0 color-gray f-14">UI Design</p>
-                        <h6 className="mt-1 fs-18 fw-600">12.3455</h6>
+                        <Icon name="book" fill="black" width={32} height={32} />
                       </div>
                     </div>
-                    <div className="">grpaj</div>
+                    <div className="">
+                      <p className="p-0 m-0 color-gray f-14">
+                        {topSale?.title}
+                      </p>
+                      <h6 className="mt-1 fs-18 fw-600">{topSale?.price}</h6>
+                    </div>
                   </div>
-                ))}
+                  <div className="">{topSale?.level}</div>
+                </div>
+              ))}
             </Card>
           </div>
           {/* feedback section */}

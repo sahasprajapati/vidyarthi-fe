@@ -10,9 +10,10 @@ import Card from 'components/card';
 import Heading from 'components/heading';
 import MainHeading from 'components/main-heading';
 import { AdminLayout } from 'containers';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TableColumn } from 'react-data-table-component';
 import { Link } from 'react-router-dom';
+import Service from 'setup/network';
 import formatMoney from 'utils/formatMoney';
 import { doughnutData, stackGraph } from './__chartdata__/chartData';
 
@@ -293,37 +294,37 @@ const AdminDashboard: React.FC = () => {
     },
   ];
 
-  const overviewData = [
-    {
-      id: 0,
-      total: '2000',
-      title: 'total students',
-      iconName: 'menu',
-      bgColor: 'red',
-    },
+  // const overviewData = [
+  //   {
+  //     id: 0,
+  //     total: '2000',
+  //     title: 'total students',
+  //     iconName: 'menu',
+  //     bgColor: 'red',
+  //   },
 
-    {
-      id: 1,
-      total: '49832',
-      title: 'total instructor',
-      iconName: 'menu',
-      bgColor: 'red',
-    },
-    {
-      id: 2,
-      total: '2000',
-      title: 'revenue',
-      iconName: 'menu',
-      bgColor: 'red',
-    },
-    {
-      id: 3,
-      total: '2000',
-      title: 'total enrolled courses',
-      iconName: 'menu',
-      bgColor: 'red',
-    },
-  ];
+  //   {
+  //     id: 1,
+  //     total: '49832',
+  //     title: 'total instructor',
+  //     iconName: 'menu',
+  //     bgColor: 'red',
+  //   },
+  //   {
+  //     id: 2,
+  //     total: '2000',
+  //     title: 'revenue',
+  //     iconName: 'menu',
+  //     bgColor: 'red',
+  //   },
+  //   {
+  //     id: 3,
+  //     total: '2000',
+  //     title: 'total enrolled courses',
+  //     iconName: 'menu',
+  //     bgColor: 'red',
+  //   },
+  // ];
 
   //   stacked chart options
 
@@ -395,106 +396,106 @@ const AdminDashboard: React.FC = () => {
 
   //   Best Instructor data
 
-  const bestInstructor = [
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-    {
-      title: 'Dennis Guzman',
-      image:
-        'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
-      course: '5 Design Courses',
-      students: '12k Students',
-    },
-  ];
+  // const bestInstructor = [
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  //   {
+  //     title: 'Dennis Guzman',
+  //     image:
+  //       'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg',
+  //     course: '5 Design Courses',
+  //     students: '12k Students',
+  //   },
+  // ];
 
   // Doughnut Data
 
@@ -508,6 +509,77 @@ const AdminDashboard: React.FC = () => {
     ],
   };
 
+  const [dashboard, setDashboard] = useState({});
+  const [bestInstructor, setBestInstructor] = useState<any[]>([]);
+  const [overviewData, setOverviewData] = useState<any[]>([]);
+  useEffect(() => {
+    Service.get('profile/dashboard').then((res) => {
+      console.log('Profile', res?.data?.data?.dashboard);
+      const dashboard = res.data?.data?.dashboard;
+      setDashboard(dashboard);
+      setBestInstructor(
+        dashboard?.popularTeacher?.map((teacher: any) => {
+          console.log('Teacher', teacher);
+          const teacherStudents = teacher?.teacherCourses?.reduce(
+            (sum: number, course: any) => {
+              return sum + (course?._count?.coursesOnStudents ?? 0);
+            },
+            0
+          );
+          console.log('teacherStudents', teacherStudents);
+
+          return {
+            title: teacher?.name ?? '',
+            image: teacher?.image ?? '',
+            course: `${teacher?._count?.teacherCourses ?? 0} Design Courses`,
+            students: `${teacherStudents} Students`,
+          };
+        })
+      );
+      const instructor = dashboard?.roledUsers.find((user: any) => {
+        return user.name === 'instructor';
+      });
+
+      const student = dashboard?.roledUsers.find((user: any) => {
+        return user.name === 'student';
+      });
+
+      const admin = dashboard?.roledUsers.find((user: any) => {
+        return user.name === 'student';
+      });
+      setOverviewData([
+        {
+          id: 0,
+          total: (student?.count ?? '0') + '',
+          title: 'total students',
+          iconName: 'menu',
+          bgColor: 'red',
+        },
+
+        {
+          id: 1,
+          total: (instructor?.count ?? '0') + '',
+          title: 'total instructor',
+          iconName: 'menu',
+          bgColor: 'red',
+        },
+        // {
+        //   id: 2,
+        //   total: '2000',
+        //   title: 'revenue',
+        //   iconName: 'menu',
+        //   bgColor: 'red',
+        // },
+        {
+          id: 3,
+          total: (dashboard?.courses ?? '0') + '',
+          title: 'total enrolled courses',
+          iconName: 'menu',
+          bgColor: 'red',
+        },
+      ]);
+    });
+  }, []);
   return (
     <AdminLayout>
       <div className="container-fluid">
@@ -530,7 +602,7 @@ const AdminDashboard: React.FC = () => {
         </div>
         {/* Sales chart */}
         <div className="row my-5">
-          <div className="col-lg-7 col-md-12">
+          {/* <div className="col-lg-7 col-md-12">
             <Card>
               <Chart
                 data={graphData}
@@ -539,11 +611,11 @@ const AdminDashboard: React.FC = () => {
                 height={200}
               />
             </Card>
-          </div>
+          </div> */}
           <div className="col-lg-5 col-md-12">
             <Card>
               <DashBoardScrollContent title="Best Instructor">
-                {bestInstructor.map((e, i) => (
+                {bestInstructor?.map((e, i) => (
                   <div className="flex-between py-3" key={i}>
                     <div className="flex">
                       <img

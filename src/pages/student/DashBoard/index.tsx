@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MainHeading from 'components/main-heading';
 import { DashboardCard, DashBoardScrollContent } from 'components';
 import { AdminLayout } from 'containers';
@@ -6,13 +6,53 @@ import { overviewData } from './dashboardData';
 import Icon from 'assets/svg/Icon';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import Service from 'setup/network';
 
 const StudentDashBoard: React.FC = () => {
+  const [overviewData, setOverviewData] = useState<any[]>([]);
+  const [completedCourses, setCompletedCourses] = useState<any[]>([]);
+  useEffect(() => {
+    Service.get('profile/dashboard').then((res) => {
+      const dashboard = res?.data?.data?.dashboard;
+      console.log('Dashboard', res?.data?.data);
+      setCompletedCourses(res?.data?.data?.completedCourses);
+      setOverviewData([
+        {
+          id: 0,
+          courseProgress: dashboard?.courseInProgress,
+          bgColor: '#72BFB2',
+          iconName: 'menu',
+          title: 'Course in progress',
+        },
+        {
+          id: 1,
+          courseProgress: dashboard?.completedCourseCount,
+          bgColor: '#779CE6',
+          iconName: 'menu',
+          title: 'Courses Competed',
+        },
+        {
+          id: 2,
+          courseProgress: dashboard?.ownedCourse,
+          bgColor: '#EE8059',
+          iconName: 'menu',
+          title: 'Courses Owned',
+        },
+        {
+          id: 3,
+          courseProgress: dashboard?.totalAchievement,
+          bgColor: '#EB6077',
+          iconName: 'menu',
+          title: 'Certificates achivements',
+        },
+      ]);
+    });
+  }, []);
   return (
     <AdminLayout>
       <MainHeading title="overview" />
       <div className="row">
-        {overviewData.map((e) => (
+        {overviewData?.map((e) => (
           <div
             className="col-lg-3 col-md-4 col-sm-6 col-12 mb-5 mt-2"
             key={e?.id}
@@ -37,36 +77,35 @@ const StudentDashBoard: React.FC = () => {
         <div className="col-lg-6">
           <div className="b10 p-3">
             <DashBoardScrollContent title="Completed Courses">
-              {Array(10)
-                .fill('')
-                .map((_, i) => (
-                  <div className="flex-between" key={i}>
-                    <div className="flex">
-                      <img
-                        src="https://leverageedublog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2020/04/01170800/Free-Online-Courses-with-Certificates.jpg"
-                        alt="completed-course-image"
-                        className="student__completed__course__image"
-                      />
+              {completedCourses?.map((course, i) => (
+                <div className="flex-between" key={i}>
+                  <div className="flex">
+                    <img
+                      src={course?.thumbnail}
+                      alt="completed-course-image"
+                      className="student__completed__course__image"
+                    />
 
-                      <div className="ms-3">
-                        <div className="pb-2">
-                          <h6 className="f-24 text-capitalize mt-4 m-0 p-0">
-                            hello
-                          </h6>
-                          <h6 className="student__completed__course__subtitle m-0 p-0">
-                            hello
-                          </h6>
-                        </div>
-                        <p className="student__completed__course__time mb-4">
-                          4h 41m <span>.</span> <span>djdfj</span>{' '}
-                        </p>
+                    <div className="ms-3">
+                      <div className="pb-2">
+                        <h6 className="f-24 text-capitalize mt-4 m-0 p-0">
+                          {course?.title}
+                        </h6>
+                        <h6 className="student__completed__course__subtitle m-0 p-0">
+                          {course?.subtitle}
+                        </h6>
                       </div>
-                    </div>
-                    <div className="me-3 pointer">
-                      <Icon name="dots" />
+                      <p className="student__completed__course__time mb-4">
+                        ${course?.price} <span>.</span>{' '}
+                        <span>{course?.level}</span>{' '}
+                      </p>
                     </div>
                   </div>
-                ))}
+                  <div className="me-3 pointer">
+                    <Icon name="dots" />
+                  </div>
+                </div>
+              ))}
             </DashBoardScrollContent>
           </div>
         </div>
