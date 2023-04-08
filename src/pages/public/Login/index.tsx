@@ -127,7 +127,7 @@ const Login: React.FC = () => {
                 <h6 className="text-center fw-normal my-5">Or Sign Up</h6>
                 <div className="flex-center">
                   {/*  */}
-                  <a href="/api/google">
+                  <a href={`${process.env.REACT_APP_API_BASE_URL}/google`}>
                     <SocialMediaLoginOptions
                       logo={GoogleLogo}
                       title="Google"
@@ -137,7 +137,7 @@ const Login: React.FC = () => {
                     />
                   </a>
 
-                  <a href="/api/facebook">
+                  <a href={`${process.env.REACT_APP_API_BASE_URL}/facebook`}>
                     <SocialMediaLoginOptions
                       logo={FacebookLogo}
                       title="Facebook"
