@@ -1,0 +1,7 @@
+ssh -i ~/.ssh/id_rsa.1679500823 -p 22 {server_user}@{server_ip}
+
+
+source /home/vidyarth/nodevenv/repositories/vidyarthi-fe/16/bin/activate && cd /home/vidyarth/repositories/vidyarthi-fe
+
+git pull origin main
+
