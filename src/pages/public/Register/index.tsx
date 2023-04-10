@@ -9,6 +9,8 @@ import MainHeading from 'components/main-heading';
 import Icon from 'assets/svg/Icon';
 import { useDispatch, useSelector } from 'react-redux';
 import { authRegisterAction } from 'redux/actions/auth.action';
+import Tabs from 'components/tabs';
+import TabsButton from 'components/tabs-button';
 
 const FORM_VALIDATION = Yup.object().shape({
   email: Yup.string().email('Please enter a valid mail').required('Required'),
@@ -32,7 +34,19 @@ const FORM_VALIDATION = Yup.object().shape({
 const Register: React.FC = () => {
   const dispatch: any = useDispatch();
   const userData: any = useSelector((state: any) => state.auth);
+  const [activeIndex, setActiveIndex] = React.useState(2);
 
+  console.log('Active Index: ' + activeIndex);
+  const tabData = [
+    {
+      id: 3,
+      label: 'Teacher',
+    },
+    {
+      id: 2,
+      label: 'Student',
+    },
+  ];
   const [errorText, setErrorText] = React.useState('');
   const navigate = useNavigate();
   const handleRegister = async (val: {
@@ -49,6 +63,7 @@ const Register: React.FC = () => {
         firstName: val?.firstName,
         lastName: val?.lastName,
         confirmPassword: val?.cpassword,
+        role: activeIndex ?? 2,
       };
 
       dispatch(authRegisterAction(payload));
@@ -70,8 +85,8 @@ const Register: React.FC = () => {
   return (
     <div className="row me-2">
       <div className="col-lg-6 register__image__banner">
-        <div className="p-5">
-          <img src={VidyarthiLogo} alt="logo" />
+        <div>
+          <img src={VidyarthiLogo} alt="logo" width="280px" />
         </div>
       </div>
       <div className="col-lg-6 p-5">
@@ -101,6 +116,20 @@ const Register: React.FC = () => {
                 <div className="my-5">
                   <MainHeading title="Create your Account" />
                 </div>
+                <p
+                  style={{
+                    fontSize: '1.15em',
+                    fontWeight: 500,
+                  }}
+                >
+                  Sign Up As:
+                </p>
+                <TabsButton
+                  activeIndex={activeIndex}
+                  setActiveIndex={setActiveIndex}
+                  tabData={tabData}
+                />
+
                 <p className="text-center text-danger"> {errorText} </p>
                 <div className="col-md-6">
                   <TextField
@@ -165,7 +194,9 @@ const Register: React.FC = () => {
                     <span className="p-5">Register</span>
                   </Button>
                 </div>
-                <h6 className="text-center fw-normal my-5">Or Sign Up</h6>
+                <h6 className="text-center fw-normal my-5">
+                  Or Sign Up (Student Only)
+                </h6>
                 <div className="flex-center">
                   <a href={`${process.env.REACT_APP_API_BASE_URL}/google`}>
                     <SocialMediaLoginOptions logo={GoogleLogo} title="Google" />

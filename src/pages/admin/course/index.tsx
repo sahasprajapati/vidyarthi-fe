@@ -43,7 +43,7 @@ const AdminCourse: React.FC = () => {
         </Button>
       </div>
       <div className="row">
-        <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-2">
+        {/* <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-2">
           <label htmlFor="" className="label__heading mb-1">
             To Date
           </label>
@@ -58,27 +58,7 @@ const AdminCourse: React.FC = () => {
             />
           </div>
         </div>
-        {Array(4)
-          .fill('')
-          .map((e, i) => (
-            <div className="col-lg-2 col-md-2 col-sm-6 col-12 mb-2" key={i}>
-              <label htmlFor="" className="label__heading mb-1">
-                To Date
-              </label>
-              <div className="flex-between course__filter__container">
-                <select
-                  name=""
-                  id=""
-                  className="form-control shadow-none bg-transparent outline-none border-none"
-                >
-                  <option value="hhd">djf</option>
-                  <option value="dfd">djkjf</option>
-                  <option value="dfjfkj">fdfdkj</option>
-                </select>
-                <Icon name="down-arrow" />
-              </div>
-            </div>
-          ))}
+x */}
 
         {courseData?.course?.map((e, i) => (
           <div className="col-lg-3 col-md-4 col-sm-6 col-12 my-3" key={i}>

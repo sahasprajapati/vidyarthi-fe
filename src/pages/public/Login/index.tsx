@@ -52,8 +52,8 @@ const Login: React.FC = () => {
   return (
     <div className="row me-2">
       <div className="col-lg-6 login__image__banner">
-        <div className="p-5">
-          <img src={VidyarthiLogo} alt="logo" />
+        <div>
+          <img src={VidyarthiLogo} alt="logo" width="280px" />
         </div>
       </div>
       <div className="col-lg-6 p-5">

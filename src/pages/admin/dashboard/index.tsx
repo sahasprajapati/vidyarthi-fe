@@ -695,7 +695,7 @@ const AdminDashboard: React.FC = () => {
             </Card>
           </div>
         </div>
-        <div className="row my-5">
+        {/* <div className="row my-5">
           <div className="col-12 mb-4">
             <Card>
               <Heading title="Feedback" />
@@ -707,7 +707,7 @@ const AdminDashboard: React.FC = () => {
               />
             </Card>
           </div>
-        </div>
+        </div> */}
       </div>
     </AdminLayout>
   );

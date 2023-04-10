@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { AdminLayout } from 'containers';
 import Icon from 'assets/svg/Icon';
@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CourseReducer } from 'redux/reducers/course.reducer';
 import { useNavigate } from 'react-router-dom';
 import CurriculumSection from './Curriculum/CurriculumSection';
+import CategoryModal from 'components/category/Category';
 // "title": "string",
 //   "subtitle": "string",
 //   "categoryId": 0,
@@ -101,6 +102,13 @@ const tabData = [
 ];
 
 const AddCourse: React.FC = () => {
+  const [isChildCategory, setIsChildCategory] = useState(false);
+  const [initalCategoryValue, setInitialCategoryValue] = useState({
+    name: '',
+    description: '',
+  });
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+
   const dispatch: any = useDispatch();
   const inputImageRef = React.useRef<any>(null);
   const inputVideoRef = React.useRef<any>(null);
@@ -370,6 +378,15 @@ const AddCourse: React.FC = () => {
                         placeholder="Select.."
                         isMulti={false}
                         label="Course Category"
+                        isCreatable={true}
+                        handleCreate={(inputValue: string) => {
+                          setInitialCategoryValue({
+                            name: inputValue,
+                            description: '',
+                          });
+                          setIsChildCategory(false);
+                          setShowCategoryModal(true);
+                        }}
                       />
                     </div>
                     <div className="col-lg-6 col-md-6 ">
@@ -380,6 +397,15 @@ const AddCourse: React.FC = () => {
                         placeholder="Select.."
                         isMulti={false}
                         label="Course Sub-Category"
+                        isCreatable={true}
+                        handleCreate={(inputValue: string) => {
+                          setInitialCategoryValue({
+                            name: inputValue,
+                            description: '',
+                          });
+                          setIsChildCategory(true);
+                          setShowCategoryModal(true);
+                        }}
                       />
                     </div>
 
@@ -851,6 +877,16 @@ const AddCourse: React.FC = () => {
           </Formik>
         )}
       </Card>
+      {showCategoryModal && (
+        <CategoryModal
+          handleChange={(value) => {}}
+          handleModal={() => {
+            setShowCategoryModal(false);
+          }}
+          initialValue={initalCategoryValue}
+          isChild={isChildCategory}
+        />
+      )}
     </AdminLayout>
   );
 };
