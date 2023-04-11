@@ -514,19 +514,16 @@ const AdminDashboard: React.FC = () => {
   const [overviewData, setOverviewData] = useState<any[]>([]);
   useEffect(() => {
     Service.get('profile/dashboard').then((res) => {
-      console.log('Profile', res?.data?.data?.dashboard);
       const dashboard = res.data?.data?.dashboard;
       setDashboard(dashboard);
       setBestInstructor(
         dashboard?.popularTeacher?.map((teacher: any) => {
-          console.log('Teacher', teacher);
           const teacherStudents = teacher?.teacherCourses?.reduce(
             (sum: number, course: any) => {
               return sum + (course?._count?.coursesOnStudents ?? 0);
             },
             0
           );
-          console.log('teacherStudents', teacherStudents);
 
           return {
             title: teacher?.name ?? '',

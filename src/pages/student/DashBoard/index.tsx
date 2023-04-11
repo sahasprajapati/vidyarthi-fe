@@ -14,7 +14,6 @@ const StudentDashBoard: React.FC = () => {
   useEffect(() => {
     Service.get('profile/dashboard').then((res) => {
       const dashboard = res?.data?.data?.dashboard;
-      console.log('Dashboard', res?.data?.data);
       setCompletedCourses(res?.data?.data?.completedCourses);
       setOverviewData([
         {

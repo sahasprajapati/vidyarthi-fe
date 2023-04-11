@@ -13,7 +13,6 @@ const Header: React.FC<Props> = ({ responsive }) => {
   const dispatch: any = useDispatch();
   const navigate = useNavigate();
   const handleLogout = () => {
-    console.log('WHHAT');
     dispatch(logoutAction());
     navigate('/');
   };
@@ -75,7 +74,6 @@ const Header: React.FC<Props> = ({ responsive }) => {
             type="button"
             isValid={true}
             onClick={() => {
-              console.log('Wd');
               handleLogout();
             }}
           >

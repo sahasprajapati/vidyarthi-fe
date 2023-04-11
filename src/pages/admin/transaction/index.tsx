@@ -262,7 +262,6 @@ const AdminTransaction = () => {
       setTransactions(res?.data?.data);
     });
   }, []);
-  console.log('table', transactions);
 
   return (
     <AdminLayout>

@@ -30,7 +30,6 @@ export const CustomSelect = ({
   isCreatable = false,
   handleCreate,
 }: CustomSelectProps) => {
-  console.log('Createable', isCreatable);
   const [initialValue, setInitialValue] = useState();
 
   const selectOptions = options

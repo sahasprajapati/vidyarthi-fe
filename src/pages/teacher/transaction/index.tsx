@@ -189,7 +189,6 @@ const Transaction: React.FC = ({}) => {
     });
   }, []);
 
-  console.log('VV', transactions);
   return (
     <AdminLayout>
       <div className="row">

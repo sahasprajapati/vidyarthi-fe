@@ -36,7 +36,6 @@ const Register: React.FC = () => {
   const userData: any = useSelector((state: any) => state.auth);
   const [activeIndex, setActiveIndex] = React.useState(2);
 
-  console.log('Active Index: ' + activeIndex);
   const tabData = [
     {
       id: 3,
