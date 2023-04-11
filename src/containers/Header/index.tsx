@@ -1,5 +1,5 @@
-import { VidyarthiLogo } from 'assets/images';
 import Icon from 'assets/svg/Icon';
+import Button from 'components/button';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +13,7 @@ const Header: React.FC<Props> = ({ responsive }) => {
   const dispatch: any = useDispatch();
   const navigate = useNavigate();
   const handleLogout = () => {
+    console.log('WHHAT');
     dispatch(logoutAction());
     navigate('/');
   };
@@ -23,13 +24,17 @@ const Header: React.FC<Props> = ({ responsive }) => {
         responsive ? 'responsive__header__container' : 'header__container'
       }`}
     >
-      <div className="flex-between mt-3">
-        <div className="flex rounded header__search__container">
-          <div className="">
-            {responsive && (
-              <img src={VidyarthiLogo} alt="logo" className="me-5" />
-            )}
-          </div>
+      <div
+        className="flex-between mt-3"
+        style={
+          responsive
+            ? {
+                marginLeft: '5em',
+              }
+            : {}
+        }
+      >
+        <div className="flex rounded header__search__container ">
           <Icon name="search" />
           <input
             type="text"
@@ -64,7 +69,18 @@ const Header: React.FC<Props> = ({ responsive }) => {
               alt="logo"
             />
           </div>
-          <p onClick={handleLogout}>Logout</p>
+
+          <Button
+            variant="outline"
+            type="button"
+            isValid={true}
+            onClick={() => {
+              console.log('Wd');
+              handleLogout();
+            }}
+          >
+            Logout
+          </Button>
         </div>
       </div>
     </div>

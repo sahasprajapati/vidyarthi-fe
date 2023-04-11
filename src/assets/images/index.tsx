@@ -1,4 +1,5 @@
 export { default as VidyarthiLogo } from './VidyarthiLogo.png';
+export { default as VidyarthiLogo2 } from './VidyarthiLogo2.png';
 export { default as LoginBanner } from './loginBanner.png';
 export { default as FacebookLogo } from './Facebook.png';
 export { default as Register } from './register.png';
@@ -19,6 +20,7 @@ export { default as Avatar } from './avatar.png';
 export { default as Crown } from './crown.png';
 export { default as JoinUS } from './joinus.png';
 export { default as VidyarthiWhiteLogo } from './VidyarthifooterLogo.png';
+export { default as VidyarthiWhiteLogo2 } from './VidyarthiWhiteFooterLogo.png';
 export { default as BgCourse } from './bg-course.png';
 export { default as NotFoundImage } from './404.png';
 export { default as HomePageCourse } from './homePageCourse.png';

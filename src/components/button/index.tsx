@@ -4,7 +4,7 @@ interface Props {
   variant: 'primary' | 'secondary' | 'outline';
   onClick?: () => void;
   children: ReactNode;
-  type: 'button' | 'submit' | 'reset' | undefined;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   isSubmitting?: boolean;
   isValid?: boolean;
   className?: string;
@@ -22,6 +22,9 @@ const Button: React.FC<Props> = ({
   return (
     <div className="">
       <button
+        style={{
+          cursor: 'pointer',
+        }}
         onClick={onClick}
         className={`${
           variant === 'primary'

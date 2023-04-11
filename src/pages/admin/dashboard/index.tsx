@@ -680,7 +680,7 @@ const AdminDashboard: React.FC = () => {
               <Chart data={doughnut} type="doughnut" options={doughnutConfig} />
             </Card>
           </div>
-          <div className="col-lg-7 col-md-12">
+          {/* <div className="col-lg-7 col-md-12">
             <Card>
               <div className="flex-between mb-4 mt-2">
                 <Heading title="latest withdraw" />
@@ -693,7 +693,7 @@ const AdminDashboard: React.FC = () => {
                 notPadding
               />
             </Card>
-          </div>
+          </div> */}
         </div>
         {/* <div className="row my-5">
           <div className="col-12 mb-4">

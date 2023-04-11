@@ -1,7 +1,7 @@
 import React from 'react';
 import { SideBarRow } from 'components';
 import Icon from 'assets/svg/Icon';
-import { VidyarthiLogo } from 'assets/images';
+import { VidyarthiLogo2 } from 'assets/images';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
@@ -40,13 +40,14 @@ const SideBar: React.FC<Props> = ({ responsive, setResponsive }) => {
               onClick={() => {
                 navigate('/');
               }}
-              src={VidyarthiLogo}
+              src={VidyarthiLogo2}
               alt="main-logo"
               style={{
                 height: '50px',
                 width: '200px',
                 objectFit: 'cover',
                 marginBottom: '20px',
+                marginTop: '20px',
               }}
             />
           )}

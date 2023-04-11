@@ -50,6 +50,7 @@
 
 :root {
   --color-primary: #6b8e4e;
+  --color-primary-dark: #53723a;
   --color-white: #ffffffff;
   --color-black: #120d26;
   --color-light-black: #120d2680;
@@ -335,6 +336,10 @@ progress[value]::-webkit-progress-value {
   background-color: var(--color-primary);
   color: var(--color-white) !important;
   border-radius: 4px;
+}
+.link__btn:hover {
+  background-color: var(--color-primary-dark);
+  color: var(--color-white) !important;
 }
 .descriptions__text {
   font-weight: 500;
@@ -818,12 +823,18 @@ progress[value]::-webkit-progress-value {
   box-shadow: 0 3px 0.563rem rgba (57, 20, 0, 0.08);
   border: none;
 }
+.primary__btn:hover {
+  background: var(--color-primary-dark);
+}
 .secondary__btn {
   padding: 0.625rem 1.25rem;
   background: #f6eeff;
   color: var(--color-primary);
   border: none;
   border-radius: 0.625rem;
+}
+.secondary__btn:hover {
+  background: #e9e6e6;
 }
 .outline__btn {
   padding: 0.625rem 1.25rem;
@@ -832,7 +843,9 @@ progress[value]::-webkit-progress-value {
   border-radius: 0.625rem;
   border: 1px solid #f6eeff;
 }
-
+.outline__btn:hover {
+  background-color: #e9e6e6;
+}
 /* tab components */
 
 .tab__container {
@@ -1588,7 +1601,7 @@ button[disabled] {
 }
 
 .banner-container {
-  background-color: rgba(0, 0, 0, 0.718);
+  background-color: rgba(0, 0, 0, 0);
   height: 40vh;
   position: relative;
 }
@@ -1600,7 +1613,7 @@ button[disabled] {
   transform: translate(-50%, -50%);
   font-size: 30px;
   font-weight: 700;
-  color: #fff;
+  color: #000;
 }
 
 .contact-comment {

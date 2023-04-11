@@ -51,7 +51,7 @@ const CourseSearch: React.FC = () => {
         <div className="row">
           <div
             className="
-          col-lg-4 my-4"
+          col-lg-3 my-4"
           >
             <label htmlFor="" className="label__course__search mb-1">
               Search:
@@ -72,6 +72,10 @@ const CourseSearch: React.FC = () => {
             </div>
           </div>
           <div
+            className="
+          col-lg-9 my-4"
+          ></div>
+          {/* <div
             className="
           col-lg-2 col-md-4  my-4"
           >
@@ -150,7 +154,7 @@ const CourseSearch: React.FC = () => {
               </select>
               <Icon name="down-arrow" />
             </div>
-          </div>
+          </div> */}
           {/* category and bottom section */}
           <div className="col-md-3">
             <div className="category__container my-3">

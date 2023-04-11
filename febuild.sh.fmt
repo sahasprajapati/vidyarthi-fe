@@ -1,3 +1,4 @@
+# /bin/bash
 ssh -i ~/.ssh/id_rsa.1679500823 -p 22 {server_user}@{server_ip}
 
 
@@ -5,3 +6,4 @@ source /home/vidyarth/nodevenv/repositories/vidyarthi-fe/16/bin/activate && cd /
 
 git pull origin main
 
+yarn build

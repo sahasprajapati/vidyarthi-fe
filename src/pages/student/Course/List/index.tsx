@@ -30,7 +30,7 @@ const StudentCourse: React.FC = () => {
     <AdminLayout>
       <div className="flex-between mt-3 mb-5">
         <MainHeading title="All Courses" />
-        <Button
+        {/* <Button
           variant="primary"
           onClick={() => {
             dispatch(selectCourse({}));
@@ -40,7 +40,7 @@ const StudentCourse: React.FC = () => {
           isValid={true}
         >
           Add course
-        </Button>
+        </Button> */}
       </div>
       <div className="row">
         {/* <div className="col-lg-4 col-md-4 col-sm-6 col-12 mb-2">

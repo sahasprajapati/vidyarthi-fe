@@ -1,4 +1,4 @@
-import { FacebookLogo, GoogleLogo, VidyarthiLogo } from 'assets/images';
+import { FacebookLogo, GoogleLogo, VidyarthiLogo2 } from 'assets/images';
 import { SocialMediaLoginOptions, TextField } from 'components';
 import Button from 'components/button';
 import MainHeading from 'components/main-heading';
@@ -53,7 +53,16 @@ const Login: React.FC = () => {
     <div className="row me-2">
       <div className="col-lg-6 login__image__banner">
         <div>
-          <img src={VidyarthiLogo} alt="logo" width="280px" />
+          <a href="/">
+            <img
+              src={VidyarthiLogo2}
+              alt="logo"
+              width="230px"
+              style={{
+                margin: '4em',
+              }}
+            />
+          </a>
         </div>
       </div>
       <div className="col-lg-6 p-5">
@@ -62,7 +71,7 @@ const Login: React.FC = () => {
             Don’t have account?
           </Link>
           <Link to="/register" className="link__btn">
-            <span className="p-4 text-capitalize ">signup</span>
+            <span className="p-4 text-capitalize ">sign up</span>
           </Link>
         </div>
         <div className="d-flex align-items-center">

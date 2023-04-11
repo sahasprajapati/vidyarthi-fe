@@ -1,4 +1,4 @@
-import { VidyarthiWhiteLogo } from 'assets/images';
+import { VidyarthiWhiteLogo2 } from 'assets/images';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -29,7 +29,16 @@ const Footer: React.FC = () => {
       <div className="container">
         <div className="row py-5">
           <div className="col-lg-6 col-md-6 col-sm-6">
-            <img src={VidyarthiWhiteLogo} alt="vidyathilogo" height={100} />
+            <img
+              src={VidyarthiWhiteLogo2}
+              alt="vidyathilogo"
+              style={{
+                height: '50px',
+                width: '180px',
+                marginLeft: '-0.5em',
+                objectFit: 'cover',
+              }}
+            />
             <p className="footer__leftside__subtitle mt-3">
               Yet bed any for travelling assistance indulgence unpleasing. Not
               thoughts all exercise blessing. Indulgence way everything joy

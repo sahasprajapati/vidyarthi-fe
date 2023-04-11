@@ -1,4 +1,4 @@
-import { VidyarthiLogo, VidyarthiWhiteLogo } from 'assets/images';
+import { VidyarthiLogo2, VidyarthiWhiteLogo2 } from 'assets/images';
 import Icon from 'assets/svg/Icon';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -15,12 +15,17 @@ const LoginNavBar: React.FC<Props> = ({ imageUrl, variant }) => {
   const userData = JSON.parse(localStorage.getItem('user') ?? 'null');
 
   return (
-    <nav className="flex-between py-5">
+    <nav className="flex-between py-5 ">
       <Link to="/">
         <img
-          src={variant === 'white' ? VidyarthiWhiteLogo : VidyarthiLogo}
+          src={variant === 'white' ? VidyarthiWhiteLogo2 : VidyarthiLogo2}
           alt="main-logo"
-          style={{ height: '50px', width: '200px', objectFit: 'cover' }}
+          style={{
+            height: '50px',
+            width: '200px',
+            marginLeft: '-1em',
+            objectFit: 'cover',
+          }}
         />
       </Link>
       <div className="navlist__mobile__menu">

@@ -9,7 +9,7 @@ const AboutUs: React.FC<IProps> = ({}) => {
   return (
     <React.Fragment>
       <div className="banner-container">
-        <NavBar variant="white" />
+        <NavBar variant="black" />
         <h5 className="banner-container-text">About us</h5>
       </div>
       <div className="container mx-auto my-5">

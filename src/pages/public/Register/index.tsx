@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import { FacebookLogo, GoogleLogo, VidyarthiLogo } from 'assets/images';
+import { FacebookLogo, GoogleLogo, VidyarthiLogo2 } from 'assets/images';
 import { SocialMediaLoginOptions, TextField } from 'components';
 import Button from 'components/button';
 import MainHeading from 'components/main-heading';
@@ -86,13 +86,22 @@ const Register: React.FC = () => {
     <div className="row me-2">
       <div className="col-lg-6 register__image__banner">
         <div>
-          <img src={VidyarthiLogo} alt="logo" width="280px" />
+          <a href="/">
+            <img
+              src={VidyarthiLogo2}
+              alt="logo"
+              width="230px"
+              style={{
+                margin: '4em',
+              }}
+            />
+          </a>
         </div>
       </div>
       <div className="col-lg-6 p-5">
         <div className="d-flex justify-content-end  align-items-center">
-          <Link className="login__qn" to="/register">
-            Don’t have account?
+          <Link className="login__qn" to="/login">
+            Already have account?
           </Link>
           <Link to="/login" className="link__btn">
             <span className="p-4 text-capitalize ">login</span>
