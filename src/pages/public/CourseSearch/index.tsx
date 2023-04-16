@@ -28,7 +28,6 @@ const CourseSearch: React.FC = () => {
   }, []);
 
   const { data: categoryData } = useFetch('/category');
-  const { data: instructorData } = useFetch('/user/instructor');
 
   const navigate = useNavigate();
 
@@ -201,7 +200,7 @@ const CourseSearch: React.FC = () => {
                         title={course.title}
                         descriptions={course.description ?? undefined}
                         courseTag={course?.level as unknown as string}
-                        price={'$' + (course?.price ?? 0)}
+                        price={'Rs.' + (course?.price ?? 0)}
                         imageUrl={course?.thumbnail}
                         icon={<Icon name="arrow-right" />}
                         isPrice="yes"

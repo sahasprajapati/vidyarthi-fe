@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { FacebookLogo, GoogleLogo, VidyarthiLogo2 } from 'assets/images';
@@ -32,6 +32,8 @@ const FORM_VALIDATION = Yup.object().shape({
 });
 
 const Register: React.FC = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const dispatch: any = useDispatch();
   const userData: any = useSelector((state: any) => state.auth);
   const [activeIndex, setActiveIndex] = React.useState(2);
@@ -165,17 +167,42 @@ const Register: React.FC = () => {
                   <TextField
                     name="password"
                     label="Password"
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="Create password"
+                    icon={
+                      <div
+                        onClick={() => {
+                          setShowPassword((password) => !password);
+                        }}
+                      >
+                        {showPassword ? (
+                          <Icon name="eye" />
+                        ) : (
+                          <Icon name="eyeClosed" />
+                        )}
+                      </div>
+                    }
                   />
-                  <Icon name="eye" />
                 </div>
                 <div className="col-md-6">
                   <TextField
                     name="cpassword"
                     label="Confirm Password"
-                    type="password"
-                    placeholder="Confirm Password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Confirm password"
+                    icon={
+                      <div
+                        onClick={() => {
+                          setShowPassword((password) => !password);
+                        }}
+                      >
+                        {showPassword ? (
+                          <Icon name="eye" />
+                        ) : (
+                          <Icon name="eyeClosed" />
+                        )}
+                      </div>
+                    }
                   />
                 </div>
                 {/* <label className="mb-2">

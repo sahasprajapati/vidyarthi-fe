@@ -152,7 +152,7 @@ const Home: React.FC = () => {
                     descriptions={course?.description}
                     courseTag={course?.level}
                     isPrice="yes"
-                    price={course?.price}
+                    price={`Rs. ${course?.price ?? 0}`}
                     isIcon={course?.price ? 'yes' : 'no'}
                     imageUrl={course?.thumbnail}
                     icon={<Icon name="arrow-right" />}

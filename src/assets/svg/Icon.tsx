@@ -33,6 +33,7 @@ import RectangleSvg from './Rectangle';
 import PlayBtnSvg from './PlayBtn';
 import TrashSvg from './Trash';
 import DownloadSvg from './Download';
+import EyeClosedSvg from './EyeClosed';
 export interface Props {
   name: string;
   height?: number | string;
@@ -61,6 +62,7 @@ const IconsList: any = {
   star: (props: Props) => <StartSvg {...props} />,
   user: (props: Props) => <UserSvg {...props} />,
   eye: (props: Props) => <EyeSvg {...props} />,
+  eyeClosed: (props: Props) => <EyeClosedSvg {...props} />,
   'wish-list': (props: Props) => <WishListSvg {...props} />,
   'arrow-right': (props: Props) => <ArrowRightSvg {...props} />,
   'arrow-left': (props: Props) => <ArrowLeftSvg {...props} />,

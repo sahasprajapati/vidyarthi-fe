@@ -642,7 +642,7 @@ const AdminDashboard: React.FC = () => {
         </div>
         {/*  */}
         <div className="row">
-          <div className="col-lg-5 col-md-12">
+          {/* <div className="col-lg-5 col-md-12">
             <Card>
               <div className="flex-between">
                 <Heading title="top sales" />
@@ -676,7 +676,7 @@ const AdminDashboard: React.FC = () => {
               </div>
               <Chart data={doughnut} type="doughnut" options={doughnutConfig} />
             </Card>
-          </div>
+          </div> */}
           {/* <div className="col-lg-7 col-md-12">
             <Card>
               <div className="flex-between mb-4 mt-2">

@@ -1,9 +1,10 @@
 import { FacebookLogo, GoogleLogo, VidyarthiLogo2 } from 'assets/images';
+import Icon from 'assets/svg/Icon';
 import { SocialMediaLoginOptions, TextField } from 'components';
 import Button from 'components/button';
 import MainHeading from 'components/main-heading';
 import { Field, Form, Formik } from 'formik';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { authAction, socialLoginAction } from 'redux/actions/auth.action';
@@ -15,6 +16,8 @@ const FORM_VALIDATION = Yup.object().shape({
 });
 
 const Login: React.FC = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const dispatch: any = useDispatch();
   const userData: any = useSelector((state: any) => state.auth);
   const authError: any = useSelector((state: any) => state.auth.error);
@@ -107,8 +110,21 @@ const Login: React.FC = () => {
                   <TextField
                     name="password"
                     label="Password"
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="Enter your password"
+                    icon={
+                      <div
+                        onClick={() => {
+                          setShowPassword((password) => !password);
+                        }}
+                      >
+                        {showPassword ? (
+                          <Icon name="eye" />
+                        ) : (
+                          <Icon name="eyeClosed" />
+                        )}
+                      </div>
+                    }
                   />
                 </div>
                 {/* <label className="mb-2">

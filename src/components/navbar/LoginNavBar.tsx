@@ -63,20 +63,22 @@ const LoginNavBar: React.FC<Props> = ({ imageUrl, variant }) => {
           />
           <div className="wishlist__badge">3</div>
         </div> */}
-        <div
-          className="position-relative mx-5 pointer"
-          onClick={() => {
-            navigate('/student-cart');
-          }}
-        >
-          <Icon
-            name="cart"
-            fill={variant === 'white' ? '#FFFFFF' : '#120D26'}
-          />
-          <div className="wishlist__badge">
-            {userData?.cart?.course?.length ?? 0}
+        {userData?.role?.name === 'student' && (
+          <div
+            className="position-relative mx-5 pointer"
+            onClick={() => {
+              navigate('/student-cart');
+            }}
+          >
+            <Icon
+              name="cart"
+              fill={variant === 'white' ? '#FFFFFF' : '#120D26'}
+            />
+            <div className="wishlist__badge">
+              {userData?.cart?.course?.length ?? 0}
+            </div>
           </div>
-        </div>
+        )}
 
         <img
           src={imageUrl}

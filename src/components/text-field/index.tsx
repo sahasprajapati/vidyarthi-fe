@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ErrorMessage, FieldHookConfig, useField } from 'formik';
 interface IProps {
   label: string | number;
@@ -8,6 +8,7 @@ interface IProps {
   readOnly?: boolean;
   hidden?: boolean;
   ref?: any;
+  icon?: ReactNode;
 }
 const TextField = ({
   label,
@@ -17,11 +18,12 @@ const TextField = ({
   defaultValue,
   hidden,
   ref,
+  icon,
   ...otherProps
 }: IProps & FieldHookConfig<string>) => {
   const [field, meta] = useField(otherProps);
   return (
-    <div className="my-3">
+    <div className="my-3" style={{ position: 'relative' }}>
       <label
         className={`input__label ${
           meta.error && meta.touched
@@ -34,8 +36,8 @@ const TextField = ({
       </label>
       <input
         className={`form-control  ${
-          meta.touched && meta.error ? 'is-invalid' : ''
-        } ${!meta.error ? 'is-valid' : ''}`}
+          field.value && meta.touched && meta.error ? 'is-invalid' : ''
+        } ${field.value && !meta.error ? 'is-valid' : ''}`}
         {...field}
         type={type}
         placeholder={placeholder}
@@ -45,6 +47,18 @@ const TextField = ({
         hidden={hidden}
         ref={ref}
       />
+      {icon && (
+        <div
+          style={{
+            cursor: 'pointer',
+            position: 'absolute',
+            top: '50px',
+            right: '35px',
+          }}
+        >
+          {icon}
+        </div>
+      )}
       {meta.touched && meta.error ? (
         <div className="input__error__icon"></div>
       ) : (

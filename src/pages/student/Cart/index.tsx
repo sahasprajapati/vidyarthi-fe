@@ -92,7 +92,9 @@ const StudentCart: React.FC<IProps> = ({}) => {
       Header: 'Price',
       Cell: (row: any) => {
         const course = row?.row?.original;
-        return <p className="cart-table-price mt-5 px-2">${course?.price}</p>;
+        return (
+          <p className="cart-table-price mt-5 px-2">Rs. {course?.price}</p>
+        );
       },
     },
     {
@@ -485,8 +487,8 @@ const StudentCart: React.FC<IProps> = ({}) => {
             <CartCard
               variant="light-dark"
               couponDiscount="0%"
-              subTotal={`$${courseSubTotal}`}
-              total={`$${courseSubTotal}`}
+              subTotal={`Rs. ${courseSubTotal}`}
+              total={`Rs. ${courseSubTotal}`}
               onClick={() => {
                 setShowModal(true);
               }}
@@ -510,8 +512,8 @@ const StudentCart: React.FC<IProps> = ({}) => {
               <CartCard
                 variant="light-dark"
                 couponDiscount="0%"
-                subTotal={`$${courseSubTotal}`}
-                total={`$${courseSubTotal}`}
+                subTotal={`Rs. ${courseSubTotal}`}
+                total={`Rs. ${courseSubTotal}`}
                 onClick={() => {
                   handleOrder();
                 }}

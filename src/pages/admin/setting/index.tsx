@@ -3,6 +3,7 @@ import Button from 'components/button';
 import Card from 'components/card';
 import MainHeading from 'components/main-heading';
 import { AdminLayout } from 'containers';
+import { format } from 'date-fns';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -188,7 +189,9 @@ const StudentProfile = () => {
         lastName: (names?.length > 1 && names[1]) ?? '',
         imageUri: '',
         email: userData?.email ?? '',
-        dob: userData?.studentProfile?.dob ?? '',
+        dob: userData?.studentProfile?.dob
+          ? format(new Date(userData?.studentProfile?.dob), 'yyyy-MM-dd')
+          : '',
         highestQualification:
           userData?.studentProfile?.highestQualification ?? '',
         institution: userData?.studentProfile?.institution ?? '',
@@ -208,48 +211,50 @@ const StudentProfile = () => {
         }
       }}
     >
-      {({ isValid }) => (
-        <Form>
-          <Card>
-            <MainHeading title="Account Setting" />
-            <div className="row mx-2">
-              <div className="col-md-8">
-                <div className="row">
-                  {personalDetailsHalfSize?.map((e) => (
-                    <div className={e?.className} key={e?.name}>
-                      <TextField
-                        label={e?.label}
-                        name={e?.name}
-                        placeholder={e?.placeHolder}
-                      />
-                    </div>
-                  ))}
+      {({ isValid, values }) => {
+        console.log('Values', values);
+        return (
+          <Form>
+            <Card>
+              <MainHeading title="Account Setting" />
+              <div className="row mx-2">
+                <div className="col-md-8">
+                  <div className="row">
+                    {personalDetailsHalfSize?.map((e) => (
+                      <div className={e?.className} key={e?.name}>
+                        <TextField
+                          label={e?.label}
+                          name={e?.name}
+                          placeholder={e?.placeHolder}
+                        />
+                      </div>
+                    ))}
 
-                  <div className="col-md-12">
-                    <div className="flex">
-                      <Field
-                        type="checkbox"
-                        name="checked"
-                        value="yes"
-                        id="checkbox"
+                    {/* <div className="col-md-12">
+                      <div className="flex">
+                        <Field
+                          type="checkbox"
+                          name="checked"
+                          value="yes"
+                          id="checkbox"
+                        />
+                        <p className="ms-3 pt-3">Get Email Updates</p>
+                      </div>
+                    </div> */}
+                    <div className="col-md-6 mt-4">
+                      <TextField
+                        label="Date Of Birth"
+                        name="dob"
+                        placeholder="Date of Birth"
+                        type="date"
                       />
-                      <p className="ms-3 pt-3">Get Email Updates</p>
                     </div>
-                  </div>
-                  <div className="col-md-6 mt-4">
-                    <TextField
-                      label="Date Of Birth"
-                      name="dob"
-                      placeholder="Date of Birth"
-                      type="date"
-                    />
-                  </div>
-                  <div className="col-lg-6 col-md-6 mt-4">
-                    {/* <label htmlFor="" className="input__label">
+                    <div className="col-lg-6 col-md-6 mt-4">
+                      {/* <label htmlFor="" className="input__label">
                         Occupation
                       </label> */}
-                    <div>
-                      {/* <Field
+                      <div>
+                        {/* <Field
                           name="occupation"
                           className="pb-3"
                           options={occupationOptions}
@@ -257,48 +262,49 @@ const StudentProfile = () => {
                           placeholder="Select a role"
                           isMulti={false}
                         /> */}
-                      <TextField
-                        label="Occupation"
-                        name="occupation"
-                        placeholder="Occupation"
-                        type="text"
-                      />
+                        <TextField
+                          label="Occupation"
+                          name="occupation"
+                          placeholder="Occupation"
+                          type="text"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="col-md-4 mt-4">
-                <TextField
-                  label=""
-                  name="imageUri"
-                  placeholder="First Name"
-                  type="file"
-                  hidden
-                />
-                <div className="">
-                  <img src="" alt="profile photo" />
-                  <h5>hello</h5>
-                </div>
-              </div>
-              {personalDetailsFullSize?.map((e) => (
-                <div className="col-12 mt-3" key={e?.name}>
+                {/* <div className="col-md-4 mt-4">
                   <TextField
-                    label={e?.label}
-                    name={e?.name}
-                    placeholder={e?.placeHolder}
+                    label=""
+                    name="imageUri"
+                    placeholder="First Name"
+                    type="file"
+                    hidden
                   />
+                  <div className="">
+                    <img src="" alt="profile photo" />
+                    <h5>hello</h5>
+                  </div>
+                </div> */}
+                {personalDetailsFullSize?.map((e) => (
+                  <div className="col-12 mt-3" key={e?.name}>
+                    <TextField
+                      label={e?.label}
+                      name={e?.name}
+                      placeholder={e?.placeHolder}
+                    />
+                  </div>
+                ))}
+                <div className="mt-4">
+                  <Button variant="primary" type="submit" isValid={isValid}>
+                    Save Changes
+                  </Button>
                 </div>
-              ))}
-              <div className="mt-4">
-                <Button variant="primary" type="submit" isValid={isValid}>
-                  Save Changes
-                </Button>
               </div>
-            </div>
-          </Card>
-        </Form>
-      )}
+            </Card>
+          </Form>
+        );
+      }}
     </Formik>
   );
 };
@@ -350,7 +356,7 @@ const TeacherProfile = () => {
                 </div>
               </div>
 
-              <div className="col-md-4 mt-4">
+              {/* <div className="col-md-4 mt-4">
                 <TextField
                   label=""
                   name="imageUri"
@@ -362,7 +368,7 @@ const TeacherProfile = () => {
                   <img src="" alt="profile photo" />
                   <h5>hello</h5>
                 </div>
-              </div>
+              </div> */}
               {personalDetailsTeacherFullSize?.map((e) => (
                 <div className="col-12 mt-3" key={e?.name}>
                   <TextField
