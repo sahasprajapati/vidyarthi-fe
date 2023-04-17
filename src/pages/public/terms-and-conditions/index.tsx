@@ -59,7 +59,7 @@ const TermsAndConditions: React.FC<IProps> = ({}) => {
   return (
     <React.Fragment>
       <div className="banner-container">
-        <NavBar variant="white" />
+        <NavBar variant="black" />
         <h5 className="banner-container-text">Terms and conditons</h5>
       </div>
       <div className="container mx-auto">

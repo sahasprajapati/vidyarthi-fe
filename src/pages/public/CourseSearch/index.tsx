@@ -28,10 +28,9 @@ const CourseSearch: React.FC = () => {
   }, []);
 
   const { data: categoryData } = useFetch('/category');
-
+  const { data: instructorData } = useFetch('/users/instructor');
+  console.log('ins,', instructorData);
   const navigate = useNavigate();
-
-  const newString = 'prashant khanal';
 
   const filterCourseData = courseData.course
     ? courseData?.course.filter((item) => {
@@ -70,11 +69,8 @@ const CourseSearch: React.FC = () => {
               />
             </div>
           </div>
+
           <div
-            className="
-          col-lg-9 my-4"
-          ></div>
-          {/* <div
             className="
           col-lg-2 col-md-4  my-4"
           >
@@ -87,9 +83,8 @@ const CourseSearch: React.FC = () => {
                 id=""
                 className="form-control shadow-none bg-transparent outline-none border-none"
               >
-                <option value="hhd">djf</option>
-                <option value="dfd">djkjf</option>
-                <option value="dfjfkj">fdfdkj</option>
+                <option value="date">Date</option>
+                <option value="length">Length</option>
               </select>
               <Icon name="down-arrow" />
             </div>
@@ -107,9 +102,14 @@ const CourseSearch: React.FC = () => {
                 id=""
                 className="form-control shadow-none bg-transparent outline-none border-none"
               >
-                <option value="hhd">djf</option>
-                <option value="dfd">djkjf</option>
-                <option value="dfjfkj">fdfdkj</option>
+                <option value={0}></option>
+                {instructorData?.data?.map((instructor: any) => {
+                  return (
+                    <option key={instructor.id} value={instructor.id}>
+                      {instructor.name}
+                    </option>
+                  );
+                })}
               </select>
               <Icon name="down-arrow" />
             </div>
@@ -127,9 +127,11 @@ const CourseSearch: React.FC = () => {
                 id=""
                 className="form-control shadow-none bg-transparent outline-none border-none"
               >
-                <option value="hhd">djf</option>
-                <option value="dfd">djkjf</option>
-                <option value="dfjfkj">fdfdkj</option>
+                {categoryData?.data?.map((e: any) => (
+                  <option key={e.id} value={e.id}>
+                    {e.name}
+                  </option>
+                ))}
               </select>
               <Icon name="down-arrow" />
             </div>
@@ -137,27 +139,11 @@ const CourseSearch: React.FC = () => {
           <div
             className="
           col-lg-2 col-md-4  my-4"
-          >
-            <label htmlFor="" className="label__course__search mb-1">
-              Sort by:
-            </label>
-            <div className="flex-between course__filter__container">
-              <select
-                name=""
-                id=""
-                className="form-control shadow-none bg-transparent outline-none border-none"
-              >
-                <option value="hhd">djf</option>
-                <option value="dfd">djkjf</option>
-                <option value="dfjfkj">fdfdkj</option>
-              </select>
-              <Icon name="down-arrow" />
-            </div>
-          </div> */}
+          ></div>
           {/* category and bottom section */}
           <div className="col-md-3">
             <div className="category__container my-3">
-              <Accordion title="Category">
+              <Accordion title="Category" isOpen={true}>
                 {categoryData?.data?.map((e: any) => (
                   <div className="flex-between" key={e?.id}>
                     <div className="flex">

@@ -66,7 +66,6 @@ const NotLoginNavBar: React.FC<Props> = ({ variant }) => {
           </Link>
         </ul>
       </nav>
-      <div style={{ height: '200px' }}>sa</div>
     </>
   );
 };
