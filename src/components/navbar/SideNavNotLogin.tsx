@@ -171,14 +171,24 @@ const SidenavNotLogin: React.FC<Props> = ({ variant }) => {
                 Contact Us
               </NavLink>
             </li>
-            <li>
+            <li
+              style={{
+                marginLeft: '1em',
+
+                marginRight: '1em',
+              }}
+            >
               <Link to="/login" className="mx-3">
                 <Button type="button" variant="outline" isValid={true}>
                   <span className="p-3">Login</span>
                 </Button>
               </Link>
             </li>
-            <li>
+            <li
+              style={{
+                marginLeft: '1em',
+              }}
+            >
               <Link to="/register" className="mx-3">
                 <Button type="button" variant="primary" isValid={true}>
                   <span className="p-2">Register</span>
