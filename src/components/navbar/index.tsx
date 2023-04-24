@@ -12,11 +12,14 @@ const NavBar: React.FC<Props> = ({ variant }) => {
   const userData: any = useSelector((state: any) => state.auth);
 
   const login = userData?.authenticate ? true : false;
+  const profile =
+    localStorage.getItem('user') &&
+    JSON.parse(localStorage.getItem('user') ?? 'null');
 
   return (
     <header className="container">
       {login ? (
-        <LoginNavBar imageUrl={Profile} variant={variant} />
+        <LoginNavBar imageUrl={profile?.image ?? Profile} variant={variant} />
       ) : (
         <NotLoginNavBar variant={variant} />
       )}

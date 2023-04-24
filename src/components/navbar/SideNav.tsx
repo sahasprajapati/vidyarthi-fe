@@ -32,7 +32,6 @@ const Sidenav: React.FC<Props> = ({ imageUrl, variant }) => {
       window.removeEventListener('resize', handleWindowResize);
     };
   });
-  console.log('widt`', windowWidth);
 
   //   <nav className="flex-between py-5 ">
   //     <Link to="/">

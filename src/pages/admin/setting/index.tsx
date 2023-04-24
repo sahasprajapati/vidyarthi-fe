@@ -4,12 +4,14 @@ import Card from 'components/card';
 import MainHeading from 'components/main-heading';
 import { AdminLayout } from 'containers';
 import { format } from 'date-fns';
+import { defaultImage } from 'assets/images';
 import { Field, Form, Formik } from 'formik';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Service from 'setup/network';
 import * as Yup from 'yup';
+import Icon from 'assets/svg/Icon';
 
 const imageSupportedFormat = ['image/jpg', 'image/png', 'image/jpeg'];
 
@@ -187,7 +189,7 @@ const StudentProfile = () => {
       initialValues={{
         firstName: (names?.length > 0 && names[0]) ?? '',
         lastName: (names?.length > 1 && names[1]) ?? '',
-        imageUri: '',
+        picture: userData?.image ?? '',
         email: userData?.email ?? '',
         dob: userData?.studentProfile?.dob
           ? format(new Date(userData?.studentProfile?.dob), 'yyyy-MM-dd')
@@ -311,14 +313,33 @@ const StudentProfile = () => {
 const TeacherProfile = () => {
   const userData = JSON.parse(localStorage.getItem('user') ?? 'null');
   const names = userData?.name?.split(' ');
+  const inputImageRef = React.useRef<any>(null);
+  const [previewImage, setPreviewImage] = React.useState<any>(null);
+  const [previewImageUrl, setPreviewImageUrl] = React.useState<any>('');
 
+  const handleUploadImageFile = async (e: any, setFieldValue: any) => {
+    const file = new FormData();
+    setPreviewImageUrl(e?.target?.files[0]);
+
+    file.append('file', e?.target?.files[0]);
+    try {
+      const request = await Service.post('/upload/file', file);
+      setFieldValue('picture', request?.data?.data?.url);
+    } catch (error) {}
+  };
+  const previewImageDiv = React.useMemo(
+    () => (
+      <img src={previewImage} alt="imageurl" width="230px" height="160px" />
+    ),
+    [previewImage]
+  );
   return (
     <Formik
       enableReinitialize
       initialValues={{
         firstName: (names?.length > 0 && names[0]) ?? '',
         lastName: (names?.length > 1 && names[1]) ?? '',
-        imageUri: '',
+        picture: userData?.image ?? '',
         email: userData?.email ?? '',
         phoneNumber: userData?.teacherProfile?.phoneNumber ?? '',
         biography: userData?.teacherProfile?.biography ?? '',
@@ -337,7 +358,7 @@ const TeacherProfile = () => {
         }
       }}
     >
-      {({ isValid }) => (
+      {({ isValid, setFieldValue, values }) => (
         <Form>
           <Card>
             <MainHeading title="Account Setting" />
@@ -356,19 +377,61 @@ const TeacherProfile = () => {
                 </div>
               </div>
 
-              {/* <div className="col-md-4 mt-4">
-                <TextField
+              <div className="col-md-4 mt-4">
+                <div className="me-3">
+                  <input
+                    hidden
+                    ref={inputImageRef}
+                    type="file"
+                    name=""
+                    id=""
+                    accept="image/png, image/jpeg, image/jpg"
+                    onChange={(e) => handleUploadImageFile(e, setFieldValue)}
+                  />
+                  {previewImage ? (
+                    previewImageDiv
+                  ) : (
+                    <img
+                      src={values?.picture || defaultImage}
+                      alt="image_logo"
+                      width={230}
+                      height={160}
+                    />
+                  )}
+                </div>
+                <div className="flex-col">
+                  <p className="course__thumbnail__text">
+                    Upload your course Thumbnail here.
+                    <span className="font-weight-bold">
+                      {' '}
+                      Important guidelines:
+                    </span>
+                    1200x800 pixels or 12:8 Ratio. Supported format: .jpg,
+                    .jpeg, or .png
+                  </p>
+                  <Button
+                    variant="secondary"
+                    type="button"
+                    onClick={() => inputImageRef.current.click()}
+                    isValid={true}
+                  >
+                    <div className="flex">
+                      <span className="me-3">Upload Image</span>
+                      <Icon name="upload" />
+                    </div>
+                  </Button>
+                </div>
+                {/* <TextField
                   label=""
                   name="imageUri"
                   placeholder="First Name"
                   type="file"
                   hidden
-                />
-                <div className="">
+                /> */}
+                {/* <div className="">
                   <img src="" alt="profile photo" />
-                  <h5>hello</h5>
-                </div>
-              </div> */}
+                </div> */}
+              </div>
               {personalDetailsTeacherFullSize?.map((e) => (
                 <div className="col-12 mt-3" key={e?.name}>
                   <TextField

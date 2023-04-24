@@ -64,7 +64,11 @@ const Header: React.FC<Props> = ({ responsive }) => {
           <span className="mx-3">{user?.name ?? 'Jane Cooper'}</span>
           <div className="header__image me-4">
             <img
-              src="https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg"
+              src={
+                user?.image
+                  ? user?.image
+                  : 'https://www.bradford-theatres.co.uk/uploads/images/crop/550/373/store/products/p1drtc61ou1lgc1so9179v1gi31d04.jpg'
+              }
               alt="logo"
             />
           </div>
