@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 interface Props {
@@ -9,20 +9,24 @@ interface Props {
 }
 
 const SideBarRow: React.FC<Props> = ({ title, Icon, path, responsive }) => {
+  const [active, setActive] = useState(false);
   return (
     <div className="flex-center mt-4">
       {responsive ? (
         <NavLink
           to={path}
-          className="flex sidebar__list"
-          style={({ isActive }) => ({
-            color: isActive ? '#ffffff' : 'rgba(18, 13, 38, 0.5)',
-            background: isActive ? '#6b8e4e' : '#ffff',
-            borderRadius: 10,
-            boxShadow: isActive
-              ? '0px 20px 50px rgba(55, 69, 87, 0.1)'
-              : 'none',
-          })}
+          className={`flex sidebar__list ${active ? 'nav__link_sidebar' : ''}`}
+          style={({ isActive }) => {
+            setActive(isActive);
+            return {
+              color: isActive ? '#ffffff' : 'rgba(18, 13, 38, 0.5)',
+              background: isActive ? '#6b8e4e' : '#ffff',
+              borderRadius: 10,
+              boxShadow: isActive
+                ? '0px 20px 50px rgba(55, 69, 87, 0.1)'
+                : 'none',
+            };
+          }}
         >
           {Icon}
           <h6
@@ -36,15 +40,18 @@ const SideBarRow: React.FC<Props> = ({ title, Icon, path, responsive }) => {
       ) : (
         <NavLink
           to={path}
-          className="flex sidebar__list"
-          style={({ isActive }) => ({
-            color: isActive ? '#ffffff' : 'rgba(18, 13, 38, 0.5)',
-            background: isActive ? '#6b8e4e' : '#ffff',
-            borderRadius: 10,
-            boxShadow: isActive
-              ? '0px 20px 50px rgba(55, 69, 87, 0.1)'
-              : 'none',
-          })}
+          className={`flex sidebar__list ${active ? 'nav__link_sidebar' : ''}`}
+          style={({ isActive }) => {
+            setActive(isActive);
+            return {
+              color: isActive ? '#ffffff' : 'rgba(18, 13, 38, 0.5)',
+              background: isActive ? '#6b8e4e' : '#ffff',
+              borderRadius: 10,
+              boxShadow: isActive
+                ? '0px 20px 50px rgba(55, 69, 87, 0.1)'
+                : 'none',
+            };
+          }}
         >
           {Icon}
           <h6

@@ -552,6 +552,10 @@ progress[value]::-webkit-progress-value {
   width: 15.75rem;
 }
 
+.sidebar__list:hover {
+  color: 'green';
+}
+
 .sidebar__container {
   width: 18.125rem;
   background: var(--color-white);
@@ -946,6 +950,9 @@ progress[value]::-webkit-progress-value {
 
 .nav__link:hover {
   color: var(--color-primary);
+}
+.nav__link_sidebar:hover {
+  color: rgba(18, 13, 38, 0.5) !important;
 }
 
 .nav__link__white {
