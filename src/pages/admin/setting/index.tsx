@@ -207,8 +207,8 @@ const StudentProfile = () => {
     <Formik
       enableReinitialize
       initialValues={{
-        firstName: (names?.length > 0 && names[0]) ?? '',
-        lastName: (names?.length > 1 && names[1]) ?? '',
+        firstName: names?.length > 0 ? names[0] : '',
+        lastName: names?.length > 1 ? names[1] : '',
         picture: userData?.image ?? '',
         email: userData?.email ?? '',
         dob: userData?.studentProfile?.dob
